@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Breakout!</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">    
+</head>
+<body>
+    <div class="contenedor">      
+        <!-- Tutorial -->
+        <div id="tutorial">
+            <h1>---------- Cómo jugar ----------</h1>
+            <h2>> Pulsa Enter para iniciar el juego y pausar/reanudar el juego</h2>
+            <h2>> Pulsa las flechas derecha o izquierda para mover la paleta</h2>
+            <h2>> Pulsa r para ver la clasificación</h2>
+            <h2>> Pulsa espacio para usar el poder</h2>
+        </div>
+        <!-- Canvas que dibuja el juego -->
+        <canvas id="miCanvas" width="1000" height="750"></canvas>
+        <!-- Informacion, poder y opciones -->
+        <div class="misc">
+            <!-- Información -->
+            <fieldset class="informacion">
+                <legend>Información</legend>
+                <!-- Vidas -->
+                <div class="info">
+                    <img th:src="@{/img/vida.svg}" alt="Vida"/>
+                    <h1 id="vidas"></h1>
+                </div>
+                <!-- Puntos -->
+                <div class="info">
+                    <img th:src="@{/img/puntuacion.svg}" alt="Puntuacion"/>
+                    <h1 id="puntos"></h1>
+                </div>
+                <!-- Bloques destruidos -->
+                <div class="info">
+                    <img th:src="@{/img/bloque.svg}" alt="BloquesDestruidos"/>
+                    <h1 id="bloquesDestruidos"></h1>
+                </div>              
+                <!-- Filas -->
+                <div class="info">
+                    <img th:src="@{/img/fila.svg}" alt="Fila"/>
+                    <h1 id="filas"></h1>
+                </div>
+                <!-- Columnas -->
+                <div class="info">
+                    <img th:src="@{/img/columna.svg}" alt="Columna"/>
+                    <h1 id="columnas"></h1>
+                </div>
+            </fieldset>
+            <!-- Poder -->
+            <fieldset class="poder">
+                <legend>Poder</legend>
+                <h1 id="poderTxt">Nada</h1>
+            </fieldset>
+            <!-- Opciones -->
+            <fieldset class="opciones">
+                <legend>Opciones</legend>
+                <button id="reanudar" onclick="reanudar()"></button>
+                <button id="pausar" onclick="pausar()"></button>
+                <button id="clasificacion" onclick="verRanking()"></button>
+            </fieldset>
+        </div>
+        <a th:href="@{/ranking}" type="hidden" id="rankingLink"></a>
+    </div>
+    <!-- Ventana emergente para guardar la información del jugador -->
+    <form id="ranking" method="post" th:action="@{/ranking}">
+        <h1>¡Vaya, has perdido!</h1>
+        <h2>----- Tu puntuación final -----</h2>
+        <h3 id="puntuacionFinal">Puntos finales: </h3>
+        <input type="hidden" name="puntuacionFinal" id="inputPuntuacionFinal" />
+        <h3 id="bloquesDestruidosFinal">Bloques destruidos totales: </h3>
+        <input type="hidden" name="bloquesDestruidosFinal" id="inputBloquesDestruidosFinal" />
+        <h3 id="fecha">Fecha: </h3>
+        <input type="hidden" name="fechaFinal" id="inputFechaFinal" />
+        <h1>Ingresa tu nombre:</h1>
+        <input type="text" name="nombreJugador" id="nombreJugador" placeholder="Nombre" required />
+        <button type="submit" onclick="guardarRanking()">Guardar</button>
+        <button type="reset" onclick="recargar()">Cancelar</button>
+    </form>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let bX = 500;
+        let bY = 450;
+        let radio = 7;
+        let vX = 0;
+        let vY = 3;
+
+        let pX = 450;
+        let pY = 20;
+        let pW = 100;
+        let pH = 10;
+        /*]]>*/
+    </script>
+    <script th:src="@{/script.js}"></script>
+</body>
+</html> 
