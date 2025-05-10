@@ -1,0 +1,67 @@
+---
+description: LA aplicación seguirá lo siguiente:
+globs: 
+alwaysApply: false
+---
+🎮 Proyecto: Juego Breakout Web + Gestión de Usuarios
+📌 Descripción General:
+Desarrollaré una aplicación web basada en el clásico juego Breakout, complementada con funcionalidades de gestión de usuarios, rankings y un panel de administración. El juego será jugable directamente desde el navegador, y estará conectado a una base de datos para guardar estadísticas.
+
+⚙️ Tecnologías a utilizar:
+Backend: Spring Boot (Java)
+
+Frontend: Thymeleaf (con Bootstrap/Tailwind opcional)
+
+Base de Datos: MySQL o PostgreSQL
+
+Seguridad: Spring Security (login, control de sesiones)
+
+Despliegue: Docker + Render.com
+
+🎯 Funcionalidades para Usuarios:
+Registro e inicio de sesión
+
+Jugar al juego
+
+Guardado automático de estadísticas al terminar partida:
+
+Puntuación
+
+Fecha y hora
+
+Ladrillos destruidos, vidas restantes, poder activo
+
+Visualización de su historial de partidas
+
+Consulta del ranking global (top 10)
+
+Consulta de su posición personal en el ranking
+
+🛠️ Panel de Administración:
+Gestión de usuarios (editar/eliminar)
+
+Activar/desactivar poderes
+
+Configurar parámetros del juego:
+
+Número de columnas/filas de ladrillos
+
+Vidas iniciales
+
+Multiplicador de puntuación
+
+(Opcional avanzado) Crear nuevos poderes desde la interfaz
+
+🎨 Interfaz:
+Hero con imagen de fondo personalizada del juego (Breakout)
+
+Diseño responsive y accesible
+
+Bootstrap y/o Tailwind CSS
+
+🔗 Otros:
+Uso del patrón MVC
+
+Se valorará la implementación de una API REST
+
+Despliegue accesible públicamente

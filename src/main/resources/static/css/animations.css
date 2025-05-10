@@ -1,0 +1,325 @@
+@keyframes bordeAnimado {
+  0% {
+    background-image: linear-gradient(90deg, transparent, var(--color-primario, #4499ff), transparent), linear-gradient(90deg, transparent, var(--color-secundario, #00ddff), transparent), linear-gradient(0deg, transparent, var(--color-primario, #4499ff), transparent), linear-gradient(0deg, transparent, var(--color-secundario, #00ddff), transparent);
+    background-position: -100% 0, 100% 100%, 0% 200%, 100% -100%;
+    box-shadow: 0 0 25px rgba(var(--color-primario, #4499ff), 0.8);
+  }
+  25% {
+    background-image: linear-gradient(90deg, transparent, var(--color-primario, #4499ff), transparent), linear-gradient(90deg, transparent, var(--color-secundario, #00ddff), transparent), linear-gradient(0deg, transparent, var(--color-primario, #4499ff), transparent), linear-gradient(0deg, transparent, var(--color-secundario, #00ddff), transparent);
+    background-position: 0% 0, 0% 100%, 0% 100%, 100% 0%;
+    box-shadow: 0 0 25px rgba(var(--color-secundario, #00ddff), 0.8);
+  }
+  50% {
+    background-image: linear-gradient(90deg, transparent, var(--color-primario, #4499ff), transparent), linear-gradient(90deg, transparent, var(--color-secundario, #00ddff), transparent), linear-gradient(0deg, transparent, var(--color-primario, #4499ff), transparent), linear-gradient(0deg, transparent, var(--color-secundario, #00ddff), transparent);
+    background-position: 100% 0, -100% 100%, 0% 0%, 100% 100%;
+    box-shadow: 0 0 25px rgba(var(--color-primario, #4499ff), 0.8);
+  }
+  75% {
+    background-image: linear-gradient(90deg, transparent, var(--color-primario, #4499ff), transparent), linear-gradient(90deg, transparent, var(--color-secundario, #00ddff), transparent), linear-gradient(0deg, transparent, var(--color-primario, #4499ff), transparent), linear-gradient(0deg, transparent, var(--color-secundario, #00ddff), transparent);
+    background-position: 0% 0, 0% 100%, 0% -100%, 100% 200%;
+    box-shadow: 0 0 25px rgba(var(--color-secundario, #00ddff), 0.8);
+  }
+  100% {
+    background-image: linear-gradient(90deg, transparent, var(--color-primario, #4499ff), transparent), linear-gradient(90deg, transparent, var(--color-secundario, #00ddff), transparent), linear-gradient(0deg, transparent, var(--color-primario, #4499ff), transparent), linear-gradient(0deg, transparent, var(--color-secundario, #00ddff), transparent);
+    background-position: -100% 0, 100% 100%, 0% 200%, 100% -100%;
+    box-shadow: 0 0 25px rgba(var(--color-primario, #4499ff), 0.8);
+  }
+}
+@keyframes bordePulsante {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 25px rgba(var(--color-primario, #4499ff), 0.9) inset;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+@keyframes flow {
+  from {
+    left: -150%;
+  }
+  to {
+    left: 150%;
+  }
+}
+@keyframes horizontalLight {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+@keyframes verticalLight {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+.animated-card-blue, .animated-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 15px rgba(68, 153, 255, 0.2);
+}
+.animated-card-blue::before, .animated-card::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 3px solid transparent;
+  border-radius: 0.25rem;
+  background-image: linear-gradient(90deg, transparent, #4499ff, transparent), linear-gradient(90deg, transparent, #00ddff, transparent), linear-gradient(0deg, transparent, #4499ff, transparent), linear-gradient(0deg, transparent, #00ddff, transparent);
+  background-size: 300% 100%, 300% 100%, 100% 300%, 100% 300%;
+  background-position: 0% 0, 0% 100%, 0% 0, 100% 0;
+  background-repeat: no-repeat;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: bordeAnimado 4s linear infinite;
+  pointer-events: none;
+  box-shadow: 0 0 20px rgba(68, 153, 255, 0.8) inset, 0 0 30px rgba(68, 153, 255, 0.5);
+  filter: drop-shadow(0 0 8px rgba(68, 153, 255, 0.8));
+}
+.animated-card-blue::after, .animated-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid transparent;
+  border-image: linear-gradient(to right, transparent, #4499ff, transparent) 1;
+  animation: bordePulsante 2s ease-in-out infinite;
+  box-shadow: 0 0 15px rgba(68, 153, 255, 0.7) inset, 0 0 20px rgba(68, 153, 255, 0.4);
+}
+.animated-card-blue > *, .animated-card > * {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 5px rgba(68, 153, 255, 0.3);
+}
+
+.animated-card-red {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 15px rgba(255, 73, 73, 0.2);
+}
+.animated-card-red::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 3px solid transparent;
+  border-radius: 0.25rem;
+  background-image: linear-gradient(90deg, transparent, #ff4949, transparent), linear-gradient(90deg, transparent, #ff7070, transparent), linear-gradient(0deg, transparent, #ff4949, transparent), linear-gradient(0deg, transparent, #ff7070, transparent);
+  background-size: 300% 100%, 300% 100%, 100% 300%, 100% 300%;
+  background-position: 0% 0, 0% 100%, 0% 0, 100% 0;
+  background-repeat: no-repeat;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: bordeAnimado 4s linear infinite;
+  pointer-events: none;
+  box-shadow: 0 0 20px rgba(255, 73, 73, 0.8) inset, 0 0 30px rgba(255, 73, 73, 0.5);
+  filter: drop-shadow(0 0 8px rgba(255, 73, 73, 0.8));
+}
+.animated-card-red::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid transparent;
+  border-image: linear-gradient(to right, transparent, #ff4949, transparent) 1;
+  animation: bordePulsante 2s ease-in-out infinite;
+  box-shadow: 0 0 15px rgba(255, 73, 73, 0.7) inset, 0 0 20px rgba(255, 73, 73, 0.4);
+}
+.animated-card-red > * {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 5px rgba(255, 73, 73, 0.3);
+}
+
+.animated-card-green {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 15px rgba(73, 255, 73, 0.2);
+}
+.animated-card-green::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 3px solid transparent;
+  border-radius: 0.25rem;
+  background-image: linear-gradient(90deg, transparent, #49ff49, transparent), linear-gradient(90deg, transparent, #70ff70, transparent), linear-gradient(0deg, transparent, #49ff49, transparent), linear-gradient(0deg, transparent, #70ff70, transparent);
+  background-size: 300% 100%, 300% 100%, 100% 300%, 100% 300%;
+  background-position: 0% 0, 0% 100%, 0% 0, 100% 0;
+  background-repeat: no-repeat;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: bordeAnimado 4s linear infinite;
+  pointer-events: none;
+  box-shadow: 0 0 20px rgba(73, 255, 73, 0.8) inset, 0 0 30px rgba(73, 255, 73, 0.5);
+  filter: drop-shadow(0 0 8px rgba(73, 255, 73, 0.8));
+}
+.animated-card-green::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid transparent;
+  border-image: linear-gradient(to right, transparent, #49ff49, transparent) 1;
+  animation: bordePulsante 2s ease-in-out infinite;
+  box-shadow: 0 0 15px rgba(73, 255, 73, 0.7) inset, 0 0 20px rgba(73, 255, 73, 0.4);
+}
+.animated-card-green > * {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 5px rgba(73, 255, 73, 0.3);
+}
+
+.animated-card-orange, .animated-card-boss {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 15px rgba(255, 153, 0, 0.2);
+}
+.animated-card-orange::before, .animated-card-boss::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 3px solid transparent;
+  border-radius: 0.25rem;
+  background-image: linear-gradient(90deg, transparent, #ff9900, transparent), linear-gradient(90deg, transparent, #ffcc00, transparent), linear-gradient(0deg, transparent, #ff9900, transparent), linear-gradient(0deg, transparent, #ffcc00, transparent);
+  background-size: 300% 100%, 300% 100%, 100% 300%, 100% 300%;
+  background-position: 0% 0, 0% 100%, 0% 0, 100% 0;
+  background-repeat: no-repeat;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: bordeAnimado 2s linear infinite;
+  pointer-events: none;
+  box-shadow: 0 0 20px rgba(255, 153, 0, 0.8) inset, 0 0 30px rgba(255, 153, 0, 0.5);
+  filter: drop-shadow(0 0 8px rgba(255, 153, 0, 0.8));
+}
+.animated-card-orange::after, .animated-card-boss::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid transparent;
+  border-image: linear-gradient(to right, transparent, #ff9900, transparent) 1;
+  animation: bordePulsante 2s ease-in-out infinite;
+  box-shadow: 0 0 15px rgba(255, 153, 0, 0.7) inset, 0 0 20px rgba(255, 153, 0, 0.4);
+}
+.animated-card-orange > *, .animated-card-boss > * {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 5px rgba(255, 153, 0, 0.3);
+}
+
+.border-flow-blue {
+  position: relative;
+}
+.border-flow-blue::after {
+  content: "";
+  display: block;
+  margin-top: 8px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #4499ff, rgba(68, 153, 255, 0.5), transparent);
+  background-size: 200% 100%;
+  animation: flow 1.5s infinite linear;
+  position: relative;
+}
+
+.border-flow-red {
+  position: relative;
+}
+.border-flow-red::after {
+  content: "";
+  display: block;
+  margin-top: 8px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ff4949, rgba(255, 73, 73, 0.5), transparent);
+  background-size: 200% 100%;
+  animation: flow 1.5s infinite linear;
+  position: relative;
+}
+
+.border-flow-green {
+  position: relative;
+}
+.border-flow-green::after {
+  content: "";
+  display: block;
+  margin-top: 8px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #49ff49, rgba(73, 255, 73, 0.5), transparent);
+  background-size: 200% 100%;
+  animation: flow 1.5s infinite linear;
+  position: relative;
+}
+
+.border-flow-orange, .border-flow-boss {
+  position: relative;
+}
+.border-flow-orange::after, .border-flow-boss::after {
+  content: "";
+  display: block;
+  margin-top: 8px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ff9900, rgba(255, 153, 0, 0.5), transparent);
+  background-size: 200% 100%;
+  animation: flow 1.5s infinite linear;
+  position: relative;
+}
+
+:root {
+  --color-primario: #4499ff;
+  --color-secundario: #00ddff;
+}
+
+/*# sourceMappingURL=animations.css.map */

@@ -1,0 +1,42 @@
+.icon-30 {
+    width: 35px;
+    height: 35px;
+    filter: brightness(0) invert(1);
+}
+
+.game-button {
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    filter: brightness(0) invert(1);
+    transition: all .3s;
+    position: relative;
+    z-index: 5;
+}
+
+.game-button[data-icon="reanudar"] {
+    background-image: url("/img/reanudar.svg");
+}
+
+.game-button[data-icon="pausar"] {
+    background-image: url("/img/pausar.svg");
+}
+
+.game-button[data-icon="ranking"] {
+    background-image: url("/img/ranking.svg");
+}
+
+button {
+    position: relative;
+    z-index: 5;
+}
+
+#tutorial {
+    max-width: 500px;
+}
+
+.tutorial-arrow {
+    font-weight: bold;
+}
+
+/*# sourceMappingURL=game.css.map */

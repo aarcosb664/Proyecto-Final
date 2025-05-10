@@ -1,0 +1,160 @@
+// Importar variables y mixins desde base
+@use 'base' as *;
+
+// Animaciones globales (solo necesitan definirse una vez)
+@keyframes bordeAnimado {
+    0% {
+        background-image: 
+            linear-gradient(90deg, transparent, var(--color-primario, $colorPrimario), transparent),
+            linear-gradient(90deg, transparent, var(--color-secundario, $colorSecundario), transparent),
+            linear-gradient(0deg, transparent, var(--color-primario, $colorPrimario), transparent),
+            linear-gradient(0deg, transparent, var(--color-secundario, $colorSecundario), transparent);
+        background-position: 
+            -100% 0,
+            100% 100%,
+            0% 200%,
+            100% -100%;
+        box-shadow: 0 0 25px rgba(var(--color-primario, $colorPrimario), 0.8);
+    }
+    
+    25% {
+        background-image: 
+            linear-gradient(90deg, transparent, var(--color-primario, $colorPrimario), transparent),
+            linear-gradient(90deg, transparent, var(--color-secundario, $colorSecundario), transparent),
+            linear-gradient(0deg, transparent, var(--color-primario, $colorPrimario), transparent),
+            linear-gradient(0deg, transparent, var(--color-secundario, $colorSecundario), transparent);
+        background-position: 
+            0% 0,
+            0% 100%,
+            0% 100%,
+            100% 0%;
+        box-shadow: 0 0 25px rgba(var(--color-secundario, $colorSecundario), 0.8);
+    }
+    
+    50% {
+        background-image: 
+            linear-gradient(90deg, transparent, var(--color-primario, $colorPrimario), transparent),
+            linear-gradient(90deg, transparent, var(--color-secundario, $colorSecundario), transparent),
+            linear-gradient(0deg, transparent, var(--color-primario, $colorPrimario), transparent),
+            linear-gradient(0deg, transparent, var(--color-secundario, $colorSecundario), transparent);
+        background-position: 
+            100% 0,
+            -100% 100%,
+            0% 0%,
+            100% 100%;
+        box-shadow: 0 0 25px rgba(var(--color-primario, $colorPrimario), 0.8);
+    }
+    
+    75% {
+        background-image: 
+            linear-gradient(90deg, transparent, var(--color-primario, $colorPrimario), transparent),
+            linear-gradient(90deg, transparent, var(--color-secundario, $colorSecundario), transparent),
+            linear-gradient(0deg, transparent, var(--color-primario, $colorPrimario), transparent),
+            linear-gradient(0deg, transparent, var(--color-secundario, $colorSecundario), transparent);
+        background-position: 
+            0% 0,
+            0% 100%,
+            0% -100%,
+            100% 200%;
+        box-shadow: 0 0 25px rgba(var(--color-secundario, $colorSecundario), 0.8);
+    }
+    
+    100% {
+        background-image: 
+            linear-gradient(90deg, transparent, var(--color-primario, $colorPrimario), transparent),
+            linear-gradient(90deg, transparent, var(--color-secundario, $colorSecundario), transparent),
+            linear-gradient(0deg, transparent, var(--color-primario, $colorPrimario), transparent),
+            linear-gradient(0deg, transparent, var(--color-secundario, $colorSecundario), transparent);
+        background-position: 
+            -100% 0,
+            100% 100%,
+            0% 200%,
+            100% -100%;
+        box-shadow: 0 0 25px rgba(var(--color-primario, $colorPrimario), 0.8);
+    }
+}
+
+// Animación para el borde pulsante
+@keyframes bordePulsante {
+    0% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 1;
+        box-shadow: 0 0 25px rgba(var(--color-primario, $colorPrimario), 0.9) inset;
+    }
+    100% {
+        opacity: 0.4;
+    }
+}
+
+// Animación de flujo
+@keyframes flow {
+    from { left: -150%; }
+    to   { left: 150%; }
+}
+
+// Animaciones horizontales y verticales para efectos de luz
+@keyframes horizontalLight {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes verticalLight {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+// Clases básicas que utilizan los mixins
+.animated-card-blue {
+    @include animated-card($colorPrimario, $colorSecundario);
+}
+
+.animated-card-red {
+    @include animated-card($colorRojo, $colorRojoSecundario);
+}
+
+.animated-card-green {
+    @include animated-card($colorVerde, $colorVerdeSecundario);
+}
+
+.animated-card-orange {
+    @include animated-card($colorJefe, $colorJefeSecundario, 2s);
+}
+
+// Para compatibilidad con código existente
+.animated-card {
+    @extend .animated-card-blue;
+}
+
+.animated-card-boss {
+    @extend .animated-card-orange;
+}
+
+// Elementos con borde fluido
+.border-flow-blue {
+    @include border-flow($colorPrimario);
+}
+
+.border-flow-red {
+    @include border-flow($colorRojo);
+}
+
+.border-flow-green {
+    @include border-flow($colorVerde);
+}
+
+.border-flow-orange {
+    @include border-flow($colorJefe);
+}
+
+// Para compatibilidad con código existente
+.border-flow-boss {
+    @extend .border-flow-orange;
+}
+
+// Configuración de variables CSS para uso sin SASS
+:root {
+    --color-primario: #{$colorPrimario};
+    --color-secundario: #{$colorSecundario};
+}

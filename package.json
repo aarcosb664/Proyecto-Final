@@ -1,0 +1,12 @@
+{
+  "name": "breakout-game",
+  "version": "1.0.0",
+  "description": "Juego Breakout con animaciones SCSS",
+  "scripts": {
+    "sass": "sass --watch src/main/resources/static/scss:src/main/resources/static/css",
+    "build-sass": "sass src/main/resources/static/scss:src/main/resources/static/css"
+  },
+  "devDependencies": {
+    "sass": "^1.69.5"
+  }
+}

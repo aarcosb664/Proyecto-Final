@@ -36,3 +36,54 @@ build/
 *.db
 *.log
 ranking.txt
+
+# Archivos compilados
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+.pnp/
+.pnp.js
+.npm
+
+# CSS compilado (si usas un preprocesador)
+# Puedes descomentar esta línea si no quieres incluir los CSS generados
+# src/main/resources/static/css/
+
+# Archivos de configuración IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+
+# Logs
+logs/
+*.log
+
+# Archivos de Spring Boot
+target/
+build/
+.gradle/
+.springBeans
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos de respaldo
+*~
+*.swp
+*.bak

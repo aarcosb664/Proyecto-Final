@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import aarcosb.Jugador;
+import aarcosb.model.Player;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -22,10 +22,15 @@ public class GameController {
     public String index() {
         return "index";
     }
+
+    @GetMapping("/game")
+    public String game() {
+        return "game";
+    }
     
     @GetMapping("/ranking")
     public String ranking(Model model) {
-        List<Jugador> jugadores = leerJugadoresDesdeArchivo();
+        List<Player> jugadores = leerJugadoresDesdeArchivo();
         model.addAttribute("jugadores", jugadores);
         return "ranking";
     }
@@ -47,19 +52,18 @@ public class GameController {
         }
         
         // Leer todos los jugadores para mostrar el ranking
-        List<Jugador> jugadores = leerJugadoresDesdeArchivo();
+        List<Player> jugadores = leerJugadoresDesdeArchivo();
         model.addAttribute("jugadores", jugadores);
         
         return "ranking";
     }
     
-    private List<Jugador> leerJugadoresDesdeArchivo() {
-        List<Jugador> jugadores = new ArrayList<>();
+    private List<Player> leerJugadoresDesdeArchivo() {
+        List<Player> jugadores = new ArrayList<>();
         
         try {
             File file = new File(RANKING_FILE);
             if (!file.exists()) {
-                file.createNewFile();
                 return jugadores;
             }
             
@@ -68,11 +72,10 @@ public class GameController {
                 while ((linea = br.readLine()) != null) {
                     String[] datos = linea.split(", ");
                     if (datos.length >= 4) {
-                        jugadores.add(new Jugador(
+                        jugadores.add(new Player(
                                 datos[0], 
                                 Integer.parseInt(datos[1]), 
-                                Integer.parseInt(datos[2]), 
-                                datos[3]));
+                                Integer.parseInt(datos[2])));
                     }
                 }
             }
@@ -81,7 +84,7 @@ public class GameController {
         }
         
         // Ordenar jugadores por puntuación (mayor a menor)
-        jugadores.sort(Comparator.comparing(Jugador::getPuntos).reversed());
+        jugadores.sort(Comparator.comparing(Player::getScore).reversed());
         
         return jugadores;
     }

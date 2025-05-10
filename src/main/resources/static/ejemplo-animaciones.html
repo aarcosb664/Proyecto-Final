@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de Animaciones</title>
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .card {
+            flex: 1 1 250px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            text-align: center;
+        }
+        h1, h2 {
+            width: 100%;
+        }
+        .title {
+            margin-bottom: 10px;
+            color: #00ddff;
+        }
+        code {
+            font-family: monospace;
+            background-color: #333;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejemplos de Animaciones</h1>
+    <p>Este archivo muestra ejemplos de las animaciones disponibles en el sistema simplificado de SCSS.</p>
+    
+    <h2 class="title">Tarjetas Animadas</h2>
+    <div class="container">
+        <div class="animated-card card">
+            <div>Tarjeta Azul<br>
+            <code>.animated-card</code></div>
+        </div>
+        
+        <div class="animated-card-red card">
+            <div>Tarjeta Roja<br>
+            <code>.animated-card-red</code></div>
+        </div>
+        
+        <div class="animated-card-green card">
+            <div>Tarjeta Verde<br>
+            <code>.animated-card-green</code></div>
+        </div>
+        
+        <div class="animated-card-boss card">
+            <div>Tarjeta Jefe<br>
+            <code>.animated-card-boss</code></div>
+        </div>
+    </div>
+    
+    <h2 class="title">Bordes con Flujo</h2>
+    <div class="container">
+        <div class="card border-flow-blue">
+            <div>Borde Azul<br>
+            <code>.border-flow-blue</code></div>
+        </div>
+        
+        <div class="card border-flow-red">
+            <div>Borde Rojo<br>
+            <code>.border-flow-red</code></div>
+        </div>
+        
+        <div class="card border-flow-green">
+            <div>Borde Verde<br>
+            <code>.border-flow-green</code></div>
+        </div>
+        
+        <div class="card border-flow-boss">
+            <div>Borde Jefe<br>
+            <code>.border-flow-boss</code></div>
+        </div>
+    </div>
+</body>
+</html> 
