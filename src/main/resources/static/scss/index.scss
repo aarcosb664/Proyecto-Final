@@ -47,8 +47,8 @@ body {
   height: 85vh;
   min-height: 550px;
   max-height: 700px; // Limita la altura máxima
-  margin-top: -56px; // Compensar el navbar
-  padding-top: 56px; // Espacio para el navbar
+  margin-top: 0; // Ajustado para el nuevo navbar
+  padding-top: 0; // Ya no necesitamos compensar
   overflow: hidden;
   display: flex;
 }
@@ -433,6 +433,134 @@ body {
     
     .btn {
       margin-bottom: 0.5rem;
+    }
+  }
+}
+
+// Estilos para el navbar
+.navbar.border-bottom-animated {
+  background-color: rgba($bgDark, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 10px 0;
+  
+  .navbar-brand {
+    font-weight: bold;
+    color: $bgLight;
+    
+    span {
+      margin-left: 5px;
+    }
+  }
+  
+  .navbar-toggler {
+    border-color: rgba($bgLight, 0.1);
+    
+    &:focus {
+      box-shadow: 0 0 0 0.1rem rgba($azulPrimario, 0.5);
+    }
+  }
+  
+  .nav-link {
+    color: rgba($bgLight, 0.8);
+    margin: 0 5px;
+    transition: color 0.3s;
+    
+    &:hover, &:focus {
+      color: $bgLight;
+    }
+    
+    &.active {
+      color: $bgLight;
+      font-weight: 500;
+    }
+  }
+  
+  .btn-success {
+    background-color: $verdePrimario;
+    border-color: $verdePrimario;
+    transition: all 0.3s;
+    
+    &:hover {
+      background-color: $verdeSecundario;
+      border-color: $verdeSecundario;
+      transform: translateY(-2px);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
+  
+  // Estilos para el dropdown de usuario
+  .dropdown {
+    .dropdown-toggle {
+      color: $bgLight;
+      
+      &::after {
+        color: rgba($bgLight, 0.5);
+        margin-left: 5px;
+      }
+      
+      img.rounded-circle {
+        border: 2px solid rgba($azulPrimario, 0.7);
+        transition: border-color 0.3s;
+      }
+      
+      &:hover {
+        img.rounded-circle {
+          border-color: $azulPrimario;
+        }
+      }
+    }
+    
+    .dropdown-menu {
+      background-color: $bgDark;
+      border: 1px solid rgba($azulPrimario, 0.3);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      
+      .dropdown-item {
+        color: $bgLight;
+        
+        &:hover, &:focus {
+          background-color: rgba($azulPrimario, 0.2);
+        }
+      }
+      
+      .dropdown-divider {
+        border-color: rgba($bgLight, 0.1);
+      }
+      
+      .btn-link {
+        color: $rojoPrimario;
+        
+        &:hover {
+          color: $rojoSecundario;
+        }
+      }
+    }
+  }
+  
+  // Ajustes específicos para móvil
+  @media (max-width: 992px) {
+    .navbar-collapse {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: $borderRadius;
+      background-color: rgba($bgDark, 0.95);
+      
+      .navbar-nav {
+        padding-bottom: 10px;
+        
+        .nav-item {
+          margin: 5px 0;
+        }
+      }
+    }
+    
+    .dropdown {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba($bgLight, 0.1);
     }
   }
 }

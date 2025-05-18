@@ -1,20 +1,58 @@
-<div th:fragment="header" class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 overflow-hidden border-bottom-animated sticky-top">
-    <div class="col-md-3 mb-2 mb-md-0">
-        <a th:href="@{/}" class="d-inline-flex link-body-emphasis text-decoration-none">
-            <img th:src="@{img/logo.png}" class="img-fluid" style="width: 50px; height: 50px;" alt="Logo">
+<nav th:fragment="header" class="navbar navbar-expand-lg sticky-top border-bottom-animated">
+    <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+            <img th:src="@{/img/logo.png}" alt="Logo" width="40" height="40" class="me-2">
+            <span class="d-none d-sm-inline">Breakout</span>
         </a>
+        
+        <!-- Botón hamburguesa para móvil -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" 
+                aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- Contenido del menú (colapsable en móvil) -->
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <!-- Links principales centrados -->
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/community}">Community</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-success px-4 mx-2" th:href="@{/game}">PLAY</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/about}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/ranking}">Ranking</a>
+                </li>
+            </ul>
+            
+            <!-- Perfil de usuario (siempre a la derecha) -->
+            <div class="ms-auto d-flex align-items-center">
+                <!-- Si el usuario está autenticado -->
+                <div class="dropdown" th:if="${#request.userPrincipal != null}">
+                    <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="User" width="32" height="32" class="rounded-circle me-2">
+                        <span class="d-none d-sm-inline" th:text="${#request.userPrincipal.name}">Username</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" th:href="@{/profile}">Profile</a></li>
+                        <li><a class="dropdown-item" th:href="@{/stats}">My Stats</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form th:action="@{/logout}" method="post" class="dropdown-item p-0">
+                                <button type="submit" class="btn btn-link text-decoration-none w-100 text-start px-3 py-1">Sign out</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <ul class="nav col-12 col-md-auto mb-2 mb-md-0 justify-content-center">
-        <li><a th:href="@{/}" class="nav-link px-2 link-secondary">Home</a></li>
-        <li><a th:href="@{/community}" class="nav-link px-2">Community</a></li>
-        <li><a th:href="@{/game}" class="btn btn-success px-4 mx-2">PLAY</a></li>
-        <li><a th:href="@{/about}" class="nav-link px-2">About</a></li> <!-- TODO: Añadir feedback -->
-        <li><a th:href="@{/ranking}" class="nav-link px-2">Ranking</a></li>
-    </ul>
-
-    <div class="col-md-3 text-end">
-        <button type="button" class="btn btn-outline-primary me-2">Login</button>
-        <button type="button" class="btn btn-primary">Sign-up</button>
-    </div>
-</div>
+</nav>
