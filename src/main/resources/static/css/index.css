@@ -482,31 +482,20 @@
   border-radius: 4px;
 }
 
-@keyframes indexBorderFlow {
-  from {
-    left: -150%;
-  }
-  to {
-    left: 150%;
-  }
-}
 @keyframes borderFlow {
   0% {
-    background-position: 200% 0%;
+    background-position: 200% 0;
   }
   100% {
-    background-position: 0% 0%;
+    background-position: 0 0;
   }
 }
 @keyframes tableGlowAnimation {
-  0% {
+  0%, 100% {
     box-shadow: 0 0 10px rgba(68, 153, 255, 0.2);
   }
   50% {
     box-shadow: 0 0 20px rgba(68, 153, 255, 0.4);
-  }
-  100% {
-    box-shadow: 0 0 10px rgba(68, 153, 255, 0.2);
   }
 }
 @keyframes borderGlow {
@@ -533,20 +522,16 @@ body {
   height: 85vh;
   min-height: 550px;
   max-height: 700px;
-  margin-top: 0;
-  padding-top: 0;
   overflow: hidden;
   display: flex;
 }
 
 .rhombus-wrapper {
   position: absolute;
-  width: 59.5%;
   height: 90%;
   top: 5%;
   z-index: 1;
-  border-width: 2px;
-  border-style: solid;
+  border: 2px solid;
   box-shadow: 0 0 15px rgba(var(--glow-color), 0.6);
   animation: borderGlow 3s infinite ease-in-out;
   overflow: hidden;
@@ -554,19 +539,21 @@ body {
 }
 
 .rhombus-red-wrapper {
-  left: -5%;
+  left: -10%;
+  width: 60%;
+  transform: skew(-15deg, 0);
   --glow-color: 255, 73, 73;
   --glow-color-solid: #ff4949;
   border-color: #ff4949;
-  transform: skew(-15deg, 0);
 }
 
 .rhombus-blue-wrapper {
-  right: -5%;
+  right: -10%;
+  width: 60%;
+  transform: skew(-15deg, 0);
   --glow-color: 68, 153, 255;
   --glow-color-solid: #4499ff;
   border-color: #4499ff;
-  transform: skew(15deg, 0);
 }
 
 .rhombus {
@@ -577,15 +564,8 @@ body {
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  border: none;
-}
-
-.rhombus-red {
   transform: skew(15deg, 0);
-}
-
-.rhombus-blue {
-  transform: skew(-15deg, 0);
+  z-index: 2;
 }
 
 .rhombus-content {
@@ -594,11 +574,11 @@ body {
   padding: 2rem;
   color: #fff;
   text-align: center;
-  z-index: 2;
+  z-index: 3;
+  position: relative;
 }
 .rhombus-content h1 {
   text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-  color: #fff;
 }
 
 .rhombus-red .rhombus-content {
@@ -660,16 +640,14 @@ body {
 }
 .border-bottom-animated::after {
   content: "";
-  display: block;
-  margin-top: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: 2px;
   background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.2) 80%, transparent 100%);
   background-size: 200% 100%;
   animation: borderFlow 3s infinite linear;
-  position: absolute;
-  bottom: 0;
-  left: 0;
 }
 
 .animated-card-blue, .animated-card-red, .animated-card-green, .animated-card-yellow {
@@ -761,7 +739,6 @@ body {
 }
 .table-animated thead th {
   border-bottom: 2px solid rgba(68, 153, 255, 0.4) !important;
-  color: #fff !important;
 }
 .table-animated tbody tr {
   transition: background-color 0.3s ease;
@@ -772,10 +749,20 @@ body {
 .table-animated tbody tr:nth-child(odd) {
   background-color: rgba(30, 30, 30, 0.6) !important;
 }
-.table-animated tbody td {
-  border-color: rgba(68, 153, 255, 0.15) !important;
-}
 
+@media (min-width: 993px) and (max-width: 1200px) {
+  .rhombus-blue .rhombus-content {
+    margin-right: 7%;
+  }
+  .rhombus-red .rhombus-content {
+    margin-left: 12%;
+  }
+  .rhombus-table-wrapper {
+    width: 95%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
 @media (max-width: 992px) {
   .rhombus-container {
     flex-direction: column;
@@ -783,16 +770,14 @@ body {
     min-height: initial;
     max-height: none;
     padding-top: 56px;
-    margin-top: 0;
   }
   .rhombus-wrapper {
     position: relative;
     width: 95%;
-    height: auto;
-    min-height: 400px;
-    top: 0;
-    left: auto !important;
-    right: auto !important;
+    min-width: auto;
+    max-width: 95%;
+    left: 0 !important;
+    right: 0 !important;
     margin: 1rem auto;
     transform: none !important;
   }
@@ -833,15 +818,18 @@ body {
   }
   .rhombus-table-wrapper {
     max-height: 250px;
+    width: 95%;
   }
 }
 @media (max-width: 576px) {
   .rhombus-wrapper {
-    width: 95%;
+    width: 85%;
     min-height: 300px;
+    margin: 1rem auto;
   }
   .rhombus-content {
     padding: 1rem !important;
+    width: 95%;
   }
   .rhombus-content h1 {
     font-size: 1.5rem;
@@ -1048,11 +1036,11 @@ body {
 }
 
 @keyframes navbarDropdownIn {
-  0% {
+  from {
     opacity: 0;
     transform: translateY(-10px);
   }
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0);
   }

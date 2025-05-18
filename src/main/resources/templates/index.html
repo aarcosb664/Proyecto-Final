@@ -6,7 +6,7 @@
     <header th:insert="fragments/header :: header"></header>
 
     <!-- Diseño de romboides a pantalla completa -->
-    <div class="rhombus-container">
+    <div class="rhombus-container mt-5">
         <!-- Wrapper para el rombo rojo -->
         <div class="rhombus-wrapper rhombus-red-wrapper">
             <div class="rhombus rhombus-red">
@@ -58,10 +58,17 @@
                             </thead>
                             <tbody>
                                 <tr th:each="player : ${players}">
-                                    <td th:text="${player.userName}">name_placeholder</td>
-                                    <td th:text="${player.score}">0</td>
-                                    <td th:text="${player.destroyedBlocks}">0</td>
-                                    <td th:text="${#dates.format(player.dateGame, 'MM/dd/yyyy HH:mm')}">01/01/2023</td>
+                                    <td th:text="${player.userName != null ? player.userName : '-'}">name_placeholder</td>
+                                    <td th:text="${player.score != null ? player.score : '-'}">0</td>
+                                    <td th:text="${player.destroyedBlocks != null ? player.destroyedBlocks : '-'}">0</td>
+                                    <td th:text="${player.dateGame != null ? #dates.format(player.dateGame, 'MM/dd/yyyy HH:mm') : '-'}">01/01/2023</td>
+                                </tr>
+                                <!-- Añadir filas vacías si no hay suficientes jugadores -->
+                                <tr th:if="${#lists.size(players) < 5}" th:each="i : ${#numbers.sequence(1, 5 - #lists.size(players))}">
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -77,7 +84,7 @@
     <div class="container py-5 mt-5">
         <h2 class="text-center mb-5">Features</h2>
         <div class="row g-4">
-            <div class="col-md-4">
+            <div class="col-lg-4">
                 <a th:href="@{/game}" class="btn-custom text-decoration-none text-white">
                     <div class="animated-card-red h-100 p-4 text-center">
                         <i class="bi bi-lightning-charge-fill fs-1 mb-3"></i>
@@ -86,7 +93,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4">
                 <a th:href="@{/ranking}" class="btn-custom text-decoration-none text-white">
                     <div class="animated-card-green h-100 p-4 text-center">
                         <i class="bi bi-trophy-fill fs-1 mb-3"></i>
@@ -95,7 +102,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-md-4">
+            <div class="col-lg-4">
                 <a th:href="@{/community}" class="btn-custom text-decoration-none text-white">
                     <div class="animated-card-blue h-100 p-4 text-center">
                         <i class="bi bi-people-fill fs-1 mb-3"></i>
@@ -110,7 +117,7 @@
     <!-- Sección de contador de estadísticas -->
     <div class="container py-5 text-center">
         <div class="row g-4">
-            <div class="col-md-3">
+            <div class="col-md-3 col-6">
                 <div class="card border-flow-blue bg-dark text-white">
                     <div class="card-body">
                         <h3 class="display-4">10K+</h3>
@@ -118,7 +125,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-6">
                 <div class="card border-flow-red bg-dark text-white">
                     <div class="card-body">
                         <h3 class="display-4">50+</h3>
@@ -126,7 +133,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-6">
                 <div class="card border-flow-green bg-dark text-white">
                     <div class="card-body">
                         <h3 class="display-4">5M+</h3>
@@ -134,7 +141,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-6  ">
                 <div class="card border-flow-yellow bg-dark text-white">
                     <div class="card-body">
                         <h3 class="display-4">20+</h3>

@@ -5,21 +5,15 @@
 // Configuración global
 $hover-scale: 1.03;
 
-// Keyframes
-@keyframes indexBorderFlow {
-  from { left: -150%; }
-  to   { left: 150%; }
-}
-
+// Keyframes optimizados
 @keyframes borderFlow {
-  0%   { background-position: 200% 0%; }
-  100% { background-position: 0% 0%; }
+  0%   { background-position: 200% 0; }
+  100% { background-position: 0 0; }
 }
 
 @keyframes tableGlowAnimation {
-  0% { box-shadow: 0 0 10px rgba($azulPrimario, 0.2); }
+  0%, 100% { box-shadow: 0 0 10px rgba($azulPrimario, 0.2); }
   50% { box-shadow: 0 0 20px rgba($azulPrimario, 0.4); }
-  100% { box-shadow: 0 0 10px rgba($azulPrimario, 0.2); }
 }
 
 @keyframes borderGlow {
@@ -33,7 +27,7 @@ $hover-scale: 1.03;
   }
 }
 
-// Estilos globales
+// Estilos globales - aprovechando Bootstrap cuando sea posible
 body {
   background-color: $bgDark;
   color: $bgLight;
@@ -48,22 +42,18 @@ body {
   width: 100%;
   height: 85vh;
   min-height: 550px;
-  max-height: 700px; // Limita la altura máxima
-  margin-top: 0; // Ajustado para el nuevo navbar
-  padding-top: 0; // Ya no necesitamos compensar
+  max-height: 700px;
   overflow: hidden;
   display: flex;
 }
 
-// Wrapper para cada rombo
+// Wrapper para cada rombo - estilo común
 .rhombus-wrapper {
   position: absolute;
-  width: 59.5%; 
-  height: 90%; 
+  height: 90%;
   top: 5%;
   z-index: 1;
-  border-width: 2px;
-  border-style: solid;
+  border: 2px solid;
   box-shadow: 0 0 15px rgba(var(--glow-color), 0.6);
   animation: borderGlow 3s infinite ease-in-out;
   overflow: hidden;
@@ -72,22 +62,24 @@ body {
 
 // Wrappers específicos para posición y color
 .rhombus-red-wrapper {
-  left: -5%;
+  left: -10%;
+  width: 60%;
+  transform: skew(-15deg, 0);
   --glow-color: 255, 73, 73;
   --glow-color-solid: #{$rojoPrimario};
   border-color: $rojoPrimario;
-  transform: skew(-15deg, 0);
 }
 
 .rhombus-blue-wrapper {
-  right: -5%;
+  right: -10%;
+  width: 60%;
+  transform: skew(-15deg, 0);
   --glow-color: 68, 153, 255;
   --glow-color-solid: #{$azulPrimario};
   border-color: $azulPrimario;
-  transform: skew(15deg, 0);
 }
 
-// Rombo interno - contrarresta la inclinación para que el contenido se vea recto
+// Rombo interno y contenido
 .rhombus {
   position: relative; 
   width: 100%; 
@@ -96,29 +88,21 @@ body {
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  border: none;
-}
-
-.rhombus-red {
   transform: skew(15deg, 0);
+  z-index: 2;
 }
 
-.rhombus-blue {
-  transform: skew(-15deg, 0);
-}
-
-// Contenido (sin cambios significativos)
 .rhombus-content {
   width: 90%;
   max-width: 550px;
   padding: 2rem;
   color: #fff;
   text-align: center;
-  z-index: 2;
+  z-index: 3;
+  position: relative;
   
   h1 {
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-    color: #fff;
   }
 }
 
@@ -130,17 +114,18 @@ body {
   margin-right: 5%;
 }
 
+// Tabla en el rombo
 .rhombus-table-wrapper {
   width: 100%;
-  max-height: 320px; // Reducido para evitar scroll excesivo
+  max-height: 320px;
   overflow-y: auto;
   
   table {
     width: 100%;
-    table-layout: fixed; // Evita que la tabla se expanda demasiado
+    table-layout: fixed;
     
     th, td {
-      padding: 0.5rem; // Padding más compacto
+      padding: 0.5rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -149,15 +134,15 @@ body {
   
   &::-webkit-scrollbar {
     width: 5px;
-  }
-  
-  &::-webkit-scrollbar-thumb {
-    background: $azulPrimario;
-    border-radius: 10px;
+    
+    &-thumb {
+      background: $azulPrimario;
+      border-radius: 10px;
+    }
   }
 }
 
-// Elementos destacados para el hero
+// Estadísticas en el héroe
 .hero-stats {
   display: flex;
   justify-content: center;
@@ -185,14 +170,15 @@ body {
   }
 }
 
-// Borde inferior animado para títulos y elementos
+// Borde inferior animado
 .border-bottom-animated {
   position: relative;
   
   &::after {
     content: '';
-    display: block;
-    margin-top: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
     height: 2px;
     background: linear-gradient(90deg, 
@@ -203,13 +189,10 @@ body {
                                 transparent 100%);
     background-size: 200% 100%;
     animation: borderFlow 3s infinite linear;
-    position: absolute;
-    bottom: 0;
-    left: 0;
   }
 }
 
-// Optimización para tarjetas animadas
+// Tarjetas animadas - simplificadas
 .animated-card {
   &-blue, &-red, &-green, &-yellow {
     background-color: transparent !important;
@@ -226,7 +209,7 @@ body {
   }
 }
 
-// Componente de botón personalizado
+// Botón personalizado
 .btn-custom {
   display: block;
   height: 100%;
@@ -237,7 +220,7 @@ body {
   }
 }
 
-// Tarjetas con efecto de borde fluido
+// Tarjetas con efecto de borde fluido - optimizado
 [class*="border-flow"] {
   &.card {
     position: relative;
@@ -249,7 +232,6 @@ body {
       transform: scale($hover-scale);
     }
     
-    // Borde animado usando CSS vars para mejor rendimiento
     &:before {
       content: '';
       position: absolute;
@@ -273,13 +255,12 @@ body {
   }
 }
 
-// Variables de color para los bordes
+// Mixin y aplicación de colores para tarjetas - optimizado
 @mixin flow-border($color1, $color2) {
   --border-color-1: #{$color1};
   --border-color-2: #{$color2};
 }
 
-// Aplicación de colores a las tarjetas
 .card {
   &.border-flow-blue { @include flow-border($azulPrimario, $azulSecundario); }
   &.border-flow-red { @include flow-border($rojoPrimario, $rojoSecundario); }
@@ -287,10 +268,10 @@ body {
   &.border-flow-yellow { @include flow-border($amarilloPrimario, $amarilloSecundario); }
 }
 
-// Estilos para tablas con efecto glow
+// Tablas con efecto glow - optimizado
 .table-animated {
   position: relative;
-  background-color: rgba($bgDark, 0.5) !important; // Más transparente
+  background-color: rgba($bgDark, 0.5) !important;
   color: $bgLight !important;
   border-radius: 10px;
   overflow: hidden;
@@ -309,7 +290,6 @@ body {
     
     th {
       border-bottom: 2px solid rgba($azulPrimario, 0.4) !important;
-      color: $bgLight !important;
     }
   }
   
@@ -325,14 +305,27 @@ body {
         background-color: $bgDarkAlt !important;
       }
     }
-    
-    td {
-      border-color: rgba($azulPrimario, 0.15) !important;
-    }
   }
 }
 
-// Media queries para responsividad
+// Breakpoint específico para pantallas antes de móvil
+@media (min-width: 993px) and (max-width: 1200px) {
+  .rhombus-blue .rhombus-content {
+    margin-right: 7%;
+  }
+  
+  .rhombus-red .rhombus-content {
+    margin-left: 12%;
+  }
+  
+  .rhombus-table-wrapper {
+    width: 95%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+// Media queries para responsividad - optimizados
 @media (max-width: 992px) {
   .rhombus-container {
     flex-direction: column;
@@ -340,17 +333,15 @@ body {
     min-height: initial;
     max-height: none;
     padding-top: 56px;
-    margin-top: 0;
   }
   
   .rhombus-wrapper {
     position: relative;
     width: 95%;
-    height: auto;
-    min-height: 400px;
-    top: 0;
-    left: auto !important;
-    right: auto !important;
+    min-width: auto;
+    max-width: 95%;
+    left: 0 !important;
+    right: 0 !important;
     margin: 1rem auto;
     transform: none !important;
   }
@@ -391,31 +382,32 @@ body {
     }
   }
   
-  .hero-stats {
-    .stat-item {
-      .stat-number {
-        font-size: 1.5rem;
-      }
-      
-      .stat-label {
-        font-size: 0.8rem;
-      }
+  .hero-stats .stat-item {
+    .stat-number {
+      font-size: 1.5rem;
+    }
+    
+    .stat-label {
+      font-size: 0.8rem;
     }
   }
   
   .rhombus-table-wrapper {
     max-height: 250px;
+    width: 95%;
   }
 }
 
 @media (max-width: 576px) {
   .rhombus-wrapper {
-    width: 95%;
+    width: 85%;
     min-height: 300px;
+    margin: 1rem auto;
   }
   
   .rhombus-content {
     padding: 1rem !important;
+    width: 95%;
     
     h1 {
       font-size: 1.5rem;
@@ -446,7 +438,7 @@ body {
   }
 }
 
-// Estilos para el navbar
+// Navbar optimizado
 .navbar.border-bottom-animated {
   background-color: rgba($bgDark, 0.95);
   backdrop-filter: blur(10px);
@@ -454,7 +446,6 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   z-index: 1030;
   
-  // Garantizar que la línea animada esté limpia
   &::after {
     bottom: -1px;
     height: 1px;
@@ -505,8 +496,8 @@ body {
     }
   }
   
+  // Optimizado CSS para el menú principal y collapse
   .navbar-collapse {
-    // Restauramos la transición para permitir animaciones nativas de Bootstrap
     transition: height 0.3s ease;
     
     @media (max-width: 991px) {
@@ -524,6 +515,7 @@ body {
     }
   }
   
+  // Enlaces de navegación
   .nav-link {
     color: rgba($bgLight, 0.8);
     margin: 0 8px;
@@ -572,7 +564,7 @@ body {
     }
   }
   
-  // Estilos para el dropdown de usuario
+  // Dropdown de usuario
   .dropdown {
     .dropdown-toggle {
       color: $bgLight;
@@ -583,7 +575,6 @@ body {
         opacity: 0.7;
       }
       
-      // Estilo especial para la flecha en móvil
       &.mobile-profile-link::after {
         margin-left: 6px;
         border-top: 0.4em solid;
@@ -594,13 +585,11 @@ body {
       }
     }
     
-    // Aplicar estilo a todas las imágenes de perfil, tanto móvil como desktop
     img.rounded-circle {
       border: 2px solid rgba($azulPrimario, 0.7);
       transition: border-color 0.3s, transform 0.3s;
     }
     
-    // Hover para todas las imágenes de perfil
     a:hover img.rounded-circle {
       border-color: $azulPrimario;
       transform: scale(1.05);
@@ -635,7 +624,7 @@ body {
     }
   }
   
-  // Ajustes específicos para móvil
+  // Móvil específico
   @media (max-width: 991px) {
     .navbar-nav {
       padding: 10px 0;
@@ -665,18 +654,13 @@ body {
   }
 }
 
-// Animaciones para el menú desplegable
+// Animación para el menú desplegable
 @keyframes navbarDropdownIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
+// Fixed-top optimization - Aprovechando Bootstrap
 .navbar.fixed-top {
   position: fixed;
   top: 0;
