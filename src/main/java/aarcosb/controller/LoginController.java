@@ -13,14 +13,10 @@ import aarcosb.model.dto.UserDto;
 import aarcosb.model.entity.Role;
 import aarcosb.model.entity.User;
 import aarcosb.model.repository.UserRepository;
-import java.util.Date;
-import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import java.util.Collections;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 

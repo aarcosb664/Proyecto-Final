@@ -97,7 +97,8 @@
         <a th:href="@{/ranking}" id="rankingLink" class="d-none">Ranking</a>
         
         <!-- Ventana emergente para guardar la información del jugador -->
-        <form id="ranking" method="post" th:action="@{/ranking}" class="position-fixed top-50 start-50 translate-middle bg-black bg-opacity-90 text-white rounded p-4 shadow-lg w-50 text-center z-3 d-none">
+        <form id="ranking" method="post" th:action="@{/ranking}" sec:authorize="isAuthenticated()" 
+              class="position-fixed top-50 start-50 translate-middle bg-black bg-opacity-90 text-white rounded p-4 shadow-lg w-50 text-center z-3 d-none">
             <h1 class="mb-3">Game Over!</h1>
             <h2 class="mb-4 border-bottom pb-2">Your Final Score</h2>
             <h3 id="puntuacionFinal" class="mb-2">Final Score: </h3>
