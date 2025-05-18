@@ -1,5 +1,5 @@
-// Mixins para animaciones de bordes iluminados
-// Puedes usar estos mixins para crear cualquier animación con los colores que necesites
+// Mixins optimizados para efectos de animación
+// Reducidos para mejorar rendimiento y reutilización
 
 // Mixins para sombras y efectos de brillo
 @mixin sombra-tarjeta($color) {
@@ -13,7 +13,7 @@
     filter: drop-shadow(0 0 8px rgba($color, 0.8));
 }
 
-// Mixin principal para la tarjeta animada con bordes iluminados
+// Mixin para tarjetas animadas - optimizado
 @mixin animated-card($colorPrimario, $colorSecundario, $tiempoAnimacion: 4s) {
     position: relative;
     overflow: hidden;
@@ -23,62 +23,41 @@
     margin-bottom: 1rem;
     @include sombra-tarjeta($colorPrimario);
 
-    // Pseudo-elemento para el borde principal
+    // Borde animado principal
     &::before {
         content: '';
         position: absolute;
-        top: -2px;
-        left: -2px;
-        right: -2px;
-        bottom: -2px;
+        inset: -2px; 
         border: 3px solid transparent;
         border-radius: 0.25rem;
         
-        // Fondo con múltiples gradientes
+        // Fondos con gradientes para efecto de borde iluminado
         background-image: 
             linear-gradient(90deg, transparent, $colorPrimario, transparent),
             linear-gradient(90deg, transparent, $colorSecundario, transparent),
             linear-gradient(0deg, transparent, $colorPrimario, transparent),
             linear-gradient(0deg, transparent, $colorSecundario, transparent);
         
-        background-size: 
-            300% 100%,
-            300% 100%,
-            100% 300%,
-            100% 300%;
-        
-        background-position: 
-            0% 0,
-            0% 100%,
-            0% 0,
-            100% 0;
-        
+        background-size: 300% 100%, 300% 100%, 100% 300%, 100% 300%;
+        background-position: 0% 0, 0% 100%, 0% 0, 100% 0;
         background-repeat: no-repeat;
         
-        // Máscaras para que solo se vea el borde
-        -webkit-mask:
-            linear-gradient(#fff 0 0) content-box,
-            linear-gradient(#fff 0 0);
+        // Máscara para mostrar solo el borde
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
         -webkit-mask-composite: xor;
-        mask:
-            linear-gradient(#fff 0 0) content-box,
-            linear-gradient(#fff 0 0);
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
         mask-composite: exclude;
         
-        // Animación y efectos
         animation: bordeAnimado $tiempoAnimacion linear infinite;
         pointer-events: none;
         @include sombra-borde($colorPrimario);
     }
     
-    // Segundo pseudo-elemento para el borde pulsante
+    // Borde pulsante secundario
     &::after {
         content: '';
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        inset: 0; // Uso de inset para simplificar
         border: 2px solid transparent;
         border-image: linear-gradient(to right, transparent, $colorPrimario, transparent) 1;
         animation: bordePulsante 2s ease-in-out infinite;
@@ -87,7 +66,7 @@
             0 0 20px rgba($colorPrimario, 0.4);
     }
     
-    // Estilo para el contenido dentro de la tarjeta
+    // Estilo para el contenido
     > * {
         position: relative;
         z-index: 1;
@@ -95,7 +74,7 @@
     }
 }
 
-// Mixin para bordes con flujo animado sencillos
+// Mixin para bordes con flujo animado - simplificado
 @mixin border-flow($color: #4499ff, $duration: 1.5s) {
     position: relative;
     
@@ -112,10 +91,15 @@
     }
 }
 
+// Mixin para botones con efectos
 @mixin btn-custom {
     transition: all 0.3s ease;
     
     &:hover {
         transform: scale(1.05);
+    }
+    
+    &:active {
+        transform: scale(0.98);
     }
 }

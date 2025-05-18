@@ -5,10 +5,10 @@ class RankingManager {
     
     showRankingScreen() {
         this.game.pause();
-        document.getElementById('puntuacionFinal').innerHTML = this.game.getPoints();
-        document.getElementById('bloquesDestruidosFinal').innerHTML = this.game.getTotalDestroyedBricks();
-        document.getElementById('fecha').innerHTML = new Date().toLocaleString();
-        document.getElementById('ranking').style.display = 'block';
+        document.getElementById('puntuacionFinal').innerHTML = "Final Score: " + this.game.getPoints();
+        document.getElementById('bloquesDestruidosFinal').innerHTML = "Total Destroyed Blocks: " + this.game.getTotalDestroyedBricks();
+        document.getElementById('fecha').innerHTML = "Date: " + new Date().toLocaleString();
+        document.getElementById('ranking').classList.remove('d-none');
     }
     
     saveRanking() {
@@ -16,6 +16,7 @@ class RankingManager {
         document.getElementById('inputBloquesDestruidosFinal').value = this.game.getTotalDestroyedBricks();
         document.getElementById('inputFechaFinal').value = new Date().toLocaleString();
         
-        document.getElementById('rankingForm').submit();
+        // Submit the form
+        document.getElementById('ranking').submit();
     }
 }

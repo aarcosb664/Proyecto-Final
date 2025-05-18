@@ -173,3 +173,33 @@ document.addEventListener('DOMContentLoaded', () => {
     // Expose the game object to the global scope for debugging
     window.game = game;
 });
+
+// Global function to save ranking
+function guardarRanking() {
+    if (window.game) {
+        window.game.rankingManager.saveRanking();
+    }
+}
+
+// Global function to reload the page
+function recargar() {
+    location.reload();
+}
+
+// Global function to view ranking
+function verRanking() {
+    document.getElementById('rankingLink').click();
+}
+
+// Game control functions
+function pausar() {
+    if (window.game) {
+        window.game.pause();
+    }
+}
+
+function reanudar() {
+    if (window.game) {
+        window.game.resume();
+    }
+}

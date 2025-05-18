@@ -98,19 +98,19 @@
         
         <!-- Ventana emergente para guardar la información del jugador -->
         <form id="ranking" method="post" th:action="@{/ranking}" class="position-fixed top-50 start-50 translate-middle bg-black bg-opacity-90 text-white rounded p-4 shadow-lg w-50 text-center z-3 d-none">
-            <h1 class="mb-3">¡Vaya, has perdido!</h1>
-            <h2 class="mb-4 border-bottom pb-2">Tu puntuación final</h2>
-            <h3 id="puntuacionFinal" class="mb-2">Puntos finales: </h3>
-            <input type="hidden" name="puntuacionFinal" id="inputPuntuacionFinal" />
-            <h3 id="bloquesDestruidosFinal" class="mb-2">Bloques destruidos totales: </h3>
-            <input type="hidden" name="bloquesDestruidosFinal" id="inputBloquesDestruidosFinal" />
-            <h3 id="fecha" class="mb-4">Fecha: </h3>
-            <input type="hidden" name="fechaFinal" id="inputFechaFinal" />
-            <h1 class="mb-3">Ingresa tu nombre:</h1>
-            <input type="text" name="nombreJugador" id="nombreJugador" placeholder="Nombre" required class="mb-3" />
+            <h1 class="mb-3">Game Over!</h1>
+            <h2 class="mb-4 border-bottom pb-2">Your Final Score</h2>
+            <h3 id="puntuacionFinal" class="mb-2">Final Score: </h3>
+            <input type="hidden" name="score" id="inputPuntuacionFinal" />
+            <h3 id="bloquesDestruidosFinal" class="mb-2">Total Destroyed Blocks: </h3>
+            <input type="hidden" name="destroyedBlocks" id="inputBloquesDestruidosFinal" />
+            <h3 id="fecha" class="mb-4">Date: </h3>
+            <input type="hidden" name="dateGame" id="inputFechaFinal" />
+            <h1 class="mb-3">Enter your name:</h1>
+            <input type="text" name="userName" id="nombreJugador" placeholder="Name" required class="mb-3" />
             <div class="d-flex justify-content-center gap-3">
-                <button type="submit" onclick="guardarRanking()" class="btn btn-success">Guardar</button>
-                <button type="reset" onclick="recargar()" class="btn btn-danger">Cancelar</button>
+                <button type="submit" onclick="guardarRanking()" class="btn btn-success">Save</button>
+                <button type="reset" onclick="recargar()" class="btn btn-danger">Cancel</button>
             </div>
         </form>
         
