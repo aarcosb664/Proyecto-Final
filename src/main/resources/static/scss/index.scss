@@ -38,6 +38,8 @@ body {
   background-color: $bgDark;
   color: $bgLight;
   overflow-x: hidden;
+  padding-top: 70px;
+  scroll-padding-top: 70px;
 }
 
 // Diseño de romboides
@@ -190,13 +192,20 @@ body {
   &::after {
     content: '';
     display: block;
-    margin-top: 8px;
+    margin-top: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, transparent, $bgLight, rgba(255, 255, 255, 0.5), transparent);
+    background: linear-gradient(90deg, 
+                                transparent 0%, 
+                                rgba(255, 255, 255, 0.2) 20%, 
+                                rgba(255, 255, 255, 0.8) 50%, 
+                                rgba(255, 255, 255, 0.2) 80%, 
+                                transparent 100%);
     background-size: 200% 100%;
-    animation: indexBorderFlow $flowDuration infinite linear;
-    position: relative;
+    animation: borderFlow 3s infinite linear;
+    position: absolute;
+    bottom: 0;
+    left: 0;
   }
 }
 
@@ -439,13 +448,41 @@ body {
 
 // Estilos para el navbar
 .navbar.border-bottom-animated {
-  background-color: rgba($bgDark, 0.9);
+  background-color: rgba($bgDark, 0.95);
   backdrop-filter: blur(10px);
   padding: 10px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1030;
+  
+  // Garantizar que la línea animada esté limpia
+  &::after {
+    bottom: -1px;
+    height: 1px;
+    opacity: 0.7;
+  }
+  
+  .navbar-top-row {
+    flex-wrap: nowrap;
+    min-height: 56px;
+  }
   
   .navbar-brand {
     font-weight: bold;
     color: $bgLight;
+    margin: 0;
+    text-align: center;
+    
+    @media (min-width: 992px) {
+      margin-right: 1rem;
+      text-align: left;
+    }
+    
+    @media (max-width: 991px) {
+      position: static;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
     
     span {
       margin-left: 5px;
@@ -453,25 +490,65 @@ body {
   }
   
   .navbar-toggler {
-    border-color: rgba($bgLight, 0.1);
+    border-color: rgba($azulPrimario, 0.3);
+    padding: 0.4rem 0.6rem;
+    margin-left: 0.5rem;
     
     &:focus {
-      box-shadow: 0 0 0 0.1rem rgba($azulPrimario, 0.5);
+      box-shadow: 0 0 0 0.15rem rgba($azulPrimario, 0.5);
+    }
+    
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.5' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      width: 1.4em;
+      height: 1.4em;
+    }
+  }
+  
+  .navbar-collapse {
+    // Restauramos la transición para permitir animaciones nativas de Bootstrap
+    transition: height 0.3s ease;
+    
+    @media (max-width: 991px) {
+      background-color: rgba($bgDark, 0.98);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba($azulPrimario, 0.3);
+      border-radius: $borderRadius;
+      padding: 15px;
+      margin-top: 0.5rem !important;
+    }
+    
+    @media (min-width: 992px) {
+      display: flex !important;
+      align-items: center;
     }
   }
   
   .nav-link {
     color: rgba($bgLight, 0.8);
-    margin: 0 5px;
-    transition: color 0.3s;
+    margin: 0 8px;
+    transition: all 0.3s;
+    font-weight: 500;
+    position: relative;
     
     &:hover, &:focus {
       color: $bgLight;
+      transform: translateY(-2px);
     }
     
     &.active {
       color: $bgLight;
-      font-weight: 500;
+      font-weight: 600;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: $azulPrimario;
+      }
     }
   }
   
@@ -479,15 +556,19 @@ body {
     background-color: $verdePrimario;
     border-color: $verdePrimario;
     transition: all 0.3s;
+    font-weight: 600;
+    letter-spacing: 0.5px;
     
     &:hover {
       background-color: $verdeSecundario;
       border-color: $verdeSecundario;
       transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
     
     &:active {
       transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
   }
   
@@ -497,26 +578,40 @@ body {
       color: $bgLight;
       
       &::after {
-        color: rgba($bgLight, 0.5);
-        margin-left: 5px;
+        margin-left: 8px;
+        vertical-align: 0.15em;
+        opacity: 0.7;
       }
       
-      img.rounded-circle {
-        border: 2px solid rgba($azulPrimario, 0.7);
-        transition: border-color 0.3s;
+      // Estilo especial para la flecha en móvil
+      &.mobile-profile-link::after {
+        margin-left: 6px;
+        border-top: 0.4em solid;
+        border-right: 0.4em solid transparent;
+        border-left: 0.4em solid transparent;
+        vertical-align: 0.2em;
+        opacity: 1;
       }
-      
-      &:hover {
-        img.rounded-circle {
-          border-color: $azulPrimario;
-        }
-      }
+    }
+    
+    // Aplicar estilo a todas las imágenes de perfil, tanto móvil como desktop
+    img.rounded-circle {
+      border: 2px solid rgba($azulPrimario, 0.7);
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    
+    // Hover para todas las imágenes de perfil
+    a:hover img.rounded-circle {
+      border-color: $azulPrimario;
+      transform: scale(1.05);
     }
     
     .dropdown-menu {
       background-color: $bgDark;
       border: 1px solid rgba($azulPrimario, 0.3);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      margin-top: 10px;
+      animation: navbarDropdownIn 0.2s ease-out;
       
       .dropdown-item {
         color: $bgLight;
@@ -541,26 +636,55 @@ body {
   }
   
   // Ajustes específicos para móvil
-  @media (max-width: 992px) {
-    .navbar-collapse {
-      margin-top: 15px;
-      padding: 10px;
-      border-radius: $borderRadius;
-      background-color: rgba($bgDark, 0.95);
+  @media (max-width: 991px) {
+    .navbar-nav {
+      padding: 10px 0;
       
-      .navbar-nav {
-        padding-bottom: 10px;
+      .nav-item {
+        margin: 8px 0;
         
-        .nav-item {
-          margin: 5px 0;
+        .nav-link {
+          padding: 10px;
+          border-radius: $borderRadius;
+          text-align: center;
+          transition: background-color 0.2s;
+          
+          &:hover {
+            background-color: rgba($azulPrimario, 0.1);
+            transform: none;
+          }
+          
+          &.active::after {
+            bottom: 0;
+            width: 30%;
+            left: 35%;
+          }
         }
       }
     }
-    
-    .dropdown {
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid rgba($bgLight, 0.1);
-    }
   }
+}
+
+// Animaciones para el menú desplegable
+@keyframes navbarDropdownIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.navbar.fixed-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  width: 100%;
+  background-color: rgba($bgDark, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
 }
