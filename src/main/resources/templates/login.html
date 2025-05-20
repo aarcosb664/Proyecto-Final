@@ -210,13 +210,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/js/show-password.js}"></script>
     <script th:src="@{/js/login-validation.js}"></script>
-    <script>
-      document.querySelectorAll('button[data-bs-toggle="tab"]').forEach(btn => {
-        btn.addEventListener('shown.bs.tab', e => {
-          // Mostrar la pestaña seleccionada (ya lo hace Bootstrap automáticamente)
-          // No necesitamos guardar activeTab porque Bootstrap lo maneja por sí mismo
-        });
-      });
-    </script>
 </body>
 </html>

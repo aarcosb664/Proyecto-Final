@@ -1,4 +1,4 @@
-<nav th:fragment="header" class="navbar navbar-expand-lg fixed-top border-bottom-animated py-2" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<nav th:fragment="header" class="navbar navbar-expand-lg fixed-top border-bottom-custom py-2" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
     <div class="container">
         <!-- PERFIL (móvil: primero; desktop: último) -->
         <div class="order-1 order-lg-3">
@@ -40,6 +40,14 @@
                     </ul>
                 </div>
             </div>
+
+            <a th:href="@{/login}" class="btn text-decoration-none d-none d-lg-block" sec:authorize="!isAuthenticated()">
+                <div class="box">
+                    <span class="d-block text-white px-4 py-2">
+                        Sign in
+                    </span>
+                </div>
+            </a>
         </div>
 
         <!-- LOGO (móvil: segundo, centrado; desktop: primero, a la izquierda) -->
@@ -64,7 +72,7 @@
                     <a class="nav-link text-center py-2" th:href="@{/community}">Community</a>
                 </li>
                 <li class="nav-item px-lg-2 my-2 my-lg-0">
-                    <a class="btn btn-success w-100 px-4 py-2" th:href="@{/game}">PLAY</a>
+                    <a class="btn glow-on-hover border border-light w-100 h-100 px-4 py-2" th:href="@{/game}">PLAY</a>
                 </li>
                 <li class="nav-item px-lg-2">
                     <a class="nav-link text-center py-2" th:href="@{/about}">About</a>
@@ -72,6 +80,16 @@
                 <li class="nav-item px-lg-2">
                     <a class="nav-link text-center py-2" th:href="@{/ranking}">Ranking</a>
                 </li>
+                <div class="d-lg-none w-100" sec:authorize="!isAuthenticated()">
+                    <hr class="hr-divider">
+                    <a th:href="@{/login}" class="btn text-decoration-none w-100">
+                        <div class="box w-100">
+                            <span class="d-block text-white px-4 py-2">
+                                Sign in
+                            </span>
+                        </div>
+                    </a>
+                </div>
             </ul>
         </div>
     </div>

@@ -1,138 +1,75 @@
-<div th:fragment="footer" class="text-center text-lg-start text-white my-5">
+<div th:fragment="footer" class="footer-main text-center text-lg-start text-white">
     <!-- Section: Social media -->
-    <section style="background-color: #6351ce">
-        <div class="container d-flex flex-column justify-content-between pt-4">
-            <!-- Left -->
-            <div>
-                <span>Get connected with us on social networks:</span>
+    <section class="footer-social py-3">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center pt-2">
+            <div class="mb-2 mb-md-0">
+                <span>¡Conéctate con Alejandro Arcos Bellido!</span>
             </div>
-            <!-- Left -->
-
-            <!-- Right -->
-            <div>
-                <a href="">
-                    <i class="bi bi-facebook fs-4 text-white"></i>
+            <div class="footer-social-icons d-flex justify-content-center align-items-center button-container">
+                <a href="https://facebook.com" target="_blank" rel="noopener" class="glass-btn blue-btn me-3">
+                    <span class="content"><i class="bi bi-facebook fs-4"></i></span>
                 </a>
-                <a href="" class="text-white me-4">
-                <i class="fab fa-twitter"></i>
+                <a href="https://twitter.com" target="_blank" rel="noopener" class="glass-btn black-btn me-3">
+                    <span class="content"><i class="bi bi-twitter-x fs-4"></i></span>
                 </a>
-                <a href="" class="text-white me-4">
-                <i class="fab fa-google"></i>
+                <a href="mailto:aarcos664@gmail.com" target="_blank" rel="noopener" class="glass-btn red-btn me-3">
+                    <span class="content"><i class="bi bi-envelope-fill fs-4"></i></span>
                 </a>
-                <a href="" class="text-white me-4">
-                <i class="fab fa-instagram"></i>
+                <a href="https://github.com/aarcosb" target="_blank" rel="noopener" class="glass-btn black-btn me-3">
+                    <span class="content"><i class="bi bi-github fs-4"></i></span>
                 </a>
-                <a href="" class="text-white me-4">
-                <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="" class="text-white me-4">
-                <i class="fab fa-github"></i>
+                <a href="https://linkedin.com" target="_blank" rel="noopener" class="glass-btn blue-btn me-3">
+                    <span class="content"><i class="bi bi-linkedin fs-4"></i></span>
                 </a>
             </div>
         </div>
-        <!-- Right -->
     </section>
     <!-- Section: Social media -->
 
     <!-- Section: Links  -->
-    <section class="">
-    <div class="container text-center text-md-start mt-5">
-        <!-- Grid row -->
-        <div class="row mt-3">
-        <!-- Grid column -->
-        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-            <!-- Content -->
-            <h6 class="text-uppercase fw-bold">DAW FINAL PROJECT</h6>
-            <hr
-                class="mb-4 mt-0 d-inline-block mx-auto"
-                style="width: 60px; background-color: #7c4dff; height: 2px"
-                />
+    <section class="footer-links">
+    <div class="container text-center text-md-start mt-4">
+        <div class="row mt-2">
+        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
+            <h6 class="text-uppercase fw-bold">Sobre mí</h6>
+            <hr class="mb-3 mt-0 d-inline-block mx-auto footer-hr" />
             <p>
-            Here you can use rows and columns to organize your footer
-            content. Lorem ipsum dolor sit amet, consectetur adipisicing
-            elit.
+            Alejandro Arcos Bellido<br>
+            Proyecto de fin de ciclo DAW.<br>
+            ¡Gracias por visitar!
             </p>
         </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
-        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold">OTHER PROJECTS</h6>
-            <hr
-                class="mb-4 mt-0 d-inline-block mx-auto"
-                style="width: 60px; background-color: #7c4dff; height: 2px"
-                />
-            <p>
-            <a href="https://aarcosb664-dwec.netlify.app/#/home" class="text-white">Proyecto Angular - DWEC</a>
-            </p>
-            <p>
-            <a href="#!" class="text-white">MDWordPress</a>
-            </p>
-            <p>
-            <a href="#!" class="text-white">BrandFlow</a>
-            </p>
-            <p>
-            <a href="#!" class="text-white">Bootstrap Angular</a>
-            </p>
+        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
+            <h6 class="text-uppercase fw-bold">Proyectos</h6>
+            <hr class="mb-3 mt-0 d-inline-block mx-auto footer-hr" />
+            <p><a href="https://aarcosb664-dwec.netlify.app/#/home" target="_blank" class="text-white footer-link">DWEC (Netlify)</a></p>
+            <p><a href="#" class="text-white footer-link">DWES</a></p>
+            <p><a href="#" class="text-white footer-link">Spring Boot</a></p>
         </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
-        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold">USEFUL LINKS</h6>
-            <hr
-                class="mb-4 mt-0 d-inline-block mx-auto"
-                style="width: 60px; background-color: #7c4dff; height: 2px"
-                />
-            <p>
-            <a href="#!" class="text-white">Your Account</a>
-            </p>
-            <p>
-            <a href="#!" class="text-white">Become an Affiliate</a>
-            </p>
-            <p>
-            <a href="#!" class="text-white">Shipping Rates</a>
-            </p>
-            <p>
-            <a href="#!" class="text-white">Help</a>
-            </p>
+        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
+            <h6 class="text-uppercase fw-bold">Enlaces útiles</h6>
+            <hr class="mb-3 mt-0 d-inline-block mx-auto footer-hr" />
+            <p><a href="/" class="text-white footer-link">Inicio</a></p>
+            <p><a href="/login" class="text-white footer-link">Iniciar sesión</a></p>
+            <p><a href="/register" class="text-white footer-link">Registrarse</a></p>
+            <p><a href="/game" class="text-white footer-link">Jugar como invitado</a></p>
         </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
-        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold">CONTACT</h6>
-            <hr
-                class="mb-4 mt-0 d-inline-block mx-auto"
-                style="width: 60px; background-color: #7c4dff; height: 2px"
-                />
-            <p><i class="fas fa-home mr-3"></i>Utrera 41710, Seville, Spain</p>
-            <p><i class="fas fa-envelope mr-3"></i> aarcos664@gmail.com</p>
-            <p><i class="fas fa-phone mr-3"></i> +34 691 97 04 05</p>
+        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
+            <h6 class="text-uppercase fw-bold">Contacto</h6>
+            <hr class="mb-3 mt-0 d-inline-block mx-auto footer-hr" />
+            <p><i class="bi bi-geo-alt-fill me-2"></i>Utrera 41710, Sevilla, España</p>
+            <p><i class="bi bi-envelope-fill me-2"></i> aarcos664@gmail.com</p>
+            <p><i class="bi bi-phone-fill me-2"></i> +34 691 97 04 05</p>
         </div>
-        <!-- Grid column -->
         </div>
-        <!-- Grid row -->
     </div>
     </section>
     <!-- Section: Links  -->
 
-    <!-- Copyright -->
-    <div
-        class="text-center p-3"
-        style="background-color: rgba(0, 0, 0, 0.2)"
-        >
-    © 2025 Copyright:
-    <a class="text-white" href="https://mdbootstrap.com/"
-        >aarcosb</a
-        >
+    <div class="footer-copyright text-center p-2">
+        © 2025 Alejandro Arcos Bellido
     </div>
-    <!-- Copyright -->
-</footer>
-<!-- Footer -->
+</div>
 
 </div>
 <!-- End of .container -->

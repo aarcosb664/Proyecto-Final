@@ -1,6 +1,9 @@
-// Importar variables y mixins desde base
 @use 'base' as *;
 @use 'animations';
+@use 'components/navbar';
+@use 'components/footer';
+@use 'components/banner';
+@use 'components/utils-freefrontend';
 
 // Configuración global
 $hover-scale: 1.03;
@@ -25,6 +28,11 @@ $hover-scale: 1.03;
     box-shadow: 0 0 30px rgba(var(--glow-color), 1);
     border-color: rgba(var(--glow-color-solid), 1);
   }
+}
+
+@keyframes spin {
+  0% { --mask: 0deg; }
+  100% { --mask: 360deg; }
 }
 
 // Estilos globales - aprovechando Bootstrap cuando sea posible
@@ -149,6 +157,8 @@ body {
   margin: 1.5rem 0;
   
   .stat-item {
+    position: relative;
+    isolation: isolate;
     text-align: center;
     padding: 0 1.5rem;
     border-right: 1px solid rgba(255, 255, 255, 0.2);
@@ -158,9 +168,13 @@ body {
     }
     
     .stat-number {
-      font-size: 1.8rem;
+      display: inline-block;
+      background: linear-gradient(120deg, var(--stat-color1, #00f), var(--stat-color2, #0ff));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
       font-weight: bold;
-      color: var(--color-highlight, $rojoPrimario);
+      font-size: 2em;
     }
     
     .stat-label {
@@ -398,259 +412,82 @@ body {
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 600px) {
+  .rhombus-container {
+    flex-direction: column;
+    height: auto;
+    min-height: initial;
+    max-height: none;
+    padding-top: 0;
+  }
   .rhombus-wrapper {
-    width: 85%;
-    min-height: 300px;
-    margin: 1rem auto;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0.5rem 0;
+    border-radius: 10px;
+    left: 0 !important;
+    right: 0 !important;
+    position: static;
+    transform: none !important;
+    overflow-x: auto;
   }
-  
+  .rhombus {
+    transform: none !important;
+    min-height: 0;
+    height: auto;
+    padding: 0;
+  }
   .rhombus-content {
-    padding: 1rem !important;
-    width: 95%;
-    
-    h1 {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem !important;
-    }
-    
-    p.lead {
-      font-size: 1rem;
-      margin-bottom: 0.5rem !important;
-    }
+    padding: 0.5rem 0.1rem !important;
+    width: 100%;
+    max-width: 100%;
+    font-size: 0.95rem;
+    word-break: break-word;
+    white-space: normal;
+    overflow-x: auto;
   }
-  
-  .hero-stats {
-    margin: 0.5rem 0 !important;
-    
-    .stat-item {
-      flex: 0 0 100%;
-      padding: 0.25rem;
-    }
+  .rhombus-content h1 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem !important;
   }
-  
-  .d-grid.gap-2.d-sm-flex {
-    flex-direction: column !important;
-    
-    .btn {
-      margin-bottom: 0.5rem;
-    }
+  .rhombus-content p,
+  .rhombus-content .lead {
+    font-size: 0.92rem;
+    margin-bottom: 0.2rem !important;
+  }
+  .rhombus-table-wrapper {
+    max-height: none !important;
+    overflow-y: visible !important;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
-// Navbar optimizado
-.navbar.border-bottom-animated {
-  background-color: rgba($bgDark, 0.95);
-  backdrop-filter: blur(10px);
-  padding: 10px 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  z-index: 1030;
-  
-  &::after {
-    bottom: -1px;
-    height: 1px;
-    opacity: 0.7;
+@media (max-width: 400px) {
+  .rhombus-content {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.05rem !important;
   }
-  
-  .navbar-top-row {
-    flex-wrap: nowrap;
-    min-height: 56px;
+  .rhombus-content h1 {
+    font-size: 0.9rem;
   }
-  
-  .navbar-brand {
-    font-weight: bold;
-    color: $bgLight;
-    margin: 0;
-    text-align: center;
-    
-    @media (min-width: 992px) {
-      margin-right: 1rem;
-      text-align: left;
-    }
-    
-    @media (max-width: 991px) {
-      position: static;
-      flex: 1;
-      display: flex;
-      justify-content: center;
-    }
-    
-    span {
-      margin-left: 5px;
-    }
-  }
-  
-  .navbar-toggler {
-    border-color: rgba($azulPrimario, 0.3);
-    padding: 0.4rem 0.6rem;
-    margin-left: 0.5rem;
-    
-    &:focus {
-      box-shadow: 0 0 0 0.15rem rgba($azulPrimario, 0.5);
-    }
-    
-    .navbar-toggler-icon {
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.5' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-      width: 1.4em;
-      height: 1.4em;
-    }
-  }
-  
-  // Optimizado CSS para el menú principal y collapse
-  .navbar-collapse {
-    transition: height 0.3s ease;
-    
-    @media (max-width: 991px) {
-      background-color: rgba($bgDark, 0.98);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba($azulPrimario, 0.3);
-      border-radius: $borderRadius;
-      padding: 15px;
-      margin-top: 0.5rem !important;
-    }
-    
-    @media (min-width: 992px) {
-      display: flex !important;
-      align-items: center;
-    }
-  }
-  
-  // Enlaces de navegación
-  .nav-link {
-    color: rgba($bgLight, 0.8);
-    margin: 0 8px;
-    transition: all 0.3s;
-    font-weight: 500;
-    position: relative;
-    
-    &:hover, &:focus {
-      color: $bgLight;
-      transform: translateY(-2px);
-    }
-    
-    &.active {
-      color: $bgLight;
-      font-weight: 600;
-      
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: -4px;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: $azulPrimario;
-      }
-    }
-  }
-  
-  .btn-success {
-    background-color: $verdePrimario;
-    border-color: $verdePrimario;
-    transition: all 0.3s;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    
-    &:hover {
-      background-color: $verdeSecundario;
-      border-color: $verdeSecundario;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    
-    &:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-  }
-  
-  // Dropdown de usuario
-  .dropdown {
-    .dropdown-toggle {
-      color: $bgLight;
-      
-      &::after {
-        margin-left: 8px;
-        vertical-align: 0.15em;
-        opacity: 0.7;
-      }
-      
-      &.mobile-profile-link::after {
-        margin-left: 6px;
-        border-top: 0.4em solid;
-        border-right: 0.4em solid transparent;
-        border-left: 0.4em solid transparent;
-        vertical-align: 0.2em;
-        opacity: 1;
-      }
-    }
-    
-    img.rounded-circle {
-      border: 2px solid rgba($azulPrimario, 0.7);
-      transition: border-color 0.3s, transform 0.3s;
-    }
-    
-    a:hover img.rounded-circle {
-      border-color: $azulPrimario;
-      transform: scale(1.05);
-    }
-    
-    .dropdown-menu {
-      background-color: $bgDark;
-      border: 1px solid rgba($azulPrimario, 0.3);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-      margin-top: 10px;
-      animation: navbarDropdownIn 0.2s ease-out;
-      
-      .dropdown-item {
-        color: $bgLight;
-        
-        &:hover, &:focus {
-          background-color: rgba($azulPrimario, 0.2);
-        }
-      }
-      
-      .dropdown-divider {
-        border-color: rgba($bgLight, 0.1);
-      }
-      
-      .btn-link {
-        color: $rojoPrimario;
-        
-        &:hover {
-          color: $rojoSecundario;
-        }
-      }
-    }
-  }
-  
-  // Móvil específico
-  @media (max-width: 991px) {
-    .navbar-nav {
-      padding: 10px 0;
-      
-      .nav-item {
-        margin: 8px 0;
-        
-        .nav-link {
-          padding: 10px;
-          border-radius: $borderRadius;
-          text-align: center;
-          transition: background-color 0.2s;
-          
-          &:hover {
-            background-color: rgba($azulPrimario, 0.1);
-            transform: none;
-          }
-          
-          &.active::after {
-            bottom: 0;
-            width: 30%;
-            left: 35%;
-          }
-        }
-      }
-    }
+}
+
+@media (max-width: 900px) {
+  .rhombus-table-wrapper {
+    max-height: none !important;
+    overflow-y: visible !important;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 

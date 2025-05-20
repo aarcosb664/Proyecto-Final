@@ -16,15 +16,15 @@
                     
                     <!-- Estadísticas del juego -->
                     <div class="hero-stats">
-                        <div class="stat-item">
+                        <div class="stat-item" style="--stat-color1:#00f;--stat-color2:#0ff;">
                             <div class="stat-number">50+</div>
                             <div class="stat-label">Levels</div>
                         </div>
-                        <div class="stat-item">
+                        <div class="stat-item" style="--stat-color1:#f00;--stat-color2:#ff0;">
                             <div class="stat-number">20+</div>
                             <div class="stat-label">Power-ups</div>
                         </div>
-                        <div class="stat-item">
+                        <div class="stat-item" style="--stat-color1:#0f0;--stat-color2:#0ff;">
                             <div class="stat-number">10K+</div>
                             <div class="stat-label">Players</div>
                         </div>
@@ -81,8 +81,8 @@
         </div>
     </div>
 
-    <div class="container py-5 mt-5">
-        <h2 class="text-center mb-5">Features</h2>
+    <div class="container py-5 mt-2">
+        <h2 class="text-center mb-5 banner">Features</h2>
         <div class="row g-4">
             <div class="col-lg-4">
                 <a th:href="@{/game}" class="btn-custom text-decoration-none text-white">
@@ -118,7 +118,8 @@
     <div class="container py-5 text-center">
         <div class="row g-4">
             <div class="col-md-3 col-6">
-                <div class="card border-flow-blue bg-dark text-white">
+                <div class="speckyboy-shimmer speckyboy-shimmer--red">
+                    <span class="shimmer"></span>
                     <div class="card-body">
                         <h3 class="display-4">10K+</h3>
                         <p>Jugadores</p>
@@ -126,7 +127,8 @@
                 </div>
             </div>
             <div class="col-md-3 col-6">
-                <div class="card border-flow-red bg-dark text-white">
+                <div class="speckyboy-shimmer speckyboy-shimmer--blue">
+                    <span class="shimmer"></span>
                     <div class="card-body">
                         <h3 class="display-4">50+</h3>
                         <p>Niveles</p>
@@ -134,15 +136,17 @@
                 </div>
             </div>
             <div class="col-md-3 col-6">
-                <div class="card border-flow-green bg-dark text-white">
+                <div class="speckyboy-shimmer speckyboy-shimmer--green">
+                    <span class="shimmer"></span>
                     <div class="card-body">
                         <h3 class="display-4">5M+</h3>
                         <p>Partidas jugadas</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-6  ">
-                <div class="card border-flow-yellow bg-dark text-white">
+            <div class="col-md-3 col-6">
+                <div class="speckyboy-shimmer speckyboy-shimmer--yellow">
+                    <span class="shimmer"></span>
                     <div class="card-body">
                         <h3 class="display-4">20+</h3>
                         <p>Power-ups</p>

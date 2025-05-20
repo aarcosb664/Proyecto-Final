@@ -24,7 +24,7 @@ public class WebSecurityConfig {
                 .ignoringRequestMatchers("/login", "/register")
             )
             .authorizeHttpRequests(authz ->  authz
-                .requestMatchers("/login", "/register", "/game", "/css/**", "/js/**", "/img/**", "/video/**")
+                .requestMatchers("/", "/login", "/register", "/game", "/css/**", "/js/**", "/img/**", "/video/**")
                 .permitAll()
                 .anyRequest().authenticated()
             )
