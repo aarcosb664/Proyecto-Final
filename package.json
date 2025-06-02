@@ -1,12 +1,15 @@
 {
-  "name": "breakout-game",
+  "name": "proyecto-final-styles",
   "version": "1.0.0",
-  "description": "Juego Breakout con animaciones SCSS",
+  "description": "Compilación de estilos SCSS para el proyecto final",
   "scripts": {
     "sass": "sass --watch src/main/resources/static/scss:src/main/resources/static/css",
-    "build-sass": "sass src/main/resources/static/scss:src/main/resources/static/css"
+    "sass:build": "sass src/main/resources/static/scss:src/main/resources/static/css"
   },
   "devDependencies": {
-    "sass": "^1.69.5"
+    "sass": "^1.70.0"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.6"
   }
 }

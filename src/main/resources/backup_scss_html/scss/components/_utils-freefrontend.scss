@@ -1,0 +1,347 @@
+@use 'sass:color';
+@property --mask {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+:root {
+  --shimmer-hue-1: 213deg;
+  --shimmer-sat-1: 95%;
+  --shimmer-lit-1: 91%;
+  --shimmer-hue-2: 248deg;
+  --shimmer-sat-2: 100%;
+  --shimmer-lit-2: 86%;
+  --shimmer-hue-3: 293deg;
+  --shimmer-sat-3: 78%;
+  --shimmer-lit-3: 89%;
+
+  --card-body-bg: #ffffff; 
+  --card-body-color: #000000;
+}
+
+// --------------------------------------------------
+// Estilos tomados de freefrontend.com (créditos)
+// --------------------------------------------------
+
+// Línea glow inferior para navbar (adaptado de freefrontend)
+.navbar.border-bottom-custom {
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: #00ffff;
+    box-shadow: 0px 2px 8px 1px #00ffff, 0px 4px 16px 2px #00ffff;
+    pointer-events: none;
+  }
+}
+
+// Botón glow-on-hover arcoíris (de freefrontend)
+.glow-on-hover {
+    width: 220px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+}
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: #000;
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+// Botones glass-btn para iconos sociales (de freefrontend)
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.glass-btn {
+  width: 50px;
+  height: 50px;
+  background-color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  margin-left: 1em;
+  margin-right: 1em;  
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &.blue-btn {
+    -webkit-box-shadow: 0px 12px 16px -10px rgba(0, 111, 255, 0.53);
+    -moz-box-shadow: 0px 12px 16px -10px rgba(0, 111, 255, 0.53);
+    box-shadow: 0px 12px 16px -10px rgba(0, 111, 255, 0.53);
+    &:hover {
+      -webkit-box-shadow: 0px 16px 24px -10px rgba(0, 111, 255, 0.65);
+      -moz-box-shadow: 0px 16px 24px -10px rgba(0, 111, 255, 0.65);
+      box-shadow: 0px 16px 24px -10px rgba(0, 111, 255, 0.65);      
+    }
+    .content {
+      font-size: 2em;
+      font-family: "Roboto", sans-serif;
+      background: linear-gradient(to right, #006fff, #00acff 70%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0px 6px 18px rgba(0, 111, 255, 0.8);
+    }
+  }
+
+  &.red-btn {
+    -webkit-box-shadow: 0px 12px 16px -10px rgba(255, 16, 39, 0.5);
+    -moz-box-shadow: 0px 12px 16px -10px rgba(255, 16, 39, 0.5);
+    box-shadow: 0px 12px 16px -10px rgba(255, 16, 39, 0.5);
+    &:hover {
+      -webkit-box-shadow: 0px 16px 24px -10px rgba(255, 16, 39, 0.57);
+      -moz-box-shadow: 0px 16px 24px -10px rgba(255, 16, 39, 0.57);
+      box-shadow: 0px 16px 24px -10px rgba(255, 16, 39, 0.57);      
+    }
+    .content {
+      font-size: 2em;
+      font-family: "Roboto", sans-serif;
+      background: linear-gradient(to right, #ff1027, #ff4f06 70%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0px 6px 18px rgba(255, 16, 39, 0.6);
+      color: #ff1027 !important;
+    }
+  }
+
+  &.amber-btn {
+    -webkit-box-shadow: 0px 12px 16px -10px rgba(255, 159, 16, 0.53);
+    -moz-box-shadow: 0px 12px 16px -10px rgba(255, 159, 16, 0.53);
+    box-shadow: 0px 12px 16px -10px rgba(255, 159, 16, 0.53);
+    &:hover {
+      -webkit-box-shadow: 0px 16px 24px -10px rgba(255, 159, 16, 0.6);
+      -moz-box-shadow: 0px 16px 24px -10px rgba(255, 159, 16, 0.6);
+      box-shadow: 0px 16px 24px -10px rgba(255, 159, 16, 0.6);      
+    }
+    .content {
+      font-size: 2em;
+      font-family: "Roboto", sans-serif;
+      background: linear-gradient(to right, #ff8d00, #f7ad07 70%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0px 6px 18px rgba(255, 94, 16, 0.7);
+    }
+  }
+
+  &.black-btn {
+    -webkit-box-shadow: 0px 12px 16px -10px rgba(0,0,0,0.45);
+    -moz-box-shadow: 0px 12px 16px -10px rgba(0,0,0,0.45);
+    box-shadow: 0px 12px 16px -10px rgba(0,0,0,0.45);
+    &:hover {
+      -webkit-box-shadow: 0px 16px 24px -10px rgba(0,0,0,0.65);
+      -moz-box-shadow: 0px 16px 24px -10px rgba(0,0,0,0.65);
+      box-shadow: 0px 16px 24px -10px rgba(0,0,0,0.65);      
+    }
+    .content {
+      font-size: 2em;
+      color: #111 !important;
+      background: none !important;
+      text-shadow: 0px 6px 18px rgba(0,0,0,0.4);
+    }
+  }
+
+  &:hover {
+    background-color: color.adjust(#fafafa, $lightness: -2%);    
+    transform: translateY(-5px);
+    transition: all 0.3s;
+  }
+}
+
+// --- Animated Sign In Button Box ---
+.box {
+  background: #000;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.01);
+  display: inline-block;
+  border: 1px solid #fff;
+
+  &::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    transform: scale(1.1);
+    filter: blur(15px);
+    background: linear-gradient(
+      to left,
+      #ff5770,
+      #e4428d,
+      #c42da8,
+      #9e16c3,
+      #6501de,
+      #9e16c3,
+      #c42da8,
+      #e4428d,
+      #ff5770
+    );
+    background-size: 200% 200%;
+    animation: animateGlow 1.25s linear infinite;
+    border-radius: 8px;
+    pointer-events: none;
+  }
+}
+
+@keyframes animateGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+// --- Speckyboy shimmer border effect (solid color, thicker border) ---
+.speckyboy-shimmer {
+  position: relative;
+  border-radius: 16px;
+  overflow: visible;
+  background: transparent;
+
+  .card-body {
+    position: relative;
+    z-index: 2;
+    background: #000;
+    color: #fff;
+    padding: 20px;
+    border: 1px solid #fff;
+    border-radius: inherit;
+    transition: all 0.5s;
+
+    &:hover {
+      scale: 1.025;
+    }
+  }
+
+  .shimmer {
+    position: absolute;
+    inset: -6px;
+    border-radius: calc(16px + 8px);
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: plus-lighter;
+    background: transparent;
+    mask-image: conic-gradient(from var(--mask, 0deg), transparent 0%, transparent 10%, black 36%, black 45%, transparent 50%, transparent 60%, black 85%, black 95%, transparent 100%);
+    -webkit-mask-image: conic-gradient(from var(--mask, 0deg), transparent 0%, transparent 10%, black 36%, black 45%, transparent 50%, transparent 60%, black 85%, black 95%, transparent 100%);
+    mask-size: cover;
+    -webkit-mask-size: cover;
+    animation: spin 3s linear infinite both -0.5s;
+
+    &::before, &::after {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border-radius: 16px;
+      pointer-events: none;
+    }
+    &::before { z-index: -1; }
+    &::after  { z-index: 1; }
+  }
+
+  &:hover .shimmer {
+    animation: spin 1.3s linear infinite both -0.1s;
+  }
+
+  &--red    .shimmer {
+    background: #ff3b3b;
+    &::before { box-shadow: 0 0 12px 4px #ff3b3b; }
+    &::after  { box-shadow: inset 0 0 0 2px #ff3b3b, inset 0 0 8px 2px #ff3b3b; }
+  }
+  &--blue   .shimmer {
+    background: #3b6cff;
+    &::before { box-shadow: 0 0 12px 4px #3b6cff; }
+    &::after  { box-shadow: inset 0 0 0 2px #3b6cff, inset 0 0 8px 2px #3b6cff; }
+  }
+  &--green  .shimmer {
+    background: #3bff6c;
+    &::before { box-shadow: 0 0 12px 4px #3bff6c; }
+    &::after  { box-shadow: inset 0 0 0 2px #3bff6c, inset 0 0 8px 2px #3bff6c; }
+  }
+  &--yellow .shimmer {
+    background: #ffe347;
+    &::before { box-shadow: 0 0 12px 4px #ffe347; }
+    &::after  { box-shadow: inset 0 0 0 2px #ffe347, inset 0 0 8px 2px #ffe347; }
+  }
+}
+
+@keyframes spin {
+  0%   { --mask: 0deg; }
+  100% { --mask: 360deg; }
+}
+
+@-webkit-keyframes spin {
+  0%   { --mask: 0deg; }
+  100% { --mask: 360deg; }
+}
+
+// Responsive fix: .box.w-100 ocupa todo el ancho y alto en móvil
+@media (max-width: 600px) {
+  .box.w-100 {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 48px;
+    box-sizing: border-box;
+  }
+}
+

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" th:href="@{img/logo.png}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{css/community.css}" rel="stylesheet">
+    <title>Community</title>
+</head>
+
+<body>
+    <header th:insert="~{fragments/header :: header}"></header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col mt-3">
+                <!-- Cabecera con título y buscador -->
+                <div class="banner w-100">
+                    <h1>Listings</h1>
+                </div>
+                <div class="d-flex align-items-center">
+                    <a th:href="@{/community/listing/create}" class="btn btn-success me-3">
+                        <i class="fas fa-plus"></i> Create listing
+                    </a>
+                    <form th:action="@{/community/search}" method="GET" class="flex-grow-1">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="query" placeholder="Search listing">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <hr class="mt-5">
+
+                <!-- Grid de listings -->
+                <!-- <div class="row mt-5" th:if="${!#lists.isEmpty(listings)}">
+                    <div class="card border-neon-azul h-100" style="min-height: 300px;" th:each="listing : ${listings}">
+                        <div class="row h-100" style="min-height: 300px;">
+                            <div class="carousel-container col-md-4 h-100">
+                                <div th:with="carouselId='listing-carousel-' + ${listing.id}" th:attr="id=${carouselId}" class="carousel slide carousel-fade">
+                                    <div class="carousel-inner">
+                                        <div th:each="image, iStat : ${listing.images}">
+                                            <div class="carousel-item" th:classappend="${iStat.index == 0} ? ' active' : ''">
+                                                <img th:src="${image}" class="img-fluid img-carousel d-block" style="width: 100%; max-width: 300px" th:alt="${listing.title}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" th:attr="data-bs-target='#' + ${carouselId}" data-bs-slide="prev" th:if="${listing.images.size() > 1}">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" th:attr="data-bs-target='#' + ${carouselId}" data-bs-slide="next" th:if="${listing.images.size() > 1}">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title header-neon-azul" th:text="${listing.title}">title</h5>
+                                    <p class="card-text text-neon-azul-sm" th:text="${listing.description}">description</p>
+                                    <p class="card-text"><small class="text-body-secondary" th:text="${#dates.format(listing.updatedAt, 'dd-MM-yyyy - HH:mm')}">updated_at</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="row mt-5" th:if="${!#lists.isEmpty(listings)}">
+                    <div class="col-md-4 mb-4" th:each="listing : ${listings}">
+                        <div class="card bg-black border-neon-white rounded-4 m-2" style="height: 500px;">
+                            <div class="ratio-16-9 card-img-top-container border-bottom">
+                                <img th:src="${listing.images[0]}" class="card-img-top" th:alt="${listing.title}">
+                            </div>
+                            <div class="card-body">
+                                <!-- <div class="row mb-2">
+                                    <div class="col-12 d-flex flex-wrap gap-2 justify-content-center">
+                                        <a class="border rounded-4 px-2 py-1 text-decoration-none text-neon-light-sm"
+                                           th:each="tag, itStat : ${listing.tags}"
+                                           th:if="${itStat.index < 3}"
+                                           th:href="@{/community/listing/tag/{tag}(tag=${tag})}">
+                                            <i class="fas fa-tag"></i>
+                                            <span th:text="${tag}" class="badge"></span>
+                                        </a>
+                                    </div>
+                                </div> -->
+                                <h5 class="card-title text-center header-neon-white-sm mb-3" th:text="${#strings.abbreviate(listing.title, 20)}">title</h5>
+                                <hr class="text-neon-white">
+                                <p class="card-text text-neon-white-sm" th:text="${#strings.abbreviate(listing.description, 150)}">description</p>
+                                
+                            </div>
+                            <div class="card-footer">
+                                <p class="card-text">
+                                    <small class="text-neon-white-sm" th:text="${#dates.format(listing.updatedAt, 'dd-MM-yyyy - HH:mm')}">
+                                        <i class="fas fa-clock"></i>
+                                        updated_at
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mensaje si no hay listings -->
+                <div class="row" th:if="${#lists.isEmpty(listings)}">
+                    <div class="col-md-12">
+                        <h2>No listings found</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:insert="~{fragments/footer :: footer}"></footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

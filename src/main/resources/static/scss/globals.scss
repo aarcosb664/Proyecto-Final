@@ -1,0 +1,101 @@
+@use 'base' as *;
+@use 'components/navbar';
+@use 'components/footer';
+@use 'components/banner';
+@use 'components/utils-freefrontend';
+
+// Variables CSS para colores neon
+:root {
+  --blue: #{$blue};
+  --red: #{$red};
+  --green: #{$green};
+  --yellow: #{$yellow};
+  --purple: #{$purple};
+  --cyan: #{$cyan};
+  --pink: #{$pink};
+  --orange: #{$orange};
+}
+
+// Animaciones globales
+@keyframes bordeAnimado {
+  0%, 100% { background-position: -100% 0, 100% 100%, 0% 200%, 100% -100%; box-shadow: 0 0 25px $blue; }
+  25% { background-position: 0% 0, 0% 100%, 0% 100%, 100% 0%; box-shadow: 0 0 25px $cyan; }
+  50% { background-position: 100% 0, -100% 100%, 0% 0%, 100% 100%; box-shadow: 0 0 25px $blue; }
+  75% { background-position: 0% 0, 0% 100%, 0% -100%, 100% 200%; box-shadow: 0 0 25px $cyan; }
+}
+@keyframes tableGlow {
+  0%, 100% { box-shadow: 0 0 10px $blue; }
+  50% { box-shadow: 0 0 20px $blue; }
+}
+@keyframes buttonHover {
+  to { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+}
+@keyframes buttonActive {
+  to { transform: translateY(0); }
+}
+
+// Global body styles
+body {
+  background-color: $black;
+  color: $white;
+  overflow-x: hidden;
+  padding-top: 70px;
+  scroll-padding-top: 70px;
+}
+
+// Global container utility
+.container {
+  @extend .container;
+  max-width: 95%;
+  @media (min-width: 992px) { max-width: 1200px; }
+}
+
+// Global button utility
+.btn {
+  transition: all 0.3s ease;
+  font-weight: 500;
+  border-radius: 4px;
+  filter: brightness(1.2);
+  &:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+  &:active { transform: translateY(0); }
+}
+
+// Table animated utility
+.table-animated {
+  position: relative;
+  background-color: $blackAlt !important;
+  color: $white !important;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba($blue, 0.3) !important;
+  box-shadow: 0 0 15px rgba($blue, 0.2);
+  animation: tableGlow $animationDuration infinite ease-in-out;
+  margin: 1.5rem 0 2rem;
+  th, td { background-color: transparent !important; color: #fff !important; border-color: rgba($blue, 0.2) !important; padding: 12px 15px; vertical-align: middle; }
+  thead { background-color: rgba($blue, 0.15) !important; th { border-bottom: 2px solid rgba($blue, 0.4) !important; font-weight: 500; } }
+  tbody { tr { transition: background-color 0.3s ease; border-color: rgba($blue, 0.15) !important; &:hover { background-color: rgba($blue, 0.1) !important; } &:nth-child(odd) { background-color: rgba(30, 30, 30, 0.6) !important; } } }
+}
+
+// Table responsive utility
+.table-responsive {
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 2rem;
+  padding-top: 10px;
+}
+
+// Hover scale utility
+.hover-scale {
+  transition: transform 0.3s ease;
+  &:hover { transform: scale(1.05); }
+}
+
+// Global hr utility (from login)
+hr {
+  clear: both;
+  margin: 20px 0;
+  border: 0;
+  height: 2px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+} 

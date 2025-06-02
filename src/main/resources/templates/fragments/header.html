@@ -1,7 +1,7 @@
 <nav th:fragment="header" class="navbar navbar-expand-lg fixed-top border-bottom-custom py-2" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-    <div class="container">
-        <!-- PERFIL (móvil: primero; desktop: último) -->
-        <div class="order-1 order-lg-3">
+    <div class="container-fluid container">
+        <!-- PERFIL (móvil: último; desktop: último) -->
+        <div class="order-3 order-lg-3">
             <!-- Perfil móvil - visible solo en móvil -->
             <div class="d-flex d-lg-none">
                 <div class="dropdown" sec:authorize="isAuthenticated()">
@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <a th:href="@{/login}" class="btn text-decoration-none d-none d-lg-block" sec:authorize="!isAuthenticated()">
+            <a th:href="@{/login}" class="btn text-decoration-none border-0" sec:authorize="!isAuthenticated()">
                 <div class="box">
                     <span class="d-block text-white px-4 py-2">
                         Sign in
@@ -50,46 +50,36 @@
             </a>
         </div>
 
-        <!-- LOGO (móvil: segundo, centrado; desktop: primero, a la izquierda) -->
+        <!-- LOGO (móvil: segundo; desktop: primero) -->
         <a class="navbar-brand mx-auto order-2 order-lg-1 d-flex align-items-center" th:href="@{/}">
             <img th:src="@{/img/logo.png}" alt="Logo" width="50" height="50" class="me-2">
             <span class="d-none d-sm-inline fw-bold fs-4">Breakout</span>
         </a>
         
-        <!-- TOGGLER (móvil: tercero; desktop: oculto) -->
-        <button class="navbar-toggler order-3 order-lg-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" 
+        <!-- TOGGLER (móvil: primero; desktop: oculto) -->
+        <button class="navbar-toggler order-1 order-lg-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" 
                 aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         
         <!-- LINKS (desktop: centrados; móvil: en collapse, apilados) -->
         <div class="collapse navbar-collapse justify-content-center order-4 order-lg-2 my-2 my-lg-0" id="navbarMain">
-            <ul class="navbar-nav text-center">
-                <li class="nav-item px-lg-2">
-                    <a class="nav-link text-center py-2" th:href="@{/}">Home</a>
+            <ul class="navbar-nav text-center px-2">
+                <li class="nav-item px-lg-3">
+                    <a class="nav-link text-center py-2" th:classappend="${activePage == 'index' ? 'active' : ''}" th:href="@{/}">Home</a>
                 </li>
-                <li class="nav-item px-lg-2">
-                    <a class="nav-link text-center py-2" th:href="@{/community}">Community</a>
+                <li class="nav-item px-lg-3">
+                    <a class="nav-link text-center py-2" th:classappend="${activePage == 'community' ? 'active' : ''}" th:href="@{/community}">Community</a>
                 </li>
-                <li class="nav-item px-lg-2 my-2 my-lg-0">
-                    <a class="btn glow-on-hover border border-light w-100 h-100 px-4 py-2" th:href="@{/game}">PLAY</a>
+                <li class="nav-item px-lg-3">
+                    <a class="btn glow-on-hover w-100 h-100 px-4 py-2" th:href="@{/game}">PLAY</a>
                 </li>
-                <li class="nav-item px-lg-2">
-                    <a class="nav-link text-center py-2" th:href="@{/about}">About</a>
+                <li class="nav-item px-lg-3">
+                    <a class="nav-link text-center py-2" th:classappend="${activePage == 'about' ? 'active' : ''}" th:href="@{/about}">About</a>
                 </li>
-                <li class="nav-item px-lg-2">
-                    <a class="nav-link text-center py-2" th:href="@{/ranking}">Ranking</a>
+                <li class="nav-item px-lg-3">
+                    <a class="nav-link text-center py-2" th:classappend="${activePage == 'ranking' ? 'active' : ''}" th:href="@{/ranking}">Ranking</a>
                 </li>
-                <div class="d-lg-none w-100" sec:authorize="!isAuthenticated()">
-                    <hr class="hr-divider">
-                    <a th:href="@{/login}" class="btn text-decoration-none w-100">
-                        <div class="box w-100">
-                            <span class="d-block text-white px-4 py-2">
-                                Sign in
-                            </span>
-                        </div>
-                    </a>
-                </div>
             </ul>
         </div>
     </div>

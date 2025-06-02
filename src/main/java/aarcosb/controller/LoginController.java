@@ -46,8 +46,8 @@ public class LoginController {
         model.addAttribute("activeTab", null);
         
         // Inicializar el modelo para el formulario de registro
-        if (!model.containsAttribute("registerUser")) {
-            model.addAttribute("registerUser", new UserDto());
+        if (!model.containsAttribute("user")) {
+            model.addAttribute("user", new UserDto());
         }
         return "login";
     }
@@ -57,13 +57,15 @@ public class LoginController {
      */
     @PostMapping("/register")
     public String registro(
-            @Valid @ModelAttribute("registerUser") UserDto registerUserDto,
+            @Valid @ModelAttribute("user") UserDto userDto,
             BindingResult result,
             Model model) {
-        if (!registerUserDto.getPassword().equals(registerUserDto.getConfirmPassword())) {
+
+        if (!userDto.getPassword().equals(userDto.getConfirmPassword())) {
             result.rejectValue("confirmPassword", "error", "Las contraseñas no coinciden");
         }
-        if (userRepository.findByEmail(registerUserDto.getEmail()) != null) {
+        
+        if (userRepository.findByEmail(userDto.getEmail()) != null) {
             result.rejectValue("email", "error", "Email ya registrado");
         }
         
@@ -73,10 +75,10 @@ public class LoginController {
             return "login";
         }
         User usuario = new User();
-        usuario.setEmail(registerUserDto.getEmail());
-        usuario.setPassword(passwordEncoder.encode(registerUserDto.getPassword()));
-        usuario.setName(registerUserDto.getName());
-        usuario.setLastName(registerUserDto.getLastName());
+        usuario.setEmail(userDto.getEmail());
+        usuario.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        usuario.setName(userDto.getName());
+        usuario.setLastName(userDto.getLastName());
         usuario.setRole(Role.USER);
         usuario.setCreatedAt(new java.util.Date());
         userRepository.save(usuario);
@@ -96,7 +98,7 @@ public class LoginController {
         } catch (Exception e) {
             // Si hay algún error en la autenticación, mostrar mensaje de éxito y redireccionar al login
             model.addAttribute("success", "Usuario registrado correctamente. Por favor, inicie sesión.");
-            model.addAttribute("registerUser", new UserDto());
+            model.addAttribute("userDto", new UserDto());
             model.addAttribute("activeTab", null);
             return "login";
         }

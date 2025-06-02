@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:insert="fragments/head :: head('Index')"></head>
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" th:href="@{img/logo.png}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{css/index.css}" rel="stylesheet">
+    <title>Inicio</title>
+</head>
 
-<body class="text-white" style="background-color: #000;">
+<body>
     <header th:insert="fragments/header :: header"></header>
 
     <!-- Diseño de romboides a pantalla completa -->
@@ -81,33 +90,33 @@
         </div>
     </div>
 
-    <div class="container py-5 mt-2">
+    <div class="container py-4">
         <h2 class="text-center mb-5 banner">Features</h2>
         <div class="row g-4">
             <div class="col-lg-4">
-                <a th:href="@{/game}" class="btn-custom text-decoration-none text-white">
-                    <div class="animated-card-red h-100 p-4 text-center">
-                        <i class="bi bi-lightning-charge-fill fs-1 mb-3"></i>
-                        <h3>Power-ups</h3>
-                        <p>Desbloquea poderes especiales para mejorar tu bola y romper bloques más rápidamente.</p>
+                <a th:href="@{/game}" class="text-decoration-none text-white">
+                    <div class="card border-neon-red h-100 p-4 text-center hover-scale">
+                        <i class="bi bi-lightning-charge-fill fs-1 mb-3 text-neon-red"></i>
+                        <h3 class="header-neon-red">Power-ups</h3>
+                        <p class="text-neon-red-sm">Unlock special powers to improve your ball and break blocks faster.</p>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4">
-                <a th:href="@{/ranking}" class="btn-custom text-decoration-none text-white">
-                    <div class="animated-card-green h-100 p-4 text-center">
-                        <i class="bi bi-trophy-fill fs-1 mb-3"></i>
-                        <h3>Ranking</h3>
-                        <p>Compite contra otros jugadores y alcanza la cima de nuestra tabla de clasificación global.</p>
+                <a th:href="@{/ranking}" class="text-decoration-none text-white">
+                    <div class="card border-neon-green h-100 p-4 text-center hover-scale">
+                        <i class="bi bi-trophy-fill fs-1 mb-3 text-neon-green"></i>
+                        <h3 class="header-neon-green">Ranking</h3>
+                        <p class="text-neon-green-sm">Compete against other players and reach the top of our global ranking.</p>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4">
-                <a th:href="@{/community}" class="btn-custom text-decoration-none text-white">
-                    <div class="animated-card-blue h-100 p-4 text-center">
-                        <i class="bi bi-people-fill fs-1 mb-3"></i>
-                        <h3>Community</h3>
-                        <p>Descubre y juega otros juegos creados por la comunidad.</p>
+                <a th:href="@{/community}" class="text-decoration-none text-white">
+                    <div class="card border-neon-blue h-100 p-4 text-center hover-scale">
+                        <i class="bi bi-people-fill fs-1 mb-3 text-neon-blue"></i>
+                        <h3 class="header-neon-blue">Community</h3>
+                        <p class="text-neon-blue-sm">Discover and play other games created by the community.</p>
                     </div>
                 </a>
             </div>
@@ -121,8 +130,8 @@
                 <div class="speckyboy-shimmer speckyboy-shimmer--red">
                     <span class="shimmer"></span>
                     <div class="card-body">
-                        <h3 class="display-4">10K+</h3>
-                        <p>Jugadores</p>
+                        <h3 class="display-4 text-neon-red">10K+</h3>
+                        <p class="text-neon-red-sm">Jugadores</p>
                     </div>
                 </div>
             </div>
@@ -130,8 +139,8 @@
                 <div class="speckyboy-shimmer speckyboy-shimmer--blue">
                     <span class="shimmer"></span>
                     <div class="card-body">
-                        <h3 class="display-4">50+</h3>
-                        <p>Niveles</p>
+                        <h3 class="display-4 text-neon-blue">50+</h3>
+                        <p class="text-neon-blue-sm">Niveles</p>
                     </div>
                 </div>
             </div>
@@ -139,8 +148,8 @@
                 <div class="speckyboy-shimmer speckyboy-shimmer--green">
                     <span class="shimmer"></span>
                     <div class="card-body">
-                        <h3 class="display-4">5M+</h3>
-                        <p>Partidas jugadas</p>
+                        <h3 class="display-4 text-neon-green">5M+</h3>
+                        <p class="text-neon-green-sm">Partidas jugadas</p>
                     </div>
                 </div>
             </div>
@@ -148,8 +157,8 @@
                 <div class="speckyboy-shimmer speckyboy-shimmer--yellow">
                     <span class="shimmer"></span>
                     <div class="card-body">
-                        <h3 class="display-4">20+</h3>
-                        <p>Power-ups</p>
+                        <h3 class="display-4 text-neon-yellow">20+</h3>
+                        <p class="text-neon-yellow-sm">Power-ups</p>
                     </div>
                 </div>
             </div>

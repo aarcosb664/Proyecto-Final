@@ -1,0 +1,105 @@
+// Mixins optimizados para efectos de animación
+// Reducidos para mejorar rendimiento y reutilización
+
+// Mixins para sombras y efectos de brillo
+@mixin sombra-tarjeta($color) {
+    box-shadow: 0 0 15px rgba($color, 0.2);
+}
+
+@mixin sombra-borde($color) {
+    box-shadow: 
+        0 0 20px rgba($color, 0.8) inset,
+        0 0 30px rgba($color, 0.5);
+    filter: drop-shadow(0 0 8px rgba($color, 0.8));
+}
+
+// Mixin para tarjetas animadas - optimizado
+@mixin animated-card($colorPrimario, $colorSecundario, $tiempoAnimacion: 4s) {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    @include sombra-tarjeta($colorPrimario);
+
+    // Borde animado principal
+    &::before {
+        content: '';
+        position: absolute;
+        inset: -2px; 
+        border: 3px solid transparent;
+        border-radius: 0.25rem;
+        
+        // Fondos con gradientes para efecto de borde iluminado
+        background-image: 
+            linear-gradient(90deg, transparent, $colorPrimario, transparent),
+            linear-gradient(90deg, transparent, $colorSecundario, transparent),
+            linear-gradient(0deg, transparent, $colorPrimario, transparent),
+            linear-gradient(0deg, transparent, $colorSecundario, transparent);
+        
+        background-size: 300% 100%, 300% 100%, 100% 300%, 100% 300%;
+        background-position: 0% 0, 0% 100%, 0% 0, 100% 0;
+        background-repeat: no-repeat;
+        
+        // Máscara para mostrar solo el borde
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        
+        animation: bordeAnimado $tiempoAnimacion linear infinite;
+        pointer-events: none;
+        @include sombra-borde($colorPrimario);
+    }
+    
+    // Borde pulsante secundario
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0; // Uso de inset para simplificar
+        border: 2px solid transparent;
+        border-image: linear-gradient(to right, transparent, $colorPrimario, transparent) 1;
+        animation: bordePulsante 2s ease-in-out infinite;
+        box-shadow: 
+            0 0 15px rgba($colorPrimario, 0.7) inset,
+            0 0 20px rgba($colorPrimario, 0.4);
+    }
+    
+    // Estilo para el contenido
+    > * {
+        position: relative;
+        z-index: 1;
+        text-shadow: 0 0 5px rgba($colorPrimario, 0.3);
+    }
+}
+
+// Mixin para bordes con flujo animado - simplificado
+@mixin border-flow($color: #4499ff, $duration: 1.5s) {
+    position: relative;
+    
+    &::after {
+        content: '';
+        display: block;
+        margin-top: 8px;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, $color, rgba($color, 0.5), transparent);
+        background-size: 200% 100%;
+        animation: flow $duration infinite linear;
+        position: relative;
+    }
+}
+
+// Mixin para botones con efectos
+@mixin btn-custom {
+    transition: all 0.3s ease;
+    
+    &:hover {
+        transform: scale(1.05);
+    }
+    
+    &:active {
+        transform: scale(0.98);
+    }
+}
