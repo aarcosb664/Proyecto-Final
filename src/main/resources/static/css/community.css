@@ -674,7 +674,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .footer-links .footer-hr {
   width: 40px;
-  background-color: #a259ff;
+  background: #a259ff;
   height: 2px;
   opacity: 0.7;
   border: none;
@@ -1296,3 +1296,5 @@ hr {
   object-position: center;
   display: block;
 }
+
+/*# sourceMappingURL=community.css.map */
