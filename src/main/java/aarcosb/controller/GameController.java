@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.security.core.context.SecurityContextHolder;
 import aarcosb.model.entity.Player;
 import aarcosb.model.repository.PlayerRepository;
 
@@ -15,13 +14,6 @@ public class GameController {
 
     @Autowired
     private PlayerRepository playerRepository;
-    
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("players", playerRepository.findTop5ByOrderByScoreDesc());
-        System.out.println("Usuario actual: " + SecurityContextHolder.getContext().getAuthentication().getName()); // Quitar luego
-        return "index";
-    }
 
     @GetMapping("/game")
     public String game() {

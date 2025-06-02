@@ -9,10 +9,12 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "player")
 public class Player {
     @Id
@@ -33,17 +35,9 @@ public class Player {
     
     @Column(name = "date_game")
     private Date dateGame;
-    
+
     public Player(String userName, int score, int destroyedBlocks) {
         this.userName = userName;
-        this.score = score;
-        this.destroyedBlocks = destroyedBlocks;
-        this.dateGame = new Date();
-    }
-    
-    public Player(String userName, int userId, int score, int destroyedBlocks) {
-        this.userName = userName;
-        this.userId = userId;
         this.score = score;
         this.destroyedBlocks = destroyedBlocks;
         this.dateGame = new Date();
