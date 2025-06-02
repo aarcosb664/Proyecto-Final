@@ -39,7 +39,7 @@ public class CommunityController {
     public String index(Model model) {
         model.addAttribute("listings", listingService.getAllListings());
         model.addAttribute("activePage", "community");
-        return "community/index";
+        return "community/main";
     }
 
     // Listing related methods

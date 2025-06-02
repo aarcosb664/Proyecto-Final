@@ -1,9 +1,10 @@
+@use 'sass:color';
 @use '../base' as *;
 // ... estilos de navbar movidos desde index.scss ...
 
 .navbar.border-bottom-custom {
   position: relative;
-  background-color: rgba($bgDark, 0.95);
+  background-color: rgba(0,0,0,0.95);
   backdrop-filter: blur(20px);
   padding: 10px 0;
   box-shadow: none;
@@ -16,8 +17,8 @@
     bottom: 0;
     width: 100%;
     height: 2px;
-    background: #00ffff;
-    box-shadow: 0px 2px 8px 1px #00ffff, 0px 4px 16px 2px #00ffff;
+    background: $cyan;
+    box-shadow: 0px 2px 8px 1px $cyan, 0px 4px 16px 2px $cyan;
     pointer-events: none;
   }
   
@@ -28,7 +29,7 @@
   
   .navbar-brand {
     font-weight: bold;
-    color: $bgLight;
+    color: #fff;
     margin: 0;
     text-align: center;
     
@@ -50,12 +51,12 @@
   }
   
   .navbar-toggler {
-    border-color: rgba($azulPrimario, 0.3);
+    border-color: $blue;
     padding: 0.4rem 0.6rem;
     margin-left: 0.5rem;
     
     &:focus {
-      box-shadow: 0 0 0 0.15rem rgba($azulPrimario, 0.5);
+      box-shadow: 0 0 0 0.15rem $blue;
     }
     
     .navbar-toggler-icon {
@@ -69,10 +70,10 @@
     transition: height 0.3s ease;
     
     @media (max-width: 991px) {
-      background-color: rgba($bgDark, 0.98);
+      background-color: rgba(0,0,0,0.98);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba($azulPrimario, 0.3);
-      border-radius: $borderRadius;
+      border: 1px solid $blue;
+      border-radius: 8px;
       padding: 15px;
       margin-top: 0.5rem !important;
     }
@@ -84,19 +85,19 @@
   }
   
   .nav-link {
-    color: rgba($bgLight, 0.8);
+    color: rgba(255,255,255,0.8);
     margin: 0 8px;
     transition: all 0.3s;
     font-weight: 500;
     position: relative;
     
     &:hover, &:focus {
-      color: $bgLight;
+      color: #fff;
       transform: translateY(-2px);
     }
     
     &.active {
-      color: $bgLight;
+      color: #fff;
       font-weight: 600;
       
       &::after {
@@ -106,21 +107,21 @@
         left: 0;
         width: 100%;
         height: 2px;
-        background-color: $azulPrimario;
+        background-color: $blue;
       }
     }
   }
   
   .btn-success {
-    background-color: $verdePrimario;
-    border-color: $verdePrimario;
+    background-color: $green;
+    border-color: $green;
     transition: all 0.3s;
     font-weight: 600;
     letter-spacing: 0.5px;
     
     &:hover {
-      background-color: $verdeSecundario;
-      border-color: $verdeSecundario;
+      background-color: color.adjust($green, $lightness: -10%);
+      border-color: color.adjust($green, $lightness: -10%);
       transform: translateY(-2px);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
@@ -133,7 +134,7 @@
   
   .dropdown {
     .dropdown-toggle {
-      color: $bgLight;
+      color: #fff;
       
       &::after {
         margin-left: 8px;
@@ -152,39 +153,39 @@
     }
     
     img.rounded-circle {
-      border: 2px solid rgba($azulPrimario, 0.7);
+      border: 2px solid $blue;
       transition: border-color 0.3s, transform 0.3s;
     }
     
     a:hover img.rounded-circle {
-      border-color: $azulPrimario;
+      border-color: $blue;
       transform: scale(1.05);
     }
     
     .dropdown-menu {
-      background-color: $bgDark;
-      border: 1px solid rgba($azulPrimario, 0.3);
+      background-color: #000;
+      border: 1px solid $blue;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
       margin-top: 10px;
       animation: navbarDropdownIn 0.2s ease-out;
       
       .dropdown-item {
-        color: $bgLight;
+        color: #fff;
         
         &:hover, &:focus {
-          background-color: rgba($azulPrimario, 0.2);
+          background-color: rgba($blue, 0.2);
         }
       }
       
       .dropdown-divider {
-        border-color: rgba($bgLight, 0.1);
+        border-color: rgba(255,255,255,0.1);
       }
       
       .btn-link {
-        color: $rojoPrimario;
+        color: $red;
         
         &:hover {
-          color: $rojoSecundario;
+          color: color.adjust($red, $lightness: -10%);
         }
       }
     }
@@ -199,12 +200,12 @@
         
         .nav-link {
           padding: 10px;
-          border-radius: $borderRadius;
+          border-radius: 8px;
           text-align: center;
           transition: background-color 0.2s;
           
           &:hover {
-            background-color: rgba($azulPrimario, 0.1);
+            background-color: rgba($blue, 0.1);
             transform: none;
           }
           
@@ -240,7 +241,27 @@
   left: 0;
   z-index: 1030;
   width: 100%;
-  background-color: rgba($bgDark, 0.95);
+  background-color: rgba(#000, 0.95);
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+
+.border-bottom-animated {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+                                transparent 0%, 
+                                rgba(255, 255, 255, 0.2) 20%, 
+                                rgba(255, 255, 255, 0.8) 50%, 
+                                rgba(255, 255, 255, 0.2) 80%, 
+                                transparent 100%);
+    background-size: 200% 100%;
+    animation: borderFlow 3s infinite linear;
+  }
 } 

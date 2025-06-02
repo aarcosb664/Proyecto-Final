@@ -1,0 +1,15 @@
+@use 'vars' as *;
+@use 'mixins' as *;
+
+// Utilidades personalizadas para cada color de la paleta
+.border-neon-red      { @include border-neon($red); }
+.border-neon-blue     { @include border-neon($blue); }
+.border-neon-green    { @include border-neon($green); }
+.border-neon-yellow   { @include border-neon($yellow); }
+.border-neon-purple   { @include border-neon($purple); }
+.border-neon-cyan     { @include border-neon($cyan); }
+.border-neon-pink     { @include border-neon($pink); }
+.border-neon-orange   { @include border-neon($orange); }
+.border-neon-white    { @include border-neon($white); }
+.border-neon-black    { @include border-neon($black); }
+.border-neon-blackalt { @include border-neon($blackAlt); } 

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" th:href="@{img/logo.png}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{css/community.css}" rel="stylesheet">
+    <title>Create new listing</title>
+</head>
+<body class="bg-dark text-white">
+    <header th:insert="~{fragments/header :: header}"></header>
+    
+    <form th:action="@{/community/listing/create}" class="form-neon">
+        <div class="mb-3">
+            <label for="title" class="form-label text-neon-white"><span class="text-neon-red">*</span> Title</label>
+            <input type="text" id="title" class="form-control text-neon-white" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label text-neon-white"><span class="text-neon-red">*</span> Description</label>
+            <textarea id="description" class="form-control text-neon-white" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="images" class="form-label text-neon-white"><span class="text-neon-red">*</span> Images</label>
+            <input type="file" accept=".png, .jpg, .jpeg" id="images" class="form-control text-neon-white" multiple required>
+        </div>
+        <div class="mb-3">
+            <label for="video" class="form-label text-neon-white">Video</label>
+            <input type="file" accept=".mp4, .mov, .avi, .wmv, .flv, .webm" id="video" class="form-control text-neon-white">
+        </div>
+        <div class="mb-3">
+            <label for="tags" class="form-label text-neon-white">Tags (separated by commas):</label>
+            <input type="text" id="tags" class="form-control text-neon-white">
+        </div>
+        <input type="submit" class="btn btn-primary text-neon-white" value="Create Listing">
+    </form>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Validation JS -->
+    <script th:src="@{/js/validation.js}"></script>
+</body>
+</html> 

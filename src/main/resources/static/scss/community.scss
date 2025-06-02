@@ -1,0 +1,83 @@
+@use 'globals';
+@use 'base' as *;
+
+// .carousel-container {
+//   background-color: $dark;
+//   min-height: 100%;
+//   padding: 0;
+//   margin: 0;
+//   position: relative;
+// }
+
+// .carousel-container, 
+// .carousel-inner, 
+// .carousel-control-prev, 
+// .carousel-control-next,
+// .carousel-item {
+//   min-height: 300px;
+// }
+
+// .carousel-item {
+//   transition: opacity 0.2s linear;
+  
+//   &.active {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//   }
+// }
+
+// .img-carousel {
+//   height: 100%;
+//   width: 100%;
+//   max-width: 100%;
+//   object-fit: cover;
+//   display: block;
+//   margin: 0 auto;
+//   background: $dark;
+// }
+
+// .carousel-control-prev,
+// .carousel-control-next {
+//   z-index: 5;
+//   width: 10%;
+//   opacity: 0.8;
+  
+//   &:hover {
+//     opacity: 1;
+//   }
+// }
+
+// .carousel-control-prev-icon,
+// .carousel-control-next-icon {
+//   background-color: rgba(0, 0, 0, 0.5);
+//   border-radius: 50%;
+//   padding: 1rem;
+// }
+
+.img-cover {
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  display: block;
+}
+
+.card-img-top-container {
+  height: 220px;
+  overflow: hidden;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+// SUGERENCIA: Centralizar utilidades neon y hover-scale en un solo archivo si se detectan duplicidades en otros SCSS.
+// Las clases .text-neon-*, .header-neon-*, .border-neon-* ya están importadas desde base.
+// Si se agregan variantes nuevas, definirlas en base/_text.scss y base/_borders.scss.

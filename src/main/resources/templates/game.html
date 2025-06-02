@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Breakout!</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Estilos mínimos para animaciones de bordes -->
-    <link rel="stylesheet" th:href="@{css/game.css}">
-    <link rel="stylesheet" th:href="@{css/animations.css}">
+    <link rel="icon" type="image/png" th:href="@{img/logo.png}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{css/game.css}" rel="stylesheet">
+    <title>Breakout!</title>
 </head>
 <body class="bg-dark text-white overflow-hidden">
     <div class="container-fluid p-0">
@@ -33,61 +28,48 @@
             <!-- Panel lateral - 3 columnas -->
             <div class="col-3 p-2 h-100 bg-black overflow-hidden d-flex flex-column">
                 <!-- Información -->
-                <fieldset class="animated-card">
-                    <span class="top"></span>
-                    <span class="right"></span>
-                    <span class="bottom"></span>
-                    <span class="left"></span>
-                    <h4 class="mb-1 text-center fw-bold border-bottom pb-2 mb-3">Información</h4>
+                <fieldset class="border-neon-blue mb-3 p-3">
+                    <h4 class="mb-1 text-center fw-bold border-bottom pb-2 mb-3 header-neon-blue">Información</h4>
                     <!-- Vidas -->
                     <div class="d-flex align-items-center justify-content-center my-1">
                         <img th:src="@{/img/vida.svg}" alt="Vida" class="me-2 icon-30" width="35" height="35"/>
-                        <h1 id="vidas" class="fs-4 m-0">Lives</h1>
+                        <h1 id="vidas" class="fs-4 m-0 text-neon-blue-sm">Lives</h1>
                     </div>
                     <!-- Puntos -->
                     <div class="d-flex align-items-center justify-content-center my-2">
                         <img th:src="@{/img/puntuacion.svg}" alt="Puntuacion" class="me-2 icon-30" width="35" height="35"/>
-                        <h1 id="puntos" class="fs-4 m-0">Points</h1>
+                        <h1 id="puntos" class="fs-4 m-0 text-neon-blue-sm">Points</h1>
                     </div>
                     <!-- Bloques destruidos -->
                     <div class="d-flex align-items-center justify-content-center my-2">
                         <img th:src="@{/img/bloque.svg}" alt="BloquesDestruidos" class="me-2 icon-30" width="35" height="35"/>
-                        <h1 id="bloquesDestruidos" class="fs-4 m-0">Destroyed</h1>
+                        <h1 id="bloquesDestruidos" class="fs-4 m-0 text-neon-blue-sm">Destroyed</h1>
                     </div>              
                     <!-- Filas -->
                     <div class="d-flex align-items-center justify-content-center my-2">
                         <img th:src="@{/img/fila.svg}" alt="Fila" class="me-2 icon-30" width="35" height="35"/>
-                        <h1 id="filas" class="fs-4 m-0">Rows</h1>
+                        <h1 id="filas" class="fs-4 m-0 text-neon-blue-sm">Rows</h1>
                     </div>
                     <!-- Columnas -->
                     <div class="d-flex align-items-center justify-content-center my-2">
                         <img th:src="@{/img/columna.svg}" alt="Columna" class="me-2 icon-30" width="35" height="35"/>
-                        <h1 id="columnas" class="fs-4 m-0">Columns</h1>
+                        <h1 id="columnas" class="fs-4 m-0 text-neon-blue-sm">Columns</h1>
                     </div>
                 </fieldset>
                 
                 <!-- Poder -->
-                <fieldset class="animated-card">
-                    <span class="top"></span>
-                    <span class="right"></span>
-                    <span class="bottom"></span>
-                    <span class="left"></span>
-                    <h4 class="mb-1 text-center fw-bold border-bottom pb-2 mb-3">Poder</h4>
-                    <h1 id="poderTxt" class="text-center my-3 text-white">Nada</h1>
+                <fieldset class="border-neon-red mb-3 p-3">
+                    <h4 class="mb-1 text-center fw-bold border-bottom pb-2 mb-3 header-neon-red">Poder</h4>
+                    <h1 id="poderTxt" class="text-center my-3 text-neon-red-sm">Nada</h1>
                 </fieldset>
                 
                 <!-- Opciones -->
-                <fieldset class="animated-card">
-                    <span class="top"></span>
-                    <span class="right"></span>
-                    <span class="bottom"></span>
-                    <span class="left"></span>
-                    <h4 class="mb-1 text-center fw-bold border-bottom pb-2 mb-3">Opciones</h4>
-                    <!-- TODO Arreglar botones -->
+                <fieldset class="border-neon-green mb-3 p-3">
+                    <h4 class="mb-1 text-center fw-bold border-bottom pb-2 mb-3 header-neon-green">Opciones</h4>
                     <div class="d-flex justify-content-around py-3">
-                        <button id="reanudar" onclick="reanudar()" class="mx-2 bg-transparent border-0 game-button" data-icon="reanudar"></button>
-                        <button id="pausar" onclick="pausar()" class="mx-2 bg-transparent border-0 game-button" data-icon="pausar"></button>
-                        <button id="clasificacion" onclick="verRanking()" class="mx-2 bg-transparent border-0 game-button" data-icon="ranking"></button>
+                        <button id="reanudar" onclick="reanudar()" class="mx-2 bg-transparent border-0 game-button"></button>
+                        <button id="pausar" onclick="pausar()" class="mx-2 bg-transparent border-0 game-button"></button>
+                        <button id="clasificacion" onclick="verRanking()" class="mx-2 bg-transparent border-0 game-button"></button>
                     </div>
                 </fieldset>
             </div>

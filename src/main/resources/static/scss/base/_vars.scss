@@ -1,26 +1,29 @@
-// Variables de colores para animaciones
-// Usando nombres descriptivos y consistentes
+// Paleta mínima de colores retro/neón para efectos visuales únicos
+$red:      #ff1744; // Vibrant neon red
+$blue:     #00bfff; // Electric blue
+$green:    #00ff90; // Arcade green
+$yellow:   #ffe600; // Highlighter yellow
+$purple:   #a259ff; // Retro purple
+$cyan:     #00fff7; // Neon cyan
+$pink:     #ff4fd8; // Neon pink
+$orange:   #ff9100; // Vibrant orange
+$black:    #000000; // Black
+$white:    #ffffff; // White
+$blackAlt: #1e1e1e; // Alternate black
 
-// Colores primarios
-$azulPrimario: #4499ff;
-$azulSecundario: #00ddff;
-$rojoPrimario: #ff4949;
-$rojoSecundario: #ff7070;
-$verdePrimario: #49ff49;
-$verdeSecundario: #70ff70;
-$amarilloPrimario: #ffeb3b;
-$amarilloSecundario: #ffcc00;
-$moradoPrimario: #9c27b0;
-$moradoSecundario: #ba68c8;
-
-// Colores de fondo
-$bgDark: #1e1e1e;
-$bgDarkAlt: rgba(30, 30, 30, 0.6);
-$bgLight: #fff;
-
-// Valores de animación
+// Variables de animación (solo si se usan en efectos)
 $animationDuration: 4s;
-$flowDuration: 1.5s;
 $pulseRate: 2s;
+$flowDuration: 1.5s;
 $borderRadius: 0.25rem;
 $borderWidth: 2px;
+
+$body-bg: $black !default;
+$body-color: $white !default;
+
+.hover-scale {
+    transition: transform 0.3s ease;
+    &:hover {
+        transform: scale(1.05);
+    }
+}

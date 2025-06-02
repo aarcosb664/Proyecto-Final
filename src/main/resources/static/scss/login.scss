@@ -1,0 +1,80 @@
+@use 'globals';
+@use 'base' as *;
+
+body {
+  padding-top: 0 !important;
+}
+
+// Video background
+.video-background {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1;
+  object-fit: cover;
+}
+
+// Content container
+.login-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+}
+
+// Divider
+hr {
+  clear: both;
+  margin: 20px 0;
+  border: 0;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.75),
+    rgba(0, 0, 0, 0)
+  );
+}
+
+// Password toggle
+.password-toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 35px;
+  top: 50%;
+  transform: translateY(-60%);
+  font-size: 1.4rem;
+  color: $blackAlt;
+  cursor: pointer;
+  z-index: 100;
+  transition: color 0.3s;
+
+  &:hover {
+    color: $black;
+  }
+}
+
+.form-floating .password-toggle-icon {
+  top: 32px;
+}
+
+// Hide default password reveal buttons
+input[type="password"] {
+  &::-ms-reveal,
+  &::-ms-clear,
+  &::-webkit-credentials-auto-fill-button {
+    display: none !important;
+  }
+}
+
+body {
+  padding-top: 0 !important;
+}
