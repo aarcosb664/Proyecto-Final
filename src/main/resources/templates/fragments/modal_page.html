@@ -1,0 +1,29 @@
+<div th:fragment="modal_page" class="modal fade" id="pageNumber" tabindex="-1" aria-labelledby="pageNumber" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 bg-black border-neon-white text-neon-white">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="pageNumber">Go to page...</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form th:action="@{/community(page=${page})}" method="GET">
+                    <div class="modal-grid">
+                        <div class="border-neon-blue-sm text-neon-blue text-center p-1">
+                            Min: 1
+                        </div>
+
+                        <input type="number" class="form-control form-custom p-2" name="page" placeholder="Page number"
+                               th:value="${page}" min="1" th:attr="max=${listings.totalPages}" required>
+
+                        <div class="border-neon-red-sm text-neon-red text-center p-1">
+                            Max: <span th:text="${listings.totalPages}"></span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-neon-green text-neon-white mt-3 w-100">Go</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

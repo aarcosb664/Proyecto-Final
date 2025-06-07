@@ -2,62 +2,53 @@
 @use 'mixins' as *;
 
 // Neon text utilities
-.text-neon-red    { @include text-neon($red); }
-.text-neon-blue   { @include text-neon($blue); }
-.text-neon-green  { @include text-neon($green); }
-.text-neon-yellow { @include text-neon($yellow); }
-.text-neon-purple { @include text-neon($purple); }
-.text-neon-orange { @include text-neon($orange); }
-.text-neon-cyan   { @include text-neon($cyan); }
-.text-neon-pink   { @include text-neon($pink); }
-.text-neon-white  { @include text-neon($white); }
-.text-neon-black  { @include text-neon($black); }
-.text-neon-blackalt { @include text-neon($blackAlt); }
+.text-neon-red      { @include text-neon($red);      }
+.text-neon-blue     { @include text-neon($blue);     }
+.text-neon-green    { @include text-neon($green);    }
+.text-neon-yellow   { @include text-neon($yellow);   }
+.text-neon-purple   { @include text-neon($purple);   }
+.text-neon-orange   { @include text-neon($orange);   }
+.text-neon-cyan     { @include text-neon($cyan);     }
+.text-neon-pink     { @include text-neon($pink);     }
+.text-neon-white    { @include text-neon($white);    }
+.text-neon-black    { @include text-neon($black);    }
+.text-neon-gray     { @include text-neon($gray);     }
 
 // Neon text small utilities
-.text-neon-red-sm    { @include text-neon-sm($red); }
-.text-neon-blue-sm   { @include text-neon-sm($blue); }
-.text-neon-green-sm  { @include text-neon-sm($green); }
-.text-neon-yellow-sm { @include text-neon-sm($yellow); }
-.text-neon-purple-sm { @include text-neon-sm($purple); }
-.text-neon-orange-sm { @include text-neon-sm($orange); }
-.text-neon-cyan-sm   { @include text-neon-sm($cyan); }
-.text-neon-pink-sm   { @include text-neon-sm($pink); }
-.text-neon-white-sm  { @include text-neon-sm($white); }
-.text-neon-black-sm  { @include text-neon-sm($black); }
-.text-neon-blackalt-sm { @include text-neon-sm($blackAlt); }
-
+.text-neon-red-sm      { @include text-neon-sm($red);      }
+.text-neon-blue-sm     { @include text-neon-sm($blue);     }
+.text-neon-green-sm    { @include text-neon-sm($green);    }
+.text-neon-yellow-sm   { @include text-neon-sm($yellow);   }
+.text-neon-purple-sm   { @include text-neon-sm($purple);   }
+.text-neon-orange-sm   { @include text-neon-sm($orange);   }
+.text-neon-cyan-sm     { @include text-neon-sm($cyan);     }
+.text-neon-pink-sm     { @include text-neon-sm($pink);     }
+.text-neon-white-sm    { @include text-neon-sm($white);    }
+.text-neon-black-sm    { @include text-neon-sm($black);    }
+.text-neon-gray-sm     { @include text-neon-sm($gray);     }
 
 // Neon header utilities
-.header-neon-red    { @include header-neon($red); }
-.header-neon-blue   { @include header-neon($blue); }
-.header-neon-green  { @include header-neon($green); }
-.header-neon-yellow { @include header-neon($yellow); }
-.header-neon-purple { @include header-neon($purple); }
-.header-neon-orange { @include header-neon($orange); }
-.header-neon-cyan   { @include header-neon($cyan); }
-.header-neon-pink   { @include header-neon($pink); }
-.header-neon-white  { @include header-neon($white); }
-.header-neon-black  { @include header-neon($black); }
-.header-neon-blackalt { @include header-neon($blackAlt); }
+.header-neon-red      { @include header-neon($red);      }
+.header-neon-blue     { @include header-neon($blue);     }
+.header-neon-green    { @include header-neon($green);    }
+.header-neon-yellow   { @include header-neon($yellow);   }
+.header-neon-purple   { @include header-neon($purple);   }
+.header-neon-orange   { @include header-neon($orange);   }
+.header-neon-cyan     { @include header-neon($cyan);     }
+.header-neon-pink     { @include header-neon($pink);     }
+.header-neon-white    { @include header-neon($white);    }
+.header-neon-black    { @include header-neon($black);    }
+.header-neon-gray     { @include header-neon($gray);     }
 
 // Neon header small utilities
-.header-neon-red-sm    { @include header-neon-sm($red); }
-.header-neon-blue-sm   { @include header-neon-sm($blue); }
-.header-neon-green-sm  { @include header-neon-sm($green); }
-.header-neon-yellow-sm { @include header-neon-sm($yellow); }
-.header-neon-purple-sm { @include header-neon-sm($purple); }
-.header-neon-orange-sm { @include header-neon-sm($orange); }
-.header-neon-cyan-sm   { @include header-neon-sm($cyan); }
-.header-neon-pink-sm   { @include header-neon-sm($pink); }
-.header-neon-white-sm  { @include header-neon-sm($white); }
-.header-neon-black-sm  { @include header-neon-sm($black); }
-.header-neon-blackalt-sm { @include header-neon-sm($blackAlt); }
-
-// Bootstrap override for headers (h1-h6)
-h1, h2, h3, h4, h5, h6 {
-  font-family: inherit;
-  font-weight: bold;
-  letter-spacing: 1px;
-  line-height: 1.1;
-}
+.header-neon-red-sm      { @include header-neon-sm($red);      }
+.header-neon-blue-sm     { @include header-neon-sm($blue);     }
+.header-neon-green-sm    { @include header-neon-sm($green);    }
+.header-neon-yellow-sm   { @include header-neon-sm($yellow);   }
+.header-neon-purple-sm   { @include header-neon-sm($purple);   }
+.header-neon-orange-sm   { @include header-neon-sm($orange);   }
+.header-neon-cyan-sm     { @include header-neon-sm($cyan);     }
+.header-neon-pink-sm     { @include header-neon-sm($pink);     }
+.header-neon-white-sm    { @include header-neon-sm($white);    }
+.header-neon-black-sm    { @include header-neon-sm($black);    }
+.header-neon-gray-sm     { @include header-neon-sm($gray);     }

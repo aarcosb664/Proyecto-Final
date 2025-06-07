@@ -1,0 +1,40 @@
+<nav th:fragment="pagination" aria-label="Pagination" th:if="${listings.totalPages > 0}">
+    <ul class="pagination justify-content-center mt-3">
+        <!-- Primera página -->
+        <li class="page-item" th:classappend="${listings.number + 1 == 1} ? 'disabled'">
+            <a class="page-link page-arrow" th:href="@{/community(page=1)}" aria-label="First">&laquo;</a>
+        </li>
+
+        <!-- Anterior -->
+        <li class="page-item" th:classappend="${listings.number + 1 == 1} ? 'disabled'">
+            <a class="page-link page-arrow" th:href="@{/community(page=${listings.number})}" aria-label="Previous">Prev</a>
+        </li>
+
+        <!-- Ir a página -->
+        <li class="page-item" th:if="${listings.number + 1 - 2 > 1}">
+            <button class="page-link" data-bs-toggle="modal" data-bs-target="#pageNumber">...</button>
+        </li>
+
+        <!-- Páginas alrededor de la actual -->
+        <li class="page-item"
+            th:each="page : ${#numbers.sequence(listings.number + 1 > 2 ? listings.number + 1 - 2 : 1, listings.number + 1 + 2 < listings.totalPages ? listings.number + 1 + 2 : listings.totalPages)}"
+            th:classappend="${page == listings.number + 1} ? 'active'">
+            <a class="page-link" th:href="@{/community(page=${page})}" th:text="${page}"></a>
+        </li>
+
+        <!-- Ir a página -->
+        <li class="page-item" th:if="${listings.number + 1 + 2 < listings.totalPages}">
+            <button class="page-link" data-bs-toggle="modal" data-bs-target="#pageNumber">...</button>
+        </li>
+
+        <!-- Siguiente -->
+        <li class="page-item font-weight-bold" th:classappend="${listings.number + 1 == listings.totalPages} ? 'disabled'">
+            <a class="page-link page-arrow" th:href="@{/community(page=${listings.number + 2})}" aria-label="Next">Next</a>
+        </li>
+        
+        <!-- Última página -->
+        <li class="page-item" th:classappend="${listings.number + 1 == listings.totalPages} ? 'disabled'">
+            <a class="page-link page-arrow" th:href="@{/community(page=${listings.totalPages})}" aria-label="Last">&raquo;</a>
+        </li>
+    </ul>
+</nav>

@@ -43,8 +43,9 @@
                                         <tr>
                                             <th>Contacto</th>
                                             <td>
-                                                <div><b>Email:</b> <span th:text="${listing.user.email  }">email@example.com</span></div>
-                                                <div><b>Teléfono:</b> <span th:text="${listing.user.phone}">123456789</span></div>
+                                                <div th:if="${listingUser != null && listingUser.email != null}"><b>Email:</b> <span th:text="${listingUser.email}">email@example.com</span></div>
+                                                <!-- Si tienes un campo phone, descomenta la siguiente línea -->
+                                                <!-- <div th:if="${listingUser != null && listingUser.phone != null}"><b>Teléfono:</b> <span th:text="${listingUser.phone}">123456789</span></div> -->
                                             </td>
                                         </tr>
                                         <tr>

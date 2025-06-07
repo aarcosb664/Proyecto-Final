@@ -11,6 +11,9 @@ import java.util.List;
 public interface ListingRepository extends JpaRepository<Listing, Long> {
     List<Listing> findByUserId(Long userId);
 
+    @Query("SELECT COUNT(c) FROM Comment c WHERE c.listingId = :listingId")
+    Long countCommentsByListingId(@Param("listingId") Long listingId);
+
     @Query("SELECT s FROM Listing s JOIN s.tags t WHERE t = LOWER(:tag)")
     List<Listing> retrieveByTag(@Param("tag") String tag);
 

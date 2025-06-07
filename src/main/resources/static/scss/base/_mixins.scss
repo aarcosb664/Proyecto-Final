@@ -1,9 +1,34 @@
 @use 'vars' as *;
 
 // Mixin para botones con efectos
-@mixin btn-custom {
-    transition: all 0.3s ease;
-    &:hover { transform: scale(1.05); }
+@mixin btn-base($bgcolor, $color) {
+  box-sizing: border-box;
+  background-color: rgba($bgcolor, 0.8) !important;
+  color: $color !important;
+  padding: 8px 16px;
+  border: none !important;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  @include btn-scale;
+}
+
+@mixin btn-scale {
+  transition: all 0.3s ease;
+  &:hover {
+    transform: scale(1.03);
+  }
+}
+
+@mixin btn-neon($bgcolor, $color) {
+  @include btn-base($bgcolor, $color);
+  @include border-neon-sm($bgcolor);
+}
+
+@mixin btn-outline-neon($bgcolor, $color) {
+  @include btn-base(transparent, $color);
+  @include border-neon-sm($bgcolor);
 }
 
 @mixin border-neon($color) {
@@ -11,63 +36,79 @@
   background: transparent;
   box-shadow:
     0 0 0 2px rgba(0,0,0,0.18),
-    0 0 0.7rem $color,
-    0 0 1.2rem $color;
-  animation: borderNeonPulse 2.2s ease-in-out infinite;
+    0 0 0.5rem $color,
+    0 0 1rem $color;
+  animation: borderNeonPulse 2.5s ease-in-out infinite;
   --pulse-color: #{$color};
+}
+
+@mixin border-neon-sm($color) {
+  @include border-neon($color);
+  border-width: 1px;
+  box-shadow:
+    0 0 0 2px rgba(0,0,0,0.18),
+    0 0 0.35rem $color,
+    0 0 0.75rem $color !important;
 }
 
 @keyframes borderNeonPulse {
   0%, 100% {
     box-shadow:
       0 0 0 2px rgba(0,0,0,0.18),
-      0 0 0.7rem var(--pulse-color, #fff),
-      0 0 1.2rem var(--pulse-color, #fff);
-    border-width: 3px;
+      0 0 0.5rem var(--pulse-color, #fff),
+      0 0 1rem var(--pulse-color, #fff);
   }
   50% {
     box-shadow:
       0 0 0 4px rgba(0,0,0,0.22),
-      0 0 1.2rem var(--pulse-color, #fff),
-      0 0 1.7rem var(--pulse-color, #fff);
-    border-width: 4px;
+      0 0 0.8rem var(--pulse-color, #fff),
+      0 0 1.5rem var(--pulse-color, #fff);
   }
 }
 
+// Textos con brillo sutil
 @mixin text-neon($color) {
   color: $color;
   text-shadow:
-    0 0 2px rgba($color, 0.7),
-    0 0 6px rgba($color, 0.4);
+    0 0 3px rgba($color, 0.4),
+    0 0 6px rgba($color, 0.2);
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
-// Mixin para header grande con glow fuerte
+@mixin text-neon-sm($color) {
+  color: $color;
+  text-shadow:
+    0 0 2px rgba($color, 0.4),
+    0 0 4px rgba($color, 0.2);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+// Headers con jerarquía clara
 @mixin header-neon($color) {
   color: $color;
   text-shadow:
-    0 0 3px rgba($color, 0.8),
-    0 0 10px rgba($color, 0.5);
-  font-size: 2.5rem;
-  font-weight: bold;
-  letter-spacing: 1px;
-  line-height: 1.1;
+    0 0 6px rgba($color, 0.5),
+    0 0 12px rgba($color, 0.25);
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
 }
 
 @mixin header-neon-sm($color) {
   color: $color;
   text-shadow:
-    0 0 1px rgba($color, 0.6),
-    0 0 3px rgba($color, 0.3);
+    0 0 4px rgba($color, 0.4),
+    0 0 8px rgba($color, 0.2);
   font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.3;
 }
 
-// Mixin para texto pequeño con glow sutil
-@mixin text-neon-sm($color) {
-  color: $color;
-  text-shadow:
-    0 0 1px rgba($color, 0.6),
-    0 0 3px rgba($color, 0.3);
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: 0.5px;
+@mixin bg($color) {
+  background-color: $color;
 }

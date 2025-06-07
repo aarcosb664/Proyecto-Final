@@ -1,73 +1,35 @@
 @use 'globals';
 @use 'base' as *;
+@use 'base/vars' as *;
+@use 'base/mixins' as *;
 
-// .carousel-container {
-//   background-color: $dark;
-//   min-height: 100%;
-//   padding: 0;
-//   margin: 0;
-//   position: relative;
-// }
+.form-custom {
+  @include text-neon($white);
+  @include border-neon-sm($white);
+  background-color: $black !important;
 
-// .carousel-container, 
-// .carousel-inner, 
-// .carousel-control-prev, 
-// .carousel-control-next,
-// .carousel-item {
-//   min-height: 300px;
-// }
+  &::placeholder {
+    @include text-neon($gray);
+  }
 
-// .carousel-item {
-//   transition: opacity 0.2s linear;
-  
-//   &.active {
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//   }
-// }
+  &:focus, 
+  &:hover {
+    @include border-neon-sm($gray);
+    @include text-neon($white);
+  }
+}
 
-// .img-carousel {
-//   height: 100%;
-//   width: 100%;
-//   max-width: 100%;
-//   object-fit: cover;
-//   display: block;
-//   margin: 0 auto;
-//   background: $dark;
-// }
+.card {
+  height: 500px;
+  overflow: hidden;
 
-// .carousel-control-prev,
-// .carousel-control-next {
-//   z-index: 5;
-//   width: 10%;
-//   opacity: 0.8;
-  
-//   &:hover {
-//     opacity: 1;
-//   }
-// }
-
-// .carousel-control-prev-icon,
-// .carousel-control-next-icon {
-//   background-color: rgba(0, 0, 0, 0.5);
-//   border-radius: 50%;
-//   padding: 1rem;
-// }
-
-.img-cover {
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  width: 100%;
-  display: block;
+  * {
+    transition: transform 0.3s ease-in-out;
+  }
 }
 
 .card-img-top-container {
-  height: 220px;
-  overflow: hidden;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  height: 200px;
 }
 
 .card-img-top {
@@ -78,6 +40,83 @@
   display: block;
 }
 
-// SUGERENCIA: Centralizar utilidades neon y hover-scale en un solo archivo si se detectan duplicidades en otros SCSS.
-// Las clases .text-neon-*, .header-neon-*, .border-neon-* ya están importadas desde base.
-// Si se agregan variantes nuevas, definirlas en base/_text.scss y base/_borders.scss.
+.card:hover {
+  .card-img-top-container {
+    transform: translateY(150%);
+    display: flex;
+    overflow: visible;
+    flex-direction: column;
+    border: none !important;
+  }
+
+  .card-body,
+  .card-footer {
+    transform: translateY(150%);
+  }
+}
+
+.grid-tags {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.tag {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.page-link {
+  @include text-neon($white);
+  background-color: $black !important;
+
+  &:hover, 
+  &:focus {
+    @include text-neon($cyan);
+    border: 1px $cyan solid;
+  }
+}
+
+.page-item.active .page-link {
+  @include border-neon-sm($blue);
+  @include text-neon($blue);
+}
+
+.page-item.disabled .page-link {
+  color: $gray !important;
+  border-color: $gray !important;
+}
+
+.modal-grid {
+  width: 100%;
+  display: inline-grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  justify-items: space-between;
+  gap: 1rem;
+
+  .form-custom {
+    text-align: center !important;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    &[type=number] {
+      appearance: textfield;
+      -moz-appearance: textfield;
+    }
+  }
+}
+
+.label-required {
+  &::before {
+    content: "*";
+    color: $red;
+    margin-right: 0.25rem;
+  }
+}

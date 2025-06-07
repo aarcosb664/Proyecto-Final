@@ -18,6 +18,16 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_name")
+    @NotBlank(message = "User name is required")
+    @Size(min = 1, max = 250, message = "The user name must be between 1 and 250 characters")
+    private String userName;
+
+    @Column(name = "title")
+    @NotBlank(message = "Title is required")
+    @Size(min = 1, max = 250, message = "The title must be between 1 and 250 characters")
+    private String title;
+
     @Column(name = "text", columnDefinition = "TEXT")
     @NotBlank(message = "Comment text is required")
     @Size(min = 1, max = 250, message = "The comment must be between 1 and 250 characters")

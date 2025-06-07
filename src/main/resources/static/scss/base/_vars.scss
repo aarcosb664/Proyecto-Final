@@ -9,17 +9,14 @@ $pink:     #ff4fd8; // Neon pink
 $orange:   #ff9100; // Vibrant orange
 $black:    #000000; // Black
 $white:    #ffffff; // White
-$blackAlt: #1e1e1e; // Alternate black
+$gray:     #888888; // Gray
 
-// Variables de animación (solo si se usan en efectos)
-$animationDuration: 4s;
-$pulseRate: 2s;
-$flowDuration: 1.5s;
-$borderRadius: 0.25rem;
-$borderWidth: 2px;
-
-$body-bg: $black !default;
-$body-color: $white !default;
+.header-retro {
+    font-family: 'Press Start 2P', monospace;
+    color: #0ff;
+    text-shadow: 0 0 8px #0ff, 0 0 20px #00f;
+    animation: pulse-glow 2s infinite;
+}
 
 .hover-scale {
     transition: transform 0.3s ease;

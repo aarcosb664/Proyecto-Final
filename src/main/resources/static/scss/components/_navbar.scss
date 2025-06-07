@@ -1,6 +1,5 @@
 @use 'sass:color';
 @use '../base' as *;
-// ... estilos de navbar movidos desde index.scss ...
 
 .navbar.border-bottom-custom {
   position: relative;
@@ -22,34 +21,6 @@
     pointer-events: none;
   }
   
-  .navbar-top-row {
-    flex-wrap: nowrap;
-    min-height: 56px;
-  }
-  
-  .navbar-brand {
-    font-weight: bold;
-    color: #fff;
-    margin: 0;
-    text-align: center;
-    
-    @media (min-width: 992px) {
-      margin-right: 1rem;
-      text-align: left;
-    }
-    
-    @media (max-width: 991px) {
-      position: static;
-      flex: 1;
-      display: flex;
-      justify-content: center;
-    }
-    
-    span {
-      margin-left: 5px;
-    }
-  }
-  
   .navbar-toggler {
     border-color: $blue;
     padding: 0.4rem 0.6rem;
@@ -61,26 +32,19 @@
     
     .navbar-toggler-icon {
       background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.5' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-      width: 1.4em;
-      height: 1.4em;
+      width: 1.5em;
+      height: 1.5em;
     }
   }
   
   .navbar-collapse {
-    transition: height 0.3s ease;
+    transition: all 0.4s;
     
     @media (max-width: 991px) {
-      background-color: rgba(0,0,0,0.98);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
       border: 1px solid $blue;
       border-radius: 8px;
       padding: 15px;
       margin-top: 0.5rem !important;
-    }
-    
-    @media (min-width: 992px) {
-      display: flex !important;
-      align-items: center;
     }
   }
   
@@ -112,43 +76,26 @@
     }
   }
   
-  .btn-success {
-    background-color: $green;
-    border-color: $green;
-    transition: all 0.3s;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    
-    &:hover {
-      background-color: color.adjust($green, $lightness: -10%);
-      border-color: color.adjust($green, $lightness: -10%);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    
-    &:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-  }
-  
   .dropdown {
     .dropdown-toggle {
-      color: #fff;
-      
+      color: $blue;
+      transition: color 0.3s;
+
       &::after {
-        margin-left: 8px;
-        vertical-align: 0.15em;
-        opacity: 0.7;
+        margin-top: 5px;
+        margin-left: 10px;
+        font-size: 1.5rem;
       }
-      
-      &.mobile-profile-link::after {
-        margin-left: 6px;
-        border-top: 0.4em solid;
-        border-right: 0.4em solid transparent;
-        border-left: 0.4em solid transparent;
-        vertical-align: 0.2em;
-        opacity: 1;
+    }
+
+    &:hover {
+      .dropdown-toggle {
+        color: $pink;
+      }
+
+      img.rounded-circle {
+        border-color: $pink;
+        transform: scale(1.05);
       }
     }
     
@@ -157,17 +104,18 @@
       transition: border-color 0.3s, transform 0.3s;
     }
     
-    a:hover img.rounded-circle {
-      border-color: $blue;
-      transform: scale(1.05);
-    }
-    
     .dropdown-menu {
+      position: absolute;
       background-color: #000;
       border: 1px solid $blue;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
       margin-top: 10px;
       animation: navbarDropdownIn 0.2s ease-out;
+
+      @media (max-width: 991px) {
+        left: auto;
+        right: 0;
+      }
       
       .dropdown-item {
         color: #fff;
@@ -178,43 +126,26 @@
       }
       
       .dropdown-divider {
-        border-color: rgba(255,255,255,0.1);
+        border-color: $blue;
       }
       
       .btn-link {
         color: $red;
         
         &:hover {
-          color: color.adjust($red, $lightness: -10%);
+          color: rgba($red, 0.8);
         }
       }
     }
   }
   
   @media (max-width: 991px) {
-    .navbar-nav {
-      padding: 10px 0;
-      
-      .nav-item {
-        margin: 8px 0;
+    .navbar-nav .nav-item {
+      margin: 8px 0;
+      text-align: center;
         
-        .nav-link {
-          padding: 10px;
-          border-radius: 8px;
-          text-align: center;
-          transition: background-color 0.2s;
-          
-          &:hover {
-            background-color: rgba($blue, 0.1);
-            transform: none;
-          }
-          
-          &.active::after {
-            bottom: 0;
-            width: 30%;
-            left: 35%;
-          }
-        }
+      &:hover {
+        background-color: rgba($blue, 0.1);
       }
     }
   }
@@ -225,25 +156,10 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes borderFlow {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: 0 0;
-  }
-}
-
 .navbar.fixed-top {
   position: fixed;
   top: 0;
-  right: 0;
   left: 0;
-  z-index: 1030;
-  width: 100%;
-  background-color: rgba(#000, 0.95);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
 }
 
 .border-bottom-animated {
@@ -265,3 +181,12 @@
     animation: borderFlow 3s infinite linear;
   }
 } 
+
+@keyframes borderFlow {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}

@@ -1,0 +1,15 @@
+@use 'vars' as *;
+@use 'mixins' as *;
+
+// Background utilities
+.bg-red    { @include bg($red);    }
+.bg-blue   { @include bg($blue);   }
+.bg-green  { @include bg($green);  }
+.bg-yellow { @include bg($yellow); }
+.bg-purple { @include bg($purple); }
+.bg-cyan   { @include bg($cyan);   }
+.bg-pink   { @include bg($pink);   }
+.bg-orange { @include bg($orange); }
+.bg-white  { @include bg($white);  }
+.bg-black  { @include bg($black);  }
+.bg-gray   { @include bg($gray);   }

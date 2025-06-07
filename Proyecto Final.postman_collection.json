@@ -111,159 +111,128 @@
 						"header": [],
 						"url": {
 							"raw": "http://localhost:8080/api/community",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"community"
-							]
+							"host": ["http://localhost:8080"],
+							"path": ["api", "community"]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Get A Listing",
+					"name": "Get Listing by ID",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/community/listing/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"community",
-								"listing",
-								"1"
-							]
+							"raw": "http://localhost:8080/api/community/listing/:id",
+							"host": ["http://localhost:8080"],
+							"path": ["api", "community", "listing", ":id"]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Get Listings By User",
+					"name": "Get Listings by User",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/community/user/1/listings",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"community",
-								"user",
-								"1",
-								"listings"
-							]
+							"raw": "http://localhost:8080/api/community/user/:userId/listings",
+							"host": ["http://localhost:8080"],
+							"path": ["api", "community", "user", ":userId", "listings"]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Post Listing",
+					"name": "Create Listing (multipart/form-data)",
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+							{ "key": "Content-Type", "value": "multipart/form-data" }
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Test Listing\",\n    \"description\": \"Test Description\",\n    \"images\": [\"img1.jpg\", \"img2.jpg\"],\n    \"tags\": [\"tag1\", \"tag2\"],\n    \"userId\": 1\n}"
+							"mode": "formdata",
+							"formdata": [
+								{ "key": "title", "value": "Test Listing", "type": "text" },
+								{ "key": "description", "value": "This is a test listing with a long enough description.", "type": "text" },
+								{ "key": "tags", "value": "tag1,tag2,tag3", "type": "text" },
+								{ "key": "images", "type": "file", "src": "" },
+								{ "key": "images", "type": "file", "src": "" },
+								{ "key": "images", "type": "file", "src": "" },
+								{ "key": "video", "type": "file", "src": "" }
+							]
 						},
 						"url": {
 							"raw": "http://localhost:8080/api/community/listing/create",
-							"protocol": "http",
-							"host": ["localhost"],
-							"port": "8080",
+							"host": ["http://localhost:8080"],
 							"path": ["api", "community", "listing", "create"]
-						}
+						},
+						"description": "Crea un nuevo listing con imágenes y video. Usa multipart/form-data. El campo images acepta múltiples archivos."
 					},
 					"response": []
 				},
 				{
-					"name": "Update Listing",
+					"name": "Update Listing (multipart/form-data)",
 					"request": {
 						"method": "POST",
 						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+							{ "key": "Content-Type", "value": "multipart/form-data" }
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Título Actualizado\",\n    \"description\": \"Descripción actualizada\",\n    \"images\": [\"imagen1.jpg\"]\n}"
+							"mode": "formdata",
+							"formdata": [
+								{ "key": "title", "value": "Updated Listing", "type": "text" },
+								{ "key": "description", "value": "Updated description for the listing.", "type": "text" },
+								{ "key": "tags", "value": "tag1,tag2", "type": "text" },
+								{ "key": "images", "type": "file", "src": "" },
+								{ "key": "video", "type": "file", "src": "" }
+							]
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/community/listing/1/update",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"community",
-								"listing",
-								"1",
-								"update"
-							]
-						}
+							"raw": "http://localhost:8080/api/community/listing/:id/update",
+							"host": ["http://localhost:8080"],
+							"path": ["api", "community", "listing", ":id", "update"]
+						},
+						"description": "Actualiza un listing existente. Puedes enviar nuevas imágenes y video. Usa multipart/form-data."
 					},
 					"response": []
 				},
 				{
-					"name": "Delete Listing",
+					"name": "Remove Listing",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/community/listing/1/remove",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"community",
-								"listing",
-								"1",
-								"remove"
-							]
+							"raw": "http://localhost:8080/api/community/listing/:id/remove",
+							"host": ["http://localhost:8080"],
+							"path": ["api", "community", "listing", ":id", "remove"]
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "Ratings",
+			"item": [
 				{
 					"name": "Rate Listing",
 					"request": {
 						"method": "POST",
 						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/community/listing/1/rate?userId=1&ratingValue=5",
-							"protocol": "http",
-							"host": ["localhost"],
-							"port": "8080",
-							"path": ["api", "community", "listing", "1", "rate"],
-							"query": [
-								{"key": "userId", "value": "1"},
-								{"key": "ratingValue", "value": "5"}
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{ "key": "userId", "value": "1", "type": "text" },
+								{ "key": "ratingValue", "value": "4.5", "type": "text" }
 							]
-						}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/community/listing/:listingId/rate",
+							"host": ["http://localhost:8080"],
+							"path": ["api", "community", "listing", ":listingId", "rate"]
+						},
+						"description": "Valora un listing."
 					},
 					"response": []
 				},
@@ -273,19 +242,22 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/community/listing/1/rating",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"community",
-								"listing",
-								"1",
-								"rating"
-							]
+							"raw": "http://localhost:8080/api/community/listing/:listingId/rating",
+							"host": ["http://localhost:8080"],
+							"path": ["api", "community", "listing", ":listingId", "rating"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Rating",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/community/listing/:listingId/user/:userId/rating",
+							"host": ["http://localhost:8080"],
+							"path": ["api", "community", "listing", ":listingId", "user", ":userId", "rating"]
 						}
 					},
 					"response": []
@@ -301,68 +273,45 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/community/listing/1/comments",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"community",
-								"listing",
-								"1",
-								"comments"
-							]
+							"raw": "http://localhost:8080/api/community/listing/:listingId/comments",
+							"host": ["http://localhost:8080"],
+							"path": ["api", "community", "listing", ":listingId", "comments"]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Post Comment",
+					"name": "Add Comment",
 					"request": {
 						"method": "POST",
-						"header": [
-							{"key": "Content-Type", "value": "application/json"}
-						],
+						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"text\": \"Este es un comentario de prueba\"\n}"
+							"mode": "urlencoded",
+							"urlencoded": [
+								{ "key": "userId", "value": "1", "type": "text" },
+								{ "key": "text", "value": "Comentario de prueba", "type": "text" },
+								{ "key": "title", "value": "Título comentario", "type": "text" },
+								{ "key": "userName", "value": "Usuario", "type": "text" }
+							]
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/community/listing/1/comment?userId=1",
-							"protocol": "http",
-							"host": ["localhost"],
-							"port": "8080",
-							"path": ["api", "community", "listing", "1", "comment"],
-							"query": [
-								{"key": "userId", "value": "1"}
-							]
-						}
+							"raw": "http://localhost:8080/api/community/listing/:listingId/comment",
+							"host": ["http://localhost:8080"],
+							"path": ["api", "community", "listing", ":listingId", "comment"]
+						},
+						"description": "Añade un comentario a un listing."
 					},
 					"response": []
 				},
 				{
-					"name": "Delete Comment",
+					"name": "Remove Comment",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/community/listing/1/comment/1/remove",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"community",
-								"listing",
-								"1",
-								"comment",
-								"1",
-								"remove"
-							]
+							"raw": "http://localhost:8080/api/community/listing/:listingId/comment/:commentId/remove",
+							"host": ["http://localhost:8080"],
+							"path": ["api", "community", "listing", ":listingId", "comment", ":commentId", "remove"]
 						}
 					},
 					"response": []

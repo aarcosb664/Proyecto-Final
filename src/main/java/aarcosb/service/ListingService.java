@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
 @Service
 public class ListingService {
@@ -16,8 +18,8 @@ public class ListingService {
     @Autowired
     private ListingRepository listingRepository;
 
-    public List<Listing> getAllListings() {
-        return listingRepository.findAll();
+    public Page<Listing> getAllListings(Pageable pageable) {
+        return listingRepository.findAll(pageable);
     }
 
     public Listing getListingById(Long id) {
@@ -32,6 +34,7 @@ public class ListingService {
         Date now = new Date();
         listing.setCreatedAt(now);
         listing.setUpdatedAt(now);
+        listing.setRating(0.0);
         return listingRepository.save(listing);
     }
 
@@ -51,7 +54,7 @@ public class ListingService {
         }
 
         // Se comprueba que el formato de los tags es correcto
-        String regexp = "^\\S+(,\\s*\\S+){1-100}$";
+        String regexp = "^\\S+(,\\s*\\S+){1,100}$";
         if (!tags.matches(regexp)) {
             throw new IllegalArgumentException("The tags must have a length between 1 and 100, and separated by commas");
         }
@@ -69,5 +72,9 @@ public class ListingService {
         return Arrays.asList(tags.split(",")).stream()
                      .map(String::trim)
                      .collect(Collectors.toSet());
+    }
+
+    public Long countCommentsByListingId(Long listingId) {
+        return listingRepository.countCommentsByListingId(listingId);
     }
 } 

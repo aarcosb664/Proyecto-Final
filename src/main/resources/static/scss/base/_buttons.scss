@@ -1,0 +1,28 @@
+@use 'vars' as *;
+@use 'mixins' as *;
+
+// Botones neon
+.btn-neon-red      { @include btn-neon($red, $white);    }
+.btn-neon-blue     { @include btn-neon($blue, $white);   }
+.btn-neon-green    { @include btn-neon($green, $black);  }
+.btn-neon-yellow   { @include btn-neon($yellow, $black); }
+.btn-neon-purple   { @include btn-neon($purple, $white); }
+.btn-neon-cyan     { @include btn-neon($cyan, $black);   }
+.btn-neon-pink     { @include btn-neon($pink, $white);   }
+.btn-neon-orange   { @include btn-neon($orange, $white); }
+.btn-neon-white    { @include btn-neon($white, $black);  }
+.btn-neon-black    { @include btn-neon($black, $white);  }
+.btn-neon-gray     { @include btn-neon($gray, $white);   }
+
+// Botones neon outline
+.btn-outline-neon-red      { @include btn-outline-neon($red, $red);         }
+.btn-outline-neon-blue     { @include btn-outline-neon($blue, $blue);       }
+.btn-outline-neon-green    { @include btn-outline-neon($green, $green);     }
+.btn-outline-neon-yellow   { @include btn-outline-neon($yellow, $yellow);   }
+.btn-outline-neon-purple   { @include btn-outline-neon($purple, $purple);   }
+.btn-outline-neon-cyan     { @include btn-outline-neon($cyan, $cyan);       }
+.btn-outline-neon-pink     { @include btn-outline-neon($pink, $pink);       }
+.btn-outline-neon-orange   { @include btn-outline-neon($orange, $orange);   }
+.btn-outline-neon-white    { @include btn-outline-neon($white, $white);     }
+.btn-outline-neon-black    { @include btn-outline-neon($black, $black);     }
+.btn-outline-neon-gray     { @include btn-outline-neon($gray, $gray);       } 

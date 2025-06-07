@@ -1,25 +1,7 @@
 @use '../base' as *;
 
-// Aquí puedes agregar o reformar los estilos SCSS personalizados para el footer 
-
-.footer-main {
-  background: $black;
-  border-radius: 0;
-  box-shadow: none;
-  margin: 0;
-  padding-bottom: 0;
-}
-
 .footer-social {
   background: $purple;
-  .footer-social-icons a {
-    transition: transform 0.18s, color 0.18s;
-    color: $white;
-    &:hover {
-      transform: scale(1.18);
-      color: $yellow !important;
-    }
-  }
 }
 
 .footer-links {
@@ -28,19 +10,25 @@
     background: $purple;
     height: 2px;
     opacity: 0.7;
-    border: none;
     margin-bottom: 0.5rem;
   }
+
   h6 {
     letter-spacing: 1px;
     font-weight: 700;
     color: $blue;
     margin-bottom: 0.5rem;
+
+    @media (max-width: 768px) {
+      margin-top: 0.75rem;
+    }
   }
+  
   .footer-link {
     text-decoration: none;
-    transition: color 0.18s, transform 0.18s;
+    transition: color 0.3s, transform 0.3s;
     display: inline-block;
+
     &:hover {
       color: $yellow !important;
       transform: translateX(8px);
@@ -49,41 +37,6 @@
 }
 
 .footer-copyright {
-  background: rgba($blue, 0.08);
-  font-size: 1rem;
-  letter-spacing: 0.5px;
-  color: $white;
-  border-top: 1px solid rgba($blue, 0.15);
-  margin-bottom: 0;
+  border-top: 1px solid $white;
+  margin-bottom: 0.3rem;
 }
-
-@media (max-width: 768px) {
-  .footer-main {
-    font-size: 0.95rem;
-  }
-  .footer-links {
-    .footer-hr { width: 30px; }
-    h6 { font-size: 1rem; }
-  }
-}
-
-// Footer con efecto glass y glow
-.footer-glass {
-  background: rgba($blue, 0.15);
-  border-radius: 0;
-  box-shadow: 0 0 20px 2px $blue;
-  color: #fff;
-}
-
-.footer-social-icons a.glass-btn {
-  background: rgba($purple, 0.15);
-  box-shadow: 0 0 10px $purple;
-  border-radius: 7px;
-  transition: transform 0.18s, color 0.18s;
-  color: #fff;
-  &:hover {
-    transform: scale(1.18);
-    color: $yellow !important;
-    box-shadow: 0 0 20px $yellow;
-  }
-} 

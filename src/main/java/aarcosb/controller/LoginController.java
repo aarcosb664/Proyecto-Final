@@ -19,6 +19,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.context.SecurityContextRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginController {
@@ -32,23 +38,17 @@ public class LoginController {
     @Autowired
     private UserDetailsService userDetailsService;
     
+    @Autowired
+    private SecurityContextRepository securityContextRepository;
+    
     /**
      * Muestra la página de login
      */
     @GetMapping("/login")
-    public String login(Model model, Principal principal) {
-        // Si el usuario ya está autenticado, redirigir a la página principal
-        if (principal != null) {
-            return "redirect:/";
-        }
-        
-        // Establecer valor predeterminado para activeTab (pestaña de login)
-        model.addAttribute("activeTab", null);
-        
-        // Inicializar el modelo para el formulario de registro
-        if (!model.containsAttribute("user")) {
-            model.addAttribute("user", new UserDto());
-        }
+    public String login(@RequestParam(defaultValue = "login") String tab, Model model, Principal principal) {
+        if (principal != null) return "redirect:/";
+        model.addAttribute("user", model.containsAttribute("user") ? model.getAttribute("user") : new UserDto());
+        model.addAttribute("tab", tab.toLowerCase());
         return "login";
     }
     
@@ -56,51 +56,36 @@ public class LoginController {
      * Procesa el registro de usuarios
      */
     @PostMapping("/register")
-    public String registro(
-            @Valid @ModelAttribute("user") UserDto userDto,
-            BindingResult result,
-            Model model) {
+    public String register(
+            @Valid @ModelAttribute("user") UserDto dto,
+            BindingResult result, RedirectAttributes redirect,
+            HttpServletRequest request, HttpServletResponse response) {
 
-        if (!userDto.getPassword().equals(userDto.getConfirmPassword())) {
-            result.rejectValue("confirmPassword", "error", "Las contraseñas no coinciden");
-        }
-        
-        if (userRepository.findByEmail(userDto.getEmail()) != null) {
-            result.rejectValue("email", "error", "Email ya registrado");
-        }
-        
+        if (userRepository.existsByEmail(dto.getEmail()))
+            result.rejectValue("email", "duplicated", "Email ya registrado");
+        if (!dto.getPassword().equals(dto.getConfirmPassword()))
+            result.rejectValue("confirmPassword", "mismatch", "Las contraseñas no coinciden");
+
         if (result.hasErrors()) {
-            // Establecer la pestaña de registro como activa cuando hay errores
-            model.addAttribute("activeTab", "#register");
-            return "login";
+            redirect.addFlashAttribute("org.springframework.validation.BindingResult.user", result);
+            redirect.addFlashAttribute("user", dto);
+            return "redirect:/login?tab=register";
         }
-        User usuario = new User();
-        usuario.setEmail(userDto.getEmail());
-        usuario.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        usuario.setName(userDto.getName());
-        usuario.setLastName(userDto.getLastName());
-        usuario.setRole(Role.USER);
-        usuario.setCreatedAt(new java.util.Date());
-        userRepository.save(usuario);
-        
-        // Autenticar automáticamente al usuario después del registro
-        try {
-            // Cargar el usuario recién creado con sus autoridades
-            UserDetails userDetails = userDetailsService.loadUserByUsername(usuario.getEmail());
-            Authentication auth = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-                
-            // Establecer la autenticación en el SecurityContextHolder
-            SecurityContextHolder.getContext().setAuthentication(auth);
-            
-            // Redirigir a la página principal ya que el usuario está autenticado
-            return "redirect:/";
-        } catch (Exception e) {
-            // Si hay algún error en la autenticación, mostrar mensaje de éxito y redireccionar al login
-            model.addAttribute("success", "Usuario registrado correctamente. Por favor, inicie sesión.");
-            model.addAttribute("userDto", new UserDto());
-            model.addAttribute("activeTab", null);
-            return "login";
-        }
+
+        User user = new User();
+        user.setEmail(dto.getEmail());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setName(dto.getName());
+        user.setLastName(dto.getLastName());
+        user.setRole(Role.USER);
+        userRepository.save(user);
+
+        UserDetails ud = userDetailsService.loadUserByUsername(user.getEmail());
+        Authentication auth = new UsernamePasswordAuthenticationToken(ud, null, ud.getAuthorities());
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(auth);
+        securityContextRepository.saveContext(context, request, response);
+
+        return "redirect:/";
     }
 }
