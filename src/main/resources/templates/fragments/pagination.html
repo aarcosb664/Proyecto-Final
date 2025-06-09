@@ -1,40 +1,46 @@
+<!-- Paginación principal -->
 <nav th:fragment="pagination" aria-label="Pagination" th:if="${listings.totalPages > 0}">
     <ul class="pagination justify-content-center mt-3">
         <!-- Primera página -->
-        <li class="page-item" th:classappend="${listings.number + 1 == 1} ? 'disabled'">
-            <a class="page-link page-arrow" th:href="@{/community(page=1)}" aria-label="First">&laquo;</a>
+        <li class="page-item" th:classappend="${listings.first} ? 'disabled'">
+            <a th:href="@{/community(page=1,size=${listings.size},sort=${param.sort},order=${param.order},minRating=${param.minRating},maxRating=${param.maxRating},dateFrom=${param.dateFrom},dateTo=${param.dateTo})}"
+               class="page-link page-arrow" th:classappend="${listings.first} ? 'disabled' : ''" aria-label="First">&laquo;</a>
         </li>
 
         <!-- Anterior -->
-        <li class="page-item" th:classappend="${listings.number + 1 == 1} ? 'disabled'">
-            <a class="page-link page-arrow" th:href="@{/community(page=${listings.number})}" aria-label="Previous">Prev</a>
+        <li class="page-item" th:classappend="${listings.first} ? 'disabled'">
+            <a th:href="@{/community(page=${listings.number},size=${listings.size},sort=${param.sort},order=${param.order},minRating=${param.minRating},maxRating=${param.maxRating},dateFrom=${param.dateFrom},dateTo=${param.dateTo})}"
+               class="page-link page-arrow" aria-label="Previous">Prev</a>
         </li>
 
         <!-- Ir a página -->
-        <li class="page-item" th:if="${listings.number + 1 - 2 > 1}">
+        <li class="page-item" th:if="${listings.number - 2 > 0}">
             <button class="page-link" data-bs-toggle="modal" data-bs-target="#pageNumber">...</button>
         </li>
 
         <!-- Páginas alrededor de la actual -->
         <li class="page-item"
-            th:each="page : ${#numbers.sequence(listings.number + 1 > 2 ? listings.number + 1 - 2 : 1, listings.number + 1 + 2 < listings.totalPages ? listings.number + 1 + 2 : listings.totalPages)}"
-            th:classappend="${page == listings.number + 1} ? 'active'">
-            <a class="page-link" th:href="@{/community(page=${page})}" th:text="${page}"></a>
+            th:each="i : ${#numbers.sequence(1, listings.totalPages)}"
+            th:classappend="${i == listings.number + 1} ? 'active' : ''">
+            <a th:href="@{/community(page=${i},size=${listings.size},sort=${param.sort},order=${param.order},minRating=${param.minRating},maxRating=${param.maxRating},dateFrom=${param.dateFrom},dateTo=${param.dateTo})}"
+               class="page-link" th:text="${i}"></a>
         </li>
 
         <!-- Ir a página -->
-        <li class="page-item" th:if="${listings.number + 1 + 2 < listings.totalPages}">
+        <li class="page-item" th:if="${listings.number + 2 < listings.totalPages - 1}">
             <button class="page-link" data-bs-toggle="modal" data-bs-target="#pageNumber">...</button>
         </li>
 
         <!-- Siguiente -->
-        <li class="page-item font-weight-bold" th:classappend="${listings.number + 1 == listings.totalPages} ? 'disabled'">
-            <a class="page-link page-arrow" th:href="@{/community(page=${listings.number + 2})}" aria-label="Next">Next</a>
+        <li class="page-item" th:classappend="${listings.last} ? 'disabled'">
+            <a th:href="@{/community(page=${listings.number + 2},size=${listings.size},sort=${param.sort},order=${param.order},minRating=${param.minRating},maxRating=${param.maxRating},dateFrom=${param.dateFrom},dateTo=${param.dateTo})}"
+               class="page-link page-arrow" aria-label="Next">Next</a>
         </li>
         
         <!-- Última página -->
-        <li class="page-item" th:classappend="${listings.number + 1 == listings.totalPages} ? 'disabled'">
-            <a class="page-link page-arrow" th:href="@{/community(page=${listings.totalPages})}" aria-label="Last">&raquo;</a>
+        <li class="page-item" th:classappend="${listings.last} ? 'disabled'">
+            <a th:href="@{/community(page=${listings.totalPages},size=${listings.size},sort=${param.sort},order=${param.order},minRating=${param.minRating},maxRating=${param.maxRating},dateFrom=${param.dateFrom},dateTo=${param.dateTo})}"
+               class="page-link page-arrow" aria-label="Last">&raquo;</a>
         </li>
     </ul>
 </nav>

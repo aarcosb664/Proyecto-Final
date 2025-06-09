@@ -14,252 +14,216 @@
 
 @keyframes borderNeonPulse {
   0%, 100% {
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem var(--pulse-color, #fff), 0 0 1rem var(--pulse-color, #fff);
+    box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.18), 0 0 1.3rem var(--pulse-color, #fff);
   }
   50% {
-    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.22), 0 0 0.8rem var(--pulse-color, #fff), 0 0 1.5rem var(--pulse-color, #fff);
+    box-shadow: 0 0 1.3rem var(--pulse-color, #fff);
+  }
+}
+@keyframes borderNeonPulseSm {
+  0%, 100% {
+    box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.18), 0 0 0.9rem var(--pulse-color, #fff);
+  }
+  50% {
+    box-shadow: 0 0 0.9rem var(--pulse-color, #fff);
   }
 }
 .bg-red {
-  background-color: #ff1744;
+  background-color: #ff1744 !important;
 }
 
 .bg-blue {
-  background-color: #00bfff;
+  background-color: #00bfff !important;
 }
 
 .bg-green {
-  background-color: #00ff90;
+  background-color: #00ff90 !important;
 }
 
 .bg-yellow {
-  background-color: #ffe600;
+  background-color: #ffe600 !important;
 }
 
 .bg-purple {
-  background-color: #a259ff;
+  background-color: #a259ff !important;
 }
 
 .bg-cyan {
-  background-color: #00fff7;
+  background-color: #00fff7 !important;
 }
 
 .bg-pink {
-  background-color: #ff4fd8;
+  background-color: #ff4fd8 !important;
 }
 
 .bg-orange {
-  background-color: #ff9100;
+  background-color: #ff9100 !important;
 }
 
 .bg-white {
-  background-color: #ffffff;
+  background-color: #ffffff !important;
 }
 
 .bg-black {
-  background-color: #000000;
+  background-color: #000000 !important;
 }
 
 .bg-gray {
-  background-color: #888888;
+  background-color: #888888 !important;
 }
 
 .border-neon-red {
   border: 3px solid #ff1744;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ff1744, 0 0 1rem #ff1744;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulse 5s ease-in-out infinite;
   --pulse-color: #ff1744;
 }
 
 .border-neon-blue {
   border: 3px solid #00bfff;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #00bfff, 0 0 1rem #00bfff;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulse 5s ease-in-out infinite;
   --pulse-color: #00bfff;
 }
 
 .border-neon-green {
   border: 3px solid #00ff90;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #00ff90, 0 0 1rem #00ff90;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulse 5s ease-in-out infinite;
   --pulse-color: #00ff90;
 }
 
 .border-neon-yellow {
   border: 3px solid #ffe600;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ffe600, 0 0 1rem #ffe600;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulse 5s ease-in-out infinite;
   --pulse-color: #ffe600;
 }
 
 .border-neon-purple {
   border: 3px solid #a259ff;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #a259ff, 0 0 1rem #a259ff;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulse 5s ease-in-out infinite;
   --pulse-color: #a259ff;
 }
 
 .border-neon-cyan {
   border: 3px solid #00fff7;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #00fff7, 0 0 1rem #00fff7;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulse 5s ease-in-out infinite;
   --pulse-color: #00fff7;
 }
 
 .border-neon-pink {
   border: 3px solid #ff4fd8;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ff4fd8, 0 0 1rem #ff4fd8;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulse 5s ease-in-out infinite;
   --pulse-color: #ff4fd8;
 }
 
 .border-neon-orange {
   border: 3px solid #ff9100;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ff9100, 0 0 1rem #ff9100;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulse 5s ease-in-out infinite;
   --pulse-color: #ff9100;
 }
 
 .border-neon-white {
   border: 3px solid #ffffff;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ffffff, 0 0 1rem #ffffff;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulse 5s ease-in-out infinite;
   --pulse-color: #ffffff;
 }
 
 .border-neon-black {
   border: 3px solid #000000;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #000000, 0 0 1rem #000000;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulse 5s ease-in-out infinite;
   --pulse-color: #000000;
 }
 
 .border-neon-gray {
   border: 3px solid #888888;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #888888, 0 0 1rem #888888;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulse 5s ease-in-out infinite;
   --pulse-color: #888888;
 }
 
 .border-neon-red-sm {
-  border: 3px solid #ff1744;
+  border: 1.5px solid #ff1744;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ff1744, 0 0 1rem #ff1744;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #ff1744;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #ff1744, 0 0 0.75rem #ff1744 !important;
 }
 
 .border-neon-blue-sm {
-  border: 3px solid #00bfff;
+  border: 1.5px solid #00bfff;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #00bfff, 0 0 1rem #00bfff;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #00bfff;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #00bfff, 0 0 0.75rem #00bfff !important;
 }
 
 .border-neon-green-sm {
-  border: 3px solid #00ff90;
+  border: 1.5px solid #00ff90;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #00ff90, 0 0 1rem #00ff90;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #00ff90;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #00ff90, 0 0 0.75rem #00ff90 !important;
 }
 
 .border-neon-yellow-sm {
-  border: 3px solid #ffe600;
+  border: 1.5px solid #ffe600;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ffe600, 0 0 1rem #ffe600;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #ffe600;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #ffe600, 0 0 0.75rem #ffe600 !important;
 }
 
 .border-neon-purple-sm {
-  border: 3px solid #a259ff;
+  border: 1.5px solid #a259ff;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #a259ff, 0 0 1rem #a259ff;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #a259ff;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #a259ff, 0 0 0.75rem #a259ff !important;
 }
 
 .border-neon-cyan-sm {
-  border: 3px solid #00fff7;
+  border: 1.5px solid #00fff7;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #00fff7, 0 0 1rem #00fff7;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #00fff7;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #00fff7, 0 0 0.75rem #00fff7 !important;
 }
 
 .border-neon-pink-sm {
-  border: 3px solid #ff4fd8;
+  border: 1.5px solid #ff4fd8;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ff4fd8, 0 0 1rem #ff4fd8;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #ff4fd8;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #ff4fd8, 0 0 0.75rem #ff4fd8 !important;
 }
 
 .border-neon-orange-sm {
-  border: 3px solid #ff9100;
+  border: 1.5px solid #ff9100;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ff9100, 0 0 1rem #ff9100;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #ff9100;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #ff9100, 0 0 0.75rem #ff9100 !important;
 }
 
 .border-neon-white-sm {
-  border: 3px solid #ffffff;
+  border: 1.5px solid #ffffff;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ffffff, 0 0 1rem #ffffff;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #ffffff;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #ffffff, 0 0 0.75rem #ffffff !important;
 }
 
 .border-neon-black-sm {
-  border: 3px solid #000000;
+  border: 1.5px solid #000000;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #000000, 0 0 1rem #000000;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #000000;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #000000, 0 0 0.75rem #000000 !important;
 }
 
 .border-neon-gray-sm {
-  border: 3px solid #888888;
+  border: 1.5px solid #888888;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #888888, 0 0 1rem #888888;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #888888;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #888888, 0 0 0.75rem #888888 !important;
 }
 
 .btn-neon-red {
@@ -273,13 +237,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #ff1744;
+  border: 1.5px solid #ff1744;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ff1744, 0 0 1rem #ff1744;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #ff1744;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #ff1744, 0 0 0.75rem #ff1744 !important;
 }
 .btn-neon-red:hover {
   transform: scale(1.03);
@@ -296,13 +257,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #00bfff;
+  border: 1.5px solid #00bfff;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #00bfff, 0 0 1rem #00bfff;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #00bfff;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #00bfff, 0 0 0.75rem #00bfff !important;
 }
 .btn-neon-blue:hover {
   transform: scale(1.03);
@@ -319,13 +277,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #00ff90;
+  border: 1.5px solid #00ff90;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #00ff90, 0 0 1rem #00ff90;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #00ff90;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #00ff90, 0 0 0.75rem #00ff90 !important;
 }
 .btn-neon-green:hover {
   transform: scale(1.03);
@@ -342,13 +297,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #ffe600;
+  border: 1.5px solid #ffe600;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ffe600, 0 0 1rem #ffe600;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #ffe600;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #ffe600, 0 0 0.75rem #ffe600 !important;
 }
 .btn-neon-yellow:hover {
   transform: scale(1.03);
@@ -365,13 +317,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #a259ff;
+  border: 1.5px solid #a259ff;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #a259ff, 0 0 1rem #a259ff;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #a259ff;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #a259ff, 0 0 0.75rem #a259ff !important;
 }
 .btn-neon-purple:hover {
   transform: scale(1.03);
@@ -388,13 +337,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #00fff7;
+  border: 1.5px solid #00fff7;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #00fff7, 0 0 1rem #00fff7;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #00fff7;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #00fff7, 0 0 0.75rem #00fff7 !important;
 }
 .btn-neon-cyan:hover {
   transform: scale(1.03);
@@ -411,13 +357,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #ff4fd8;
+  border: 1.5px solid #ff4fd8;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ff4fd8, 0 0 1rem #ff4fd8;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #ff4fd8;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #ff4fd8, 0 0 0.75rem #ff4fd8 !important;
 }
 .btn-neon-pink:hover {
   transform: scale(1.03);
@@ -434,13 +377,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #ff9100;
+  border: 1.5px solid #ff9100;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ff9100, 0 0 1rem #ff9100;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #ff9100;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #ff9100, 0 0 0.75rem #ff9100 !important;
 }
 .btn-neon-orange:hover {
   transform: scale(1.03);
@@ -457,13 +397,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #ffffff;
+  border: 1.5px solid #ffffff;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ffffff, 0 0 1rem #ffffff;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #ffffff;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #ffffff, 0 0 0.75rem #ffffff !important;
 }
 .btn-neon-white:hover {
   transform: scale(1.03);
@@ -480,13 +417,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #000000;
+  border: 1.5px solid #000000;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #000000, 0 0 1rem #000000;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #000000;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #000000, 0 0 0.75rem #000000 !important;
 }
 .btn-neon-black:hover {
   transform: scale(1.03);
@@ -503,13 +437,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #888888;
+  border: 1.5px solid #888888;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #888888, 0 0 1rem #888888;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #888888;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #888888, 0 0 0.75rem #888888 !important;
 }
 .btn-neon-gray:hover {
   transform: scale(1.03);
@@ -526,13 +457,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #ff1744;
+  border: 1.5px solid #ff1744;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ff1744, 0 0 1rem #ff1744;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #ff1744;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #ff1744, 0 0 0.75rem #ff1744 !important;
 }
 .btn-outline-neon-red:hover {
   transform: scale(1.03);
@@ -549,13 +477,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #00bfff;
+  border: 1.5px solid #00bfff;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #00bfff, 0 0 1rem #00bfff;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #00bfff;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #00bfff, 0 0 0.75rem #00bfff !important;
 }
 .btn-outline-neon-blue:hover {
   transform: scale(1.03);
@@ -572,13 +497,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #00ff90;
+  border: 1.5px solid #00ff90;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #00ff90, 0 0 1rem #00ff90;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #00ff90;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #00ff90, 0 0 0.75rem #00ff90 !important;
 }
 .btn-outline-neon-green:hover {
   transform: scale(1.03);
@@ -595,13 +517,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #ffe600;
+  border: 1.5px solid #ffe600;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ffe600, 0 0 1rem #ffe600;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #ffe600;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #ffe600, 0 0 0.75rem #ffe600 !important;
 }
 .btn-outline-neon-yellow:hover {
   transform: scale(1.03);
@@ -618,13 +537,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #a259ff;
+  border: 1.5px solid #a259ff;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #a259ff, 0 0 1rem #a259ff;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #a259ff;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #a259ff, 0 0 0.75rem #a259ff !important;
 }
 .btn-outline-neon-purple:hover {
   transform: scale(1.03);
@@ -641,13 +557,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #00fff7;
+  border: 1.5px solid #00fff7;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #00fff7, 0 0 1rem #00fff7;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #00fff7;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #00fff7, 0 0 0.75rem #00fff7 !important;
 }
 .btn-outline-neon-cyan:hover {
   transform: scale(1.03);
@@ -664,13 +577,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #ff4fd8;
+  border: 1.5px solid #ff4fd8;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ff4fd8, 0 0 1rem #ff4fd8;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #ff4fd8;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #ff4fd8, 0 0 0.75rem #ff4fd8 !important;
 }
 .btn-outline-neon-pink:hover {
   transform: scale(1.03);
@@ -687,13 +597,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #ff9100;
+  border: 1.5px solid #ff9100;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ff9100, 0 0 1rem #ff9100;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #ff9100;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #ff9100, 0 0 0.75rem #ff9100 !important;
 }
 .btn-outline-neon-orange:hover {
   transform: scale(1.03);
@@ -710,13 +617,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #ffffff;
+  border: 1.5px solid #ffffff;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #ffffff, 0 0 1rem #ffffff;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #ffffff;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #ffffff, 0 0 0.75rem #ffffff !important;
 }
 .btn-outline-neon-white:hover {
   transform: scale(1.03);
@@ -733,13 +637,10 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #000000;
+  border: 1.5px solid #000000;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #000000, 0 0 1rem #000000;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #000000;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #000000, 0 0 0.75rem #000000 !important;
 }
 .btn-outline-neon-black:hover {
   transform: scale(1.03);
@@ -756,20 +657,17 @@
   font-weight: 700;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  border: 3px solid #888888;
+  border: 1.5px solid #888888;
   background: transparent;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.5rem #888888, 0 0 1rem #888888;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
   --pulse-color: #888888;
-  border-width: 1px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.18), 0 0 0.35rem #888888, 0 0 0.75rem #888888 !important;
 }
 .btn-outline-neon-gray:hover {
   transform: scale(1.03);
 }
 
 .text-neon-red {
-  color: #ff1744;
+  color: #ff1744 !important;
   text-shadow: 0 0 3px rgba(255, 23, 68, 0.4), 0 0 6px rgba(255, 23, 68, 0.2);
   font-size: 1.2rem;
   font-weight: 500;
@@ -777,7 +675,7 @@
 }
 
 .text-neon-blue {
-  color: #00bfff;
+  color: #00bfff !important;
   text-shadow: 0 0 3px rgba(0, 191, 255, 0.4), 0 0 6px rgba(0, 191, 255, 0.2);
   font-size: 1.2rem;
   font-weight: 500;
@@ -785,7 +683,7 @@
 }
 
 .text-neon-green {
-  color: #00ff90;
+  color: #00ff90 !important;
   text-shadow: 0 0 3px rgba(0, 255, 144, 0.4), 0 0 6px rgba(0, 255, 144, 0.2);
   font-size: 1.2rem;
   font-weight: 500;
@@ -793,7 +691,7 @@
 }
 
 .text-neon-yellow {
-  color: #ffe600;
+  color: #ffe600 !important;
   text-shadow: 0 0 3px rgba(255, 230, 0, 0.4), 0 0 6px rgba(255, 230, 0, 0.2);
   font-size: 1.2rem;
   font-weight: 500;
@@ -801,7 +699,7 @@
 }
 
 .text-neon-purple {
-  color: #a259ff;
+  color: #a259ff !important;
   text-shadow: 0 0 3px rgba(162, 89, 255, 0.4), 0 0 6px rgba(162, 89, 255, 0.2);
   font-size: 1.2rem;
   font-weight: 500;
@@ -809,7 +707,7 @@
 }
 
 .text-neon-orange {
-  color: #ff9100;
+  color: #ff9100 !important;
   text-shadow: 0 0 3px rgba(255, 145, 0, 0.4), 0 0 6px rgba(255, 145, 0, 0.2);
   font-size: 1.2rem;
   font-weight: 500;
@@ -817,7 +715,7 @@
 }
 
 .text-neon-cyan {
-  color: #00fff7;
+  color: #00fff7 !important;
   text-shadow: 0 0 3px rgba(0, 255, 247, 0.4), 0 0 6px rgba(0, 255, 247, 0.2);
   font-size: 1.2rem;
   font-weight: 500;
@@ -825,7 +723,7 @@
 }
 
 .text-neon-pink {
-  color: #ff4fd8;
+  color: #ff4fd8 !important;
   text-shadow: 0 0 3px rgba(255, 79, 216, 0.4), 0 0 6px rgba(255, 79, 216, 0.2);
   font-size: 1.2rem;
   font-weight: 500;
@@ -833,7 +731,7 @@
 }
 
 .text-neon-white {
-  color: #ffffff;
+  color: #ffffff !important;
   text-shadow: 0 0 3px rgba(255, 255, 255, 0.4), 0 0 6px rgba(255, 255, 255, 0.2);
   font-size: 1.2rem;
   font-weight: 500;
@@ -841,7 +739,7 @@
 }
 
 .text-neon-black {
-  color: #000000;
+  color: #000000 !important;
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.4), 0 0 6px rgba(0, 0, 0, 0.2);
   font-size: 1.2rem;
   font-weight: 500;
@@ -849,7 +747,7 @@
 }
 
 .text-neon-gray {
-  color: #888888;
+  color: #888888 !important;
   text-shadow: 0 0 3px rgba(136, 136, 136, 0.4), 0 0 6px rgba(136, 136, 136, 0.2);
   font-size: 1.2rem;
   font-weight: 500;
@@ -857,7 +755,7 @@
 }
 
 .text-neon-red-sm {
-  color: #ff1744;
+  color: #ff1744 !important;
   text-shadow: 0 0 2px rgba(255, 23, 68, 0.4), 0 0 4px rgba(255, 23, 68, 0.2);
   font-size: 1rem;
   font-weight: 400;
@@ -865,7 +763,7 @@
 }
 
 .text-neon-blue-sm {
-  color: #00bfff;
+  color: #00bfff !important;
   text-shadow: 0 0 2px rgba(0, 191, 255, 0.4), 0 0 4px rgba(0, 191, 255, 0.2);
   font-size: 1rem;
   font-weight: 400;
@@ -873,7 +771,7 @@
 }
 
 .text-neon-green-sm {
-  color: #00ff90;
+  color: #00ff90 !important;
   text-shadow: 0 0 2px rgba(0, 255, 144, 0.4), 0 0 4px rgba(0, 255, 144, 0.2);
   font-size: 1rem;
   font-weight: 400;
@@ -881,7 +779,7 @@
 }
 
 .text-neon-yellow-sm {
-  color: #ffe600;
+  color: #ffe600 !important;
   text-shadow: 0 0 2px rgba(255, 230, 0, 0.4), 0 0 4px rgba(255, 230, 0, 0.2);
   font-size: 1rem;
   font-weight: 400;
@@ -889,7 +787,7 @@
 }
 
 .text-neon-purple-sm {
-  color: #a259ff;
+  color: #a259ff !important;
   text-shadow: 0 0 2px rgba(162, 89, 255, 0.4), 0 0 4px rgba(162, 89, 255, 0.2);
   font-size: 1rem;
   font-weight: 400;
@@ -897,7 +795,7 @@
 }
 
 .text-neon-orange-sm {
-  color: #ff9100;
+  color: #ff9100 !important;
   text-shadow: 0 0 2px rgba(255, 145, 0, 0.4), 0 0 4px rgba(255, 145, 0, 0.2);
   font-size: 1rem;
   font-weight: 400;
@@ -905,7 +803,7 @@
 }
 
 .text-neon-cyan-sm {
-  color: #00fff7;
+  color: #00fff7 !important;
   text-shadow: 0 0 2px rgba(0, 255, 247, 0.4), 0 0 4px rgba(0, 255, 247, 0.2);
   font-size: 1rem;
   font-weight: 400;
@@ -913,7 +811,7 @@
 }
 
 .text-neon-pink-sm {
-  color: #ff4fd8;
+  color: #ff4fd8 !important;
   text-shadow: 0 0 2px rgba(255, 79, 216, 0.4), 0 0 4px rgba(255, 79, 216, 0.2);
   font-size: 1rem;
   font-weight: 400;
@@ -921,7 +819,7 @@
 }
 
 .text-neon-white-sm {
-  color: #ffffff;
+  color: #ffffff !important;
   text-shadow: 0 0 2px rgba(255, 255, 255, 0.4), 0 0 4px rgba(255, 255, 255, 0.2);
   font-size: 1rem;
   font-weight: 400;
@@ -929,7 +827,7 @@
 }
 
 .text-neon-black-sm {
-  color: #000000;
+  color: #000000 !important;
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.4), 0 0 4px rgba(0, 0, 0, 0.2);
   font-size: 1rem;
   font-weight: 400;
@@ -937,7 +835,7 @@
 }
 
 .text-neon-gray-sm {
-  color: #888888;
+  color: #888888 !important;
   text-shadow: 0 0 2px rgba(136, 136, 136, 0.4), 0 0 4px rgba(136, 136, 136, 0.2);
   font-size: 1rem;
   font-weight: 400;
@@ -945,7 +843,7 @@
 }
 
 .header-neon-red {
-  color: #ff1744;
+  color: #ff1744 !important;
   text-shadow: 0 0 6px rgba(255, 23, 68, 0.5), 0 0 12px rgba(255, 23, 68, 0.25);
   font-size: 2.6rem;
   font-weight: 700;
@@ -954,7 +852,7 @@
 }
 
 .header-neon-blue {
-  color: #00bfff;
+  color: #00bfff !important;
   text-shadow: 0 0 6px rgba(0, 191, 255, 0.5), 0 0 12px rgba(0, 191, 255, 0.25);
   font-size: 2.6rem;
   font-weight: 700;
@@ -963,7 +861,7 @@
 }
 
 .header-neon-green {
-  color: #00ff90;
+  color: #00ff90 !important;
   text-shadow: 0 0 6px rgba(0, 255, 144, 0.5), 0 0 12px rgba(0, 255, 144, 0.25);
   font-size: 2.6rem;
   font-weight: 700;
@@ -972,7 +870,7 @@
 }
 
 .header-neon-yellow {
-  color: #ffe600;
+  color: #ffe600 !important;
   text-shadow: 0 0 6px rgba(255, 230, 0, 0.5), 0 0 12px rgba(255, 230, 0, 0.25);
   font-size: 2.6rem;
   font-weight: 700;
@@ -981,7 +879,7 @@
 }
 
 .header-neon-purple {
-  color: #a259ff;
+  color: #a259ff !important;
   text-shadow: 0 0 6px rgba(162, 89, 255, 0.5), 0 0 12px rgba(162, 89, 255, 0.25);
   font-size: 2.6rem;
   font-weight: 700;
@@ -990,7 +888,7 @@
 }
 
 .header-neon-orange {
-  color: #ff9100;
+  color: #ff9100 !important;
   text-shadow: 0 0 6px rgba(255, 145, 0, 0.5), 0 0 12px rgba(255, 145, 0, 0.25);
   font-size: 2.6rem;
   font-weight: 700;
@@ -999,7 +897,7 @@
 }
 
 .header-neon-cyan {
-  color: #00fff7;
+  color: #00fff7 !important;
   text-shadow: 0 0 6px rgba(0, 255, 247, 0.5), 0 0 12px rgba(0, 255, 247, 0.25);
   font-size: 2.6rem;
   font-weight: 700;
@@ -1008,7 +906,7 @@
 }
 
 .header-neon-pink {
-  color: #ff4fd8;
+  color: #ff4fd8 !important;
   text-shadow: 0 0 6px rgba(255, 79, 216, 0.5), 0 0 12px rgba(255, 79, 216, 0.25);
   font-size: 2.6rem;
   font-weight: 700;
@@ -1017,7 +915,7 @@
 }
 
 .header-neon-white {
-  color: #ffffff;
+  color: #ffffff !important;
   text-shadow: 0 0 6px rgba(255, 255, 255, 0.5), 0 0 12px rgba(255, 255, 255, 0.25);
   font-size: 2.6rem;
   font-weight: 700;
@@ -1026,7 +924,7 @@
 }
 
 .header-neon-black {
-  color: #000000;
+  color: #000000 !important;
   text-shadow: 0 0 6px rgba(0, 0, 0, 0.5), 0 0 12px rgba(0, 0, 0, 0.25);
   font-size: 2.6rem;
   font-weight: 700;
@@ -1035,7 +933,7 @@
 }
 
 .header-neon-gray {
-  color: #888888;
+  color: #888888 !important;
   text-shadow: 0 0 6px rgba(136, 136, 136, 0.5), 0 0 12px rgba(136, 136, 136, 0.25);
   font-size: 2.6rem;
   font-weight: 700;
@@ -1044,7 +942,7 @@
 }
 
 .header-neon-red-sm {
-  color: #ff1744;
+  color: #ff1744 !important;
   text-shadow: 0 0 4px rgba(255, 23, 68, 0.4), 0 0 8px rgba(255, 23, 68, 0.2);
   font-size: 2rem;
   font-weight: 600;
@@ -1052,7 +950,7 @@
 }
 
 .header-neon-blue-sm {
-  color: #00bfff;
+  color: #00bfff !important;
   text-shadow: 0 0 4px rgba(0, 191, 255, 0.4), 0 0 8px rgba(0, 191, 255, 0.2);
   font-size: 2rem;
   font-weight: 600;
@@ -1060,7 +958,7 @@
 }
 
 .header-neon-green-sm {
-  color: #00ff90;
+  color: #00ff90 !important;
   text-shadow: 0 0 4px rgba(0, 255, 144, 0.4), 0 0 8px rgba(0, 255, 144, 0.2);
   font-size: 2rem;
   font-weight: 600;
@@ -1068,7 +966,7 @@
 }
 
 .header-neon-yellow-sm {
-  color: #ffe600;
+  color: #ffe600 !important;
   text-shadow: 0 0 4px rgba(255, 230, 0, 0.4), 0 0 8px rgba(255, 230, 0, 0.2);
   font-size: 2rem;
   font-weight: 600;
@@ -1076,7 +974,7 @@
 }
 
 .header-neon-purple-sm {
-  color: #a259ff;
+  color: #a259ff !important;
   text-shadow: 0 0 4px rgba(162, 89, 255, 0.4), 0 0 8px rgba(162, 89, 255, 0.2);
   font-size: 2rem;
   font-weight: 600;
@@ -1084,7 +982,7 @@
 }
 
 .header-neon-orange-sm {
-  color: #ff9100;
+  color: #ff9100 !important;
   text-shadow: 0 0 4px rgba(255, 145, 0, 0.4), 0 0 8px rgba(255, 145, 0, 0.2);
   font-size: 2rem;
   font-weight: 600;
@@ -1092,7 +990,7 @@
 }
 
 .header-neon-cyan-sm {
-  color: #00fff7;
+  color: #00fff7 !important;
   text-shadow: 0 0 4px rgba(0, 255, 247, 0.4), 0 0 8px rgba(0, 255, 247, 0.2);
   font-size: 2rem;
   font-weight: 600;
@@ -1100,7 +998,7 @@
 }
 
 .header-neon-pink-sm {
-  color: #ff4fd8;
+  color: #ff4fd8 !important;
   text-shadow: 0 0 4px rgba(255, 79, 216, 0.4), 0 0 8px rgba(255, 79, 216, 0.2);
   font-size: 2rem;
   font-weight: 600;
@@ -1108,7 +1006,7 @@
 }
 
 .header-neon-white-sm {
-  color: #ffffff;
+  color: #ffffff !important;
   text-shadow: 0 0 4px rgba(255, 255, 255, 0.4), 0 0 8px rgba(255, 255, 255, 0.2);
   font-size: 2rem;
   font-weight: 600;
@@ -1116,7 +1014,7 @@
 }
 
 .header-neon-black-sm {
-  color: #000000;
+  color: #000000 !important;
   text-shadow: 0 0 4px rgba(0, 0, 0, 0.4), 0 0 8px rgba(0, 0, 0, 0.2);
   font-size: 2rem;
   font-weight: 600;
@@ -1124,7 +1022,7 @@
 }
 
 .header-neon-gray-sm {
-  color: #888888;
+  color: #888888 !important;
   text-shadow: 0 0 4px rgba(136, 136, 136, 0.4), 0 0 8px rgba(136, 136, 136, 0.2);
   font-size: 2rem;
   font-weight: 600;
@@ -1157,11 +1055,6 @@
 }
 .navbar.border-bottom-custom .navbar-toggler:focus {
   box-shadow: 0 0 0 0.15rem #00bfff;
-}
-.navbar.border-bottom-custom .navbar-toggler .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.5' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-  width: 1.5em;
-  height: 1.5em;
 }
 .navbar.border-bottom-custom .navbar-collapse {
   transition: all 0.4s;
@@ -1746,49 +1639,6 @@
     box-sizing: border-box;
   }
 }
-:root {
-  --blue: #00bfff;
-  --red: #ff1744;
-  --green: #00ff90;
-  --yellow: #ffe600;
-  --purple: #a259ff;
-  --cyan: #00fff7;
-  --pink: #ff4fd8;
-  --orange: #ff9100;
-  --black: #000000;
-  --white: #ffffff;
-  --gray: #888888;
-}
-
-@keyframes bordeAnimado {
-  0%, 100% {
-    background-position: -100% 0, 100% 100%, 0% 200%, 100% -100%;
-    box-shadow: 0 0 25px #00bfff;
-  }
-  25% {
-    background-position: 0% 0, 0% 100%, 0% 100%, 100% 0%;
-    box-shadow: 0 0 25px #00fff7;
-  }
-  50% {
-    background-position: 100% 0, -100% 100%, 0% 0%, 100% 100%;
-    box-shadow: 0 0 25px #00bfff;
-  }
-  75% {
-    background-position: 0% 0, 0% 100%, 0% -100%, 100% 200%;
-    box-shadow: 0 0 25px #00fff7;
-  }
-}
-@keyframes buttonHover {
-  to {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-}
-@keyframes buttonActive {
-  to {
-    transform: translateY(0);
-  }
-}
 * {
   box-sizing: border-box;
   margin: 0;
@@ -1816,20 +1666,91 @@ body {
 
 .container {
   padding: 0;
-  max-width: 95%;
+  max-width: 90%;
+  margin: 0 auto;
+  transition: max-width 0.3s ease;
 }
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   .container {
     max-width: 1200px;
   }
 }
 
-hr {
-  clear: both;
-  margin: 20px 0;
-  border: 0;
-  height: 2px;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+input, select, textarea {
+  color: #ffffff !important;
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.4), 0 0 6px rgba(255, 255, 255, 0.2);
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.5;
+  border: 1.5px solid #ffffff;
+  background: transparent;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
+  --pulse-color: #ffffff;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-radius: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+input::placeholder, select::placeholder, textarea::placeholder {
+  color: #888888 !important;
+  text-shadow: 0 0 2px rgba(136, 136, 136, 0.4), 0 0 4px rgba(136, 136, 136, 0.2);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+input:focus, input:hover, select:focus, select:hover, textarea:focus, textarea:hover {
+  background-color: #000000 !important;
+  border: 1.5px solid #ffffff;
+  background: transparent;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
+  --pulse-color: #ffffff;
+}
+
+input {
+  /* Firefox */
+}
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+input[type=number] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+input[type=password]::-ms-reveal, input[type=password]::-ms-clear, input[type=password]::-webkit-credentials-auto-fill-button {
+  display: none !important;
+}
+
+label {
+  color: #888888 !important;
+  text-shadow: 0 0 2px rgba(136, 136, 136, 0.4), 0 0 4px rgba(136, 136, 136, 0.2);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.4;
+  font-weight: 500;
+}
+label .label-required::before {
+  content: "*";
+  color: #ff1744;
+  margin-right: 0.25rem;
+}
+
+.crop {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+.crop-extended {
+  white-space: normal;
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
 body {
@@ -1880,15 +1801,11 @@ hr {
   transition: color 0.3s;
 }
 .password-toggle-icon:hover {
-  color: #000000;
+  color: #ffffff;
 }
 
 .form-floating .password-toggle-icon {
   top: 32px;
-}
-
-input[type=password]::-ms-reveal, input[type=password]::-ms-clear, input[type=password]::-webkit-credentials-auto-fill-button {
-  display: none !important;
 }
 
 body {

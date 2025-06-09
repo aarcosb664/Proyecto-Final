@@ -7,14 +7,23 @@
             </div>
 
             <div class="modal-body">
-                <form th:action="@{/community(page=${page})}" method="GET">
+                <form th:action="@{/community}" method="GET">
+                    <input type="hidden" name="size" th:value="${listings.size}">
+                    <input type="hidden" name="sort" th:value="${param.sort}">
+                    <input type="hidden" name="order" th:value="${param.order}">
+                    <input type="hidden" name="query" th:value="${param.query}">
+                    <input type="hidden" name="minRating" th:value="${param.minRating}">
+                    <input type="hidden" name="maxRating" th:value="${param.maxRating}">
+                    <input type="hidden" name="dateFrom" th:value="${param.dateFrom}">
+                    <input type="hidden" name="dateTo" th:value="${param.dateTo}">
+                    
                     <div class="modal-grid">
                         <div class="border-neon-blue-sm text-neon-blue text-center p-1">
                             Min: 1
                         </div>
 
-                        <input type="number" class="form-control form-custom p-2" name="page" placeholder="Page number"
-                               th:value="${page}" min="1" th:attr="max=${listings.totalPages}" required>
+                        <input type="number" class="form-control text-center p-2" name="page" 
+                               placeholder="Page number" min="1" th:attr="max=${listings.totalPages}" required>
 
                         <div class="border-neon-red-sm text-neon-red text-center p-1">
                             Max: <span th:text="${listings.totalPages}"></span>

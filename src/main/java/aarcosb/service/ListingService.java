@@ -5,12 +5,12 @@ import org.springframework.stereotype.Service;
 import aarcosb.model.entity.Listing;
 import aarcosb.model.repository.ListingRepository;
 import java.util.List;
-import java.util.Date;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
+import java.util.Date;
 
 @Service
 public class ListingService {
@@ -31,15 +31,10 @@ public class ListingService {
     }
 
     public Listing createListing(Listing listing) {
-        Date now = new Date();
-        listing.setCreatedAt(now);
-        listing.setUpdatedAt(now);
-        listing.setRating(0.0);
         return listingRepository.save(listing);
     }
 
     public Listing updateListing(Listing listing) {
-        listing.setUpdatedAt(new Date());
         return listingRepository.save(listing);
     }
 
@@ -74,7 +69,9 @@ public class ListingService {
                      .collect(Collectors.toSet());
     }
 
-    public Long countCommentsByListingId(Long listingId) {
-        return listingRepository.countCommentsByListingId(listingId);
+    public Page<Listing> searchAndFilter(String query, Double minRating, Double maxRating, Date dateFrom, Date dateTo, Pageable pageable) {
+        // Si query es null o solo espacios, pásalo como null al repo (NO devuelvas vacío)
+        String q = (query == null || query.trim().isEmpty()) ? null : query.trim().toLowerCase();
+        return listingRepository.searchAndFilter(q, minRating, maxRating, dateFrom, dateTo, pageable);
     }
 } 

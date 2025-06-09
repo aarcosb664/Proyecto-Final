@@ -46,8 +46,14 @@ public class LoginController {
      */
     @GetMapping("/login")
     public String login(@RequestParam(defaultValue = "login") String tab, Model model, Principal principal) {
+        // Si el usuario ya está autenticado, redirigir a la página de inicio
         if (principal != null) return "redirect:/";
-        model.addAttribute("user", model.containsAttribute("user") ? model.getAttribute("user") : new UserDto());
+
+        // Añadir el formulario de registro al modelo
+        if (!model.containsAttribute("user")) {
+            model.addAttribute("user", new UserDto());
+        }
+        
         model.addAttribute("tab", tab.toLowerCase());
         return "login";
     }
@@ -61,28 +67,38 @@ public class LoginController {
             BindingResult result, RedirectAttributes redirect,
             HttpServletRequest request, HttpServletResponse response) {
 
+        // Si el email ya está registrado, rechazar el registro
         if (userRepository.existsByEmail(dto.getEmail()))
             result.rejectValue("email", "duplicated", "Email ya registrado");
+        // Si las contraseñas no coinciden, rechazar el registro
         if (!dto.getPassword().equals(dto.getConfirmPassword()))
             result.rejectValue("confirmPassword", "mismatch", "Las contraseñas no coinciden");
+        // Si el userName ya está registrado, rechazar el registro
+        if (userRepository.existsByUserName(dto.getUserName()))
+            result.rejectValue("userName", "duplicated", "Username already taken");
 
+        // Si hay errores, volver a la vista de registro
         if (result.hasErrors()) {
             redirect.addFlashAttribute("org.springframework.validation.BindingResult.user", result);
             redirect.addFlashAttribute("user", dto);
             return "redirect:/login?tab=register";
         }
 
+        // Crear usuario
         User user = new User();
         user.setEmail(dto.getEmail());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        user.setName(dto.getName());
-        user.setLastName(dto.getLastName());
+        user.setUserName(dto.getUserName());
+        user.setProfilePic("default.png");
         user.setRole(Role.USER);
         userRepository.save(user);
 
+        // Autenticar usuario
         UserDetails ud = userDetailsService.loadUserByUsername(user.getEmail());
+        // Crear contexto de autenticación
         Authentication auth = new UsernamePasswordAuthenticationToken(ud, null, ud.getAuthorities());
         SecurityContext context = SecurityContextHolder.createEmptyContext();
+        // Establecer autenticación en el contexto
         context.setAuthentication(auth);
         securityContextRepository.saveContext(context, request, response);
 

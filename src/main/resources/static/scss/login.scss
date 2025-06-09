@@ -58,21 +58,12 @@ hr {
   transition: color 0.3s;
 
   &:hover {
-    color: $black;
+    color: $white;
   }
 }
 
 .form-floating .password-toggle-icon {
   top: 32px;
-}
-
-// Hide default password reveal buttons
-input[type="password"] {
-  &::-ms-reveal,
-  &::-ms-clear,
-  &::-webkit-credentials-auto-fill-button {
-    display: none !important;
-  }
 }
 
 body {

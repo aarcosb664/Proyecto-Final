@@ -1,17 +1,19 @@
+// /js/show-password.js
 document.addEventListener('DOMContentLoaded', function() {
-    // Toggle para el formulario de login
-    const togglePassword = document.querySelector('#togglePassword');
-    const password = document.querySelector('#passwordLogin');
-    
-    if (togglePassword && password) {
-        togglePassword.addEventListener('click', function() {
-            // Toggle del tipo de atributo
-            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
-            
-            // Toggle del icono
-            this.querySelector('i').classList.toggle('bi-eye');
-            this.querySelector('i').classList.toggle('bi-eye-slash');
-        });
-    }
+    [
+        ['togglePassword', 'passwordLogin'],
+        ['togglePasswordRegister', 'passwordRegister'],
+        ['toggleConfirmPassword', 'confirmPasswordRegister']
+    ].forEach(function([toggleId, inputId]) {
+        const toggle = document.getElementById(toggleId);
+        const input = document.getElementById(inputId);
+        if (toggle && input) {
+            toggle.onclick = function() {
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                this.querySelector('i').classList.toggle('bi-eye');
+                this.querySelector('i').classList.toggle('bi-eye-slash');
+            };
+        }
+    });
 });

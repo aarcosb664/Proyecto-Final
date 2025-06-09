@@ -34,41 +34,44 @@
 @mixin border-neon($color) {
   border: 3px solid $color;
   background: transparent;
-  box-shadow:
-    0 0 0 2px rgba(0,0,0,0.18),
-    0 0 0.5rem $color,
-    0 0 1rem $color;
-  animation: borderNeonPulse 2.5s ease-in-out infinite;
+  animation: borderNeonPulse 5s ease-in-out infinite;
   --pulse-color: #{$color};
-}
-
-@mixin border-neon-sm($color) {
-  @include border-neon($color);
-  border-width: 1px;
-  box-shadow:
-    0 0 0 2px rgba(0,0,0,0.18),
-    0 0 0.35rem $color,
-    0 0 0.75rem $color !important;
 }
 
 @keyframes borderNeonPulse {
   0%, 100% {
     box-shadow:
-      0 0 0 2px rgba(0,0,0,0.18),
-      0 0 0.5rem var(--pulse-color, #fff),
-      0 0 1rem var(--pulse-color, #fff);
+      0 0 0 5px rgba(0,0,0,0.18),
+      0 0 1.3rem var(--pulse-color, #fff);
   }
   50% {
     box-shadow:
-      0 0 0 4px rgba(0,0,0,0.22),
-      0 0 0.8rem var(--pulse-color, #fff),
-      0 0 1.5rem var(--pulse-color, #fff);
+      0 0 1.3rem var(--pulse-color, #fff);
+  }
+}
+
+@mixin border-neon-sm($color) {
+  border: 1.5px solid $color;
+  background: transparent;
+  animation: borderNeonPulseSm 5s ease-in-out infinite;
+  --pulse-color: #{$color};
+}
+
+@keyframes borderNeonPulseSm {
+  0%, 100% {
+    box-shadow:
+      0 0 0 5px rgba(0,0,0,0.18),
+      0 0 0.9rem var(--pulse-color, #fff);
+  }
+  50% {
+    box-shadow:
+      0 0 0.9rem var(--pulse-color, #fff);
   }
 }
 
 // Textos con brillo sutil
 @mixin text-neon($color) {
-  color: $color;
+  color: $color !important;
   text-shadow:
     0 0 3px rgba($color, 0.4),
     0 0 6px rgba($color, 0.2);
@@ -78,7 +81,7 @@
 }
 
 @mixin text-neon-sm($color) {
-  color: $color;
+  color: $color !important;
   text-shadow:
     0 0 2px rgba($color, 0.4),
     0 0 4px rgba($color, 0.2);
@@ -89,7 +92,7 @@
 
 // Headers con jerarquía clara
 @mixin header-neon($color) {
-  color: $color;
+  color: $color !important;
   text-shadow:
     0 0 6px rgba($color, 0.5),
     0 0 12px rgba($color, 0.25);
@@ -100,7 +103,7 @@
 }
 
 @mixin header-neon-sm($color) {
-  color: $color;
+  color: $color !important;
   text-shadow:
     0 0 4px rgba($color, 0.4),
     0 0 8px rgba($color, 0.2);
@@ -110,5 +113,5 @@
 }
 
 @mixin bg($color) {
-  background-color: $color;
+  background-color: $color !important;
 }

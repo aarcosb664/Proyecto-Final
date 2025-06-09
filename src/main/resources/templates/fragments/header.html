@@ -6,7 +6,7 @@
             <div class="d-flex d-lg-none">
                 <div class="dropdown" sec:authorize="isAuthenticated()">
                     <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle mobile-profile-link" id="userDropdownMobile" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="User" width="38" height="38" class="rounded-circle me-1">
+                        <img th:src="@{'/img/' + ${session.user.profilePic}}" alt="User" width="40" height="40" class="rounded-circle me-1">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="userDropdownMobile">
                         <li><a class="dropdown-item" th:href="@{/profile}">Profile</a></li>
@@ -25,8 +25,8 @@
             <div class="d-none d-lg-flex">
                 <div class="dropdown" sec:authorize="isAuthenticated()">
                     <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="User" width="40" height="40" class="rounded-circle me-2">
-                        <span class="d-none d-xl-inline" sec:authentication="name">Username</span>
+                        <img th:src="@{'/img/' + ${session.user.profilePic}}" alt="User" width="40" height="40" class="rounded-circle me-2">
+                        <span class="d-none d-xl-inline" th:text="${session.user.userName}">Username</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                         <li><a class="dropdown-item" th:href="@{/profile}">Profile</a></li>
@@ -59,7 +59,7 @@
         <!-- TOGGLER (móvil: primero; desktop: oculto) -->
         <button class="navbar-toggler order-1 order-lg-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" 
                 aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <i class="bi bi-list text-white fs-1"></i>
         </button>
         
         <!-- LINKS (desktop: centrados; móvil: en collapse, apilados) -->

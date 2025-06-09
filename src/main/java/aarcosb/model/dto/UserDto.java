@@ -9,13 +9,9 @@ import lombok.Data;
 public class UserDto {
     private Long id;
 
-    @NotBlank(message = "El nombre es obligatorio")
-    @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
-    private String name;
-
-    @NotBlank(message = "El apellido es obligatorio")
-    @Size(min = 2, max = 50, message = "El apellido debe tener entre 2 y 50 caracteres")
-    private String lastName;
+    @NotBlank(message = "Username is required")
+    @Size(min = 2, max = 50, message = "Username must be between 2 and 50 characters")
+    private String userName;
 
     @NotBlank(message = "El email es obligatorio")
     @Email(message = "El email debe ser válido")

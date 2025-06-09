@@ -29,12 +29,13 @@ public class GameController {
     @PostMapping("/ranking")
     public String saveRanking(
             @RequestParam("userName") String userName,
+            @RequestParam("userId") Long userId,
             @RequestParam("score") int score,
             @RequestParam("destroyedBlocks") int destroyedBlocks,
             Model model) {
         
         // Create and save player
-        playerRepository.save(new Player(userName, score, destroyedBlocks));
+        playerRepository.save(new Player(userName, userId, score, destroyedBlocks));
         
         // Get updated ranking
         model.addAttribute("players", playerRepository.findTop5ByOrderByScoreDesc());

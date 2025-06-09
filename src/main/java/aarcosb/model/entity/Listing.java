@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Data
@@ -21,17 +19,16 @@ public class Listing {
     private Long id;
 
     @Column(name = "title")
-    @NotBlank(message = "Title is required")
-    @Size(min = 1, max = 100, message = "The title must be between 1 and 100 characters")
     private String title;
 
     @Column(name = "description")
-    @NotBlank(message = "Description is required")
-    @Size(min = 30, max = 500, message = "The description must be between 30 and 500 characters")
     private String description;
 
     @Column(name = "user_name")
     private String userName;
+
+    @Column(name = "official_url", nullable = false)
+    private String officialUrl;
     
     @ElementCollection
     @Column(name = "image", nullable = false)
@@ -47,9 +44,6 @@ public class Listing {
     @Column(name = "tags", nullable = true)
     private Set<String> tags;
 
-    @Column(name = "comments_count", nullable = true)
-    private Long commentsCount;
-
     @Column(name = "user_id")
     private Long userId;
     
@@ -58,4 +52,16 @@ public class Listing {
 
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+        updatedAt = new Date();
+        if (rating == null) rating = 0.0;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = new Date();
+    }
 } 

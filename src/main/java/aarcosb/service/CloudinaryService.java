@@ -7,9 +7,6 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.Arrays;
 import java.util.ArrayList;
 
 @Service

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Date;
 
 @Service
 public class CommentService {
@@ -21,12 +20,12 @@ public class CommentService {
         return commentRepository.findByListingId(listingId);
     }
 
-    public Comment createComment(Long listingId, Long userId, Comment comment) {
-        Date now = new Date();
+    public Comment createComment(Long listingId, Long userId, String title, String text) {
+        Comment comment = new Comment();
         comment.setListingId(listingId);
         comment.setUserId(userId);
-        comment.setCreatedAt(now);
-        comment.setUpdatedAt(now);
+        comment.setTitle(title);
+        comment.setText(text);
         return commentRepository.save(comment);
     }
 

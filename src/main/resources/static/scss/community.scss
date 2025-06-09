@@ -3,22 +3,6 @@
 @use 'base/vars' as *;
 @use 'base/mixins' as *;
 
-.form-custom {
-  @include text-neon($white);
-  @include border-neon-sm($white);
-  background-color: $black !important;
-
-  &::placeholder {
-    @include text-neon($gray);
-  }
-
-  &:focus, 
-  &:hover {
-    @include border-neon-sm($gray);
-    @include text-neon($white);
-  }
-}
-
 .card {
   height: 500px;
   overflow: hidden;
@@ -95,28 +79,4 @@
   align-items: center;
   justify-items: space-between;
   gap: 1rem;
-
-  .form-custom {
-    text-align: center !important;
-
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    /* Firefox */
-    &[type=number] {
-      appearance: textfield;
-      -moz-appearance: textfield;
-    }
-  }
-}
-
-.label-required {
-  &::before {
-    content: "*";
-    color: $red;
-    margin-right: 0.25rem;
-  }
 }

@@ -23,11 +23,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "user_name", unique = true, nullable = false)
+    private String userName;
 
     @Column(name = "email", unique = true)
     @Email
@@ -35,6 +32,9 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "profile_pic")
+    private String profilePic;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")

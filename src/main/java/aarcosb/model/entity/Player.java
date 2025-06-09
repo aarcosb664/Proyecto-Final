@@ -10,6 +10,7 @@ import jakarta.persistence.Column;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import jakarta.persistence.PrePersist;
 
 @Entity
 @Data
@@ -19,13 +20,13 @@ import lombok.AllArgsConstructor;
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     
     @Column(name = "user_name")
     private String userName;
 
     @Column(name = "user_id")
-    private int userId;
+    private Long userId;
     
     @Column(name = "score")
     private int score;
@@ -36,10 +37,15 @@ public class Player {
     @Column(name = "date_game")
     private Date dateGame;
 
-    public Player(String userName, int score, int destroyedBlocks) {
+    public Player(String userName, Long userId, int score, int destroyedBlocks) {
         this.userName = userName;
+        this.userId = userId;
         this.score = score;
         this.destroyedBlocks = destroyedBlocks;
-        this.dateGame = new Date();
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        dateGame = new Date();
     }
 } 

@@ -21,7 +21,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Test\",\n    \"lastName\": \"Test\",\n    \"email\": \"test@email.com\",\n    \"password\": \"testtest\",\n    \"confirmPassword\": \"testtest\"\n}"
+							"raw": "{\n    \"userName\": \"TestUser\",\n    \"email\": \"test@email.com\",\n    \"password\": \"testtest\",\n    \"confirmPassword\": \"testtest\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/register",

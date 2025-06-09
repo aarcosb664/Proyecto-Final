@@ -57,4 +57,4 @@ public class RatingService {
             listingRepository.save(listing);
         }
     }
-}
+} 
