@@ -8,6 +8,7 @@
                     <span class="user-name" th:text="${user.userName}">Username</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" th:href="@{'/profile/' + ${user.id}}">Profile</a></li>
                     <li><a class="dropdown-item" th:href="@{'/profile/' + ${user.id} + '#settings'}">Settings</a></li>
                     <li><a class="dropdown-item" th:href="@{'/profile/' + ${user.id} + '#myListings'}">My Listings</a></li>
                     <li><a class="dropdown-item" th:href="@{'/profile/' + ${user.id} + '#myFavorites'}">Favorites</a></li>
@@ -33,7 +34,7 @@
         <!-- LOGO (móvil: segundo; desktop: primero) -->
         <a class="navbar-brand order-2 order-lg-1 d-flex align-items-center mx-auto" th:href="@{/}">
             <img th:src="@{/img/logo.png}" alt="Logo" width="50" height="50" class="me-0 me-sm-2">
-            <span class="d-none d-sm-inline fw-bold text-white fs-4">Breakout</span>
+            <span class="fw-bold text-white fs-4">Breakout</span>
         </a>
         
         <!-- TOGGLER (móvil: primero; desktop: oculto) -->
