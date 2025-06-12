@@ -1,0 +1,56 @@
+@use 'globals';
+@use 'base' as *;
+
+.profile-container {
+    max-width: 95vw;
+    margin: 0 auto;
+
+    .nav-link {
+        text-decoration: none;
+        transition: color 0.3s, transform 0.3s;
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    
+        &:hover {
+            color: $yellow !important;
+            transform: translateX(10px);
+        }
+    }
+}
+
+.vertical-divider {
+    width: 2px;
+    height: 100%;
+    background-color: $gray;
+}
+
+.password-container {
+    display: inline-block;
+
+    #passwordView {
+        border: none !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+
+    }
+
+    .form-control {
+        display: inline !important;
+        width: fit-content !important;
+    }
+}
+
+.toggle-password {
+    font-size: 1.2rem;
+    color: $white;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: $gray;
+    }
+}

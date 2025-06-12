@@ -14,6 +14,8 @@ import java.util.List;
 @Repository
 public interface ListingRepository extends JpaRepository<Listing, Long> {
     List<Listing> findByUserId(Long userId);
+    
+    List<Listing> findByIdIn(List<Long> ids);
 
     @Query(value = "SELECT image_url FROM listing_images WHERE listing_id = :listingId", nativeQuery = true)
     List<String> findImagesByListingId(@Param("listingId") Long listingId);
@@ -21,10 +23,10 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
     @Query("SELECT DISTINCT l FROM Listing l LEFT JOIN FETCH l.images WHERE l.id = :id")
     Listing findByIdWithImages(@Param("id") Long id);
 
-    @Query("SELECT s FROM Listing s JOIN s.tags t WHERE t = LOWER(:tag)")
+    @Query("SELECT l FROM Listing l JOIN l.tags t WHERE t = LOWER(:tag)")
     List<Listing> retrieveByTag(String tag);
 
-    @Query("SELECT s FROM Listing s JOIN s.tags t WHERE s.title = LOWER(:title) AND t = LOWER(:tag)")
+    @Query("SELECT l FROM Listing l JOIN l.tags t WHERE l.title = LOWER(:title) AND t = LOWER(:tag)")
     List<Listing> retrieveByNameFilterByTag(String title, String tag);
 
     @Query(value = "SELECT COUNT(*) FROM user_fav_listings WHERE fav_listings = :listingId", nativeQuery = true)

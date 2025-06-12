@@ -1,5 +1,5 @@
 @use 'base' as *;
-@use 'components/navbar';
+@use 'components/header';
 @use 'components/footer';
 @use 'components/banner';
 @use 'components/utils-freefrontend';
@@ -32,7 +32,6 @@ body {
 }
 
 .container {
-  @extend .container;
   padding: 0;
   max-width: 90%;
   margin: 0 auto;
