@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.ArrayList;
 
 @Entity
 @Data
@@ -31,7 +32,8 @@ public class Listing {
     private String officialUrl;
     
     @ElementCollection
-    @Column(name = "image", nullable = false)
+    @CollectionTable(name = "listing_images", joinColumns = @JoinColumn(name = "listing_id"))
+    @Column(name = "image_url")
     private List<String> images;
 
     @Column(name = "video", nullable = true)
@@ -41,7 +43,7 @@ public class Listing {
     private Double rating;
 
     @ElementCollection
-    @Column(name = "tags", nullable = true)
+    @Column(name = "tag", nullable = true)
     private Set<String> tags;
 
     @Column(name = "user_id")
@@ -57,7 +59,8 @@ public class Listing {
     protected void onCreate() {
         createdAt = new Date();
         updatedAt = new Date();
-        if (rating == null) rating = 0.0;
+        images = new ArrayList<>();
+        rating = 0.0;
     }
 
     @PreUpdate

@@ -115,3 +115,9 @@
 @mixin bg($color) {
   background-color: $color !important;
 }
+
+@mixin badge($color) {
+  @include border-neon-sm($color);
+  background: rgba($color, 0.2);
+  color: $color;
+}

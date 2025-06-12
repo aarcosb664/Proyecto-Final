@@ -26,7 +26,7 @@
                         data-bs-toggle="collapse" data-bs-target="#search-menu" 
                         aria-expanded="false" aria-controls="search-menu">
                     <i class="bi bi-menu-button"></i>
-                    Search, filters and sort menu
+                    Menu and utils
                 </button>
 
                 <!-- Search, filters and sort menu -->
@@ -127,9 +127,9 @@
                         <a th:href="@{/community/listing/{id}(id=${listing.id})}" class="hover-scale text-decoration-none">
                             <div class="card rounded-4 bg-black border-neon-white m-2">
                                 <div class="ratio-16-9 d-flex flex-column-reverse card-img-top-container border-bottom">
-                                    <img th:src="${listing.images[2]}" class="card-img-top" th:alt="${listing.title}">
-                                    <img th:src="${listing.images[1]}" class="card-img-top" th:alt="${listing.title}">
                                     <img th:src="${listing.images[0]}" class="card-img-top" th:alt="${listing.title}">
+                                    <img th:src="${listing.images[1]}" class="card-img-top" th:alt="${listing.title}">
+                                    <img th:src="${listing.images[2]}" class="card-img-top" th:alt="${listing.title}">
                                 </div>
                                 <div class="card-body">
                                     <div class="grid-tags mt-2 mb-4">
@@ -149,11 +149,11 @@
                                     </small>
                                     <small class="col-3 text-neon-yellow-sm">
                                         <i class="bi bi-star-fill"></i>
-                                        <span th:text="${listing.rating}">4.5</span>
+                                        <span th:text="${#numbers.formatDecimal(listing.rating,1,1)}">0.0</span>
                                     </small>
                                     <small class="col-5 text-neon-blue-sm">
                                         <i class="bi bi-clock"></i>
-                                        <span th:text="${#strings.abbreviate(@prettyTime.format(listing.updatedAt), 10)}"></span>
+                                        <span th:text="${#strings.abbreviate(@prettyTime.format(listing.updatedAt), 10)}">00:00</span>
                                     </small>
                                 </div>
                             </div>

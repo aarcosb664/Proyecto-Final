@@ -10,7 +10,7 @@ public class UserDto {
     private Long id;
 
     @NotBlank(message = "Username is required")
-    @Size(min = 2, max = 50, message = "Username must be between 2 and 50 characters")
+    @Size(min = 2, max = 15, message = "Username must be between 2 and 15 characters")
     private String userName;
 
     @NotBlank(message = "El email es obligatorio")

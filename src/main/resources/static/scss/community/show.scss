@@ -1,0 +1,80 @@
+@use '../globals';
+@use '../base' as *;
+
+.rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  gap: 0.3em;
+}
+
+.rating label {
+  color: #444;
+  font-size: 2.2rem;
+  cursor: pointer;
+  transition: text-shadow 0.1s ease-in-out;
+
+  &:hover,
+  &:hover ~ label {
+    color: $cyan;
+    text-shadow: 
+      0 0 12px $cyan, 
+      0 0 24px $cyan;
+    transform: scale(1.15);
+  }
+}
+
+.mainSwiper {
+  img, video {
+    object-fit: contain;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: $gray;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      color: rgba($gray, 0.5);
+    }
+  }
+}
+
+.thumbSwiper {
+  height: 80px;
+  overflow: scroll;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+
+  img, video {
+    object-fit: contain;
+  }
+
+  .swiper-slide {
+    min-width: 130px;
+    width: 130px;
+    height: 80px;
+    border: 2px solid #00fff7;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    opacity: 0.7;
+
+    &.swiper-slide-thumb-active,
+    &:hover {
+      opacity: 1;
+      @include border-neon($pink);
+    }
+  }
+}
+
+.badge-tag {
+  $colors: ($red, $green, $blue, $cyan, $yellow, $purple, $orange, $pink, $gray);
+
+  @for $i from 1 through 9 {
+    &:nth-child(#{$i}) {
+      @include badge(nth($colors, $i));
+    }
+  }
+}

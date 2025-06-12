@@ -6,7 +6,7 @@
             <div class="d-flex d-lg-none">
                 <div class="dropdown" sec:authorize="isAuthenticated()">
                     <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle mobile-profile-link" id="userDropdownMobile" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img th:src="@{'/img/' + ${session.user.profilePic}}" alt="User" width="40" height="40" class="rounded-circle me-1">
+                        <img th:src="@{'/img/' + ${user.profilePic}}" alt="User" width="50" height="50" class="rounded-circle me-1">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="userDropdownMobile">
                         <li><a class="dropdown-item" th:href="@{/profile}">Profile</a></li>
@@ -25,8 +25,8 @@
             <div class="d-none d-lg-flex">
                 <div class="dropdown" sec:authorize="isAuthenticated()">
                     <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img th:src="@{'/img/' + ${session.user.profilePic}}" alt="User" width="40" height="40" class="rounded-circle me-2">
-                        <span class="d-none d-xl-inline" th:text="${session.user.userName}">Username</span>
+                        <img th:src="@{'/img/' + ${user.profilePic}}" alt="User" width="50" height="50" class="rounded-circle me-2">
+                        <span class="d-none d-xl-inline" th:text="${user.userName}">Username</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                         <li><a class="dropdown-item" th:href="@{/profile}">Profile</a></li>

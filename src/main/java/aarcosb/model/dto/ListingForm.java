@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import java.util.List;
 import org.hibernate.validator.constraints.URL;
+import jakarta.validation.constraints.Pattern;
 
 @Data
 @NoArgsConstructor
@@ -26,9 +27,11 @@ public class ListingForm {
     @URL(message = "Invalid URL format")
     private String officialUrl;
 
+    @Size(min = 3, max = 10, message = "You must upload between 3 and 10 images")
     private List<MultipartFile> images;
 
     private MultipartFile video;
 
+    @Pattern(regexp = "^$|^\\S+(,\\s*\\S+)*$", message = "Tags must be non-empty and separated by commas")
     private String tags;
 } 

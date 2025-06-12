@@ -1,64 +1,56 @@
 package aarcosb.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import jakarta.validation.Valid;
-import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import aarcosb.model.entity.Listing;
-import aarcosb.model.entity.Comment;
-import aarcosb.model.entity.User;
-import aarcosb.service.ListingService;
-import aarcosb.service.CommentService;
-import aarcosb.service.CloudinaryService;
+import org.springframework.validation.BindingResult;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.data.web.SortDefault;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import java.util.List;
-import aarcosb.model.dto.ListingForm;
-import aarcosb.model.dto.CommentForm;
-import aarcosb.service.RatingService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
 import java.util.Date;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import aarcosb.model.entity.*;
+import aarcosb.model.dto.*;
+import aarcosb.model.repository.*;
+import aarcosb.service.*;
 
 @Controller
 @RequestMapping("/community")
 public class CommunityController {
 
-    @Autowired
-    private ListingService listingService;
-    
-    @Autowired
-    private CommentService commentService;
+    // Servicios necesarios para la gestión de listings y funcionalidades asociadas
+    @Autowired private ListingService listingService;
+    @Autowired private UserDetailsServiceImpl userDetailsService;
+    @Autowired private CloudinaryService cloudinaryService;
+    @Autowired private CommentService commentService;
+    @Autowired private RatingService ratingService;
+    @Autowired private UserRepository userRepository;
 
-    @Autowired
-    private CloudinaryService cloudinaryService;
+    // Método auxiliar para obtener el usuario actual a partir de la autenticación
+    private User getCurrentUser(Authentication authentication) {
+        return userRepository.findByEmail(authentication.getName());
+    }
 
-    @Autowired
-    private RatingService ratingService;
-
+    // Página principal de la comunidad con paginación de listings
+    // Muestra los listings más recientes primero, 12 por página por defecto
     @GetMapping("")
-    public String index(
-        @RequestParam(defaultValue = "1") Integer page,
-        @RequestParam(defaultValue = "9") Integer size,
-        @RequestParam(defaultValue = "updatedAt") String sort,
-        @RequestParam(defaultValue = "desc") String order,
-        @RequestParam(defaultValue = "") String query,
-        @RequestParam(required = false) Double minRating,
-        @RequestParam(required = false) Double maxRating,
-        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateFrom,
-        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateTo,
-        Model model) 
+    public String index(@RequestParam(defaultValue = "1") Integer page,
+                        @RequestParam(defaultValue = "9") Integer size,
+                        @RequestParam(defaultValue = "updatedAt") String sort,
+                        @RequestParam(defaultValue = "desc") String order,
+                        @RequestParam(defaultValue = "") String query,
+                        @RequestParam(required = false) Double minRating,
+                        @RequestParam(required = false) Double maxRating,
+                        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateFrom,
+                        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateTo,
+                        Model model, Authentication authentication) 
     {
+        User user = getCurrentUser(authentication);
+        model.addAttribute("user", user);
 
         Sort sortBy = order.equals("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
         Pageable pageable = PageRequest.of(page - 1, size, sortBy);
@@ -69,19 +61,27 @@ public class CommunityController {
         return "community/main";
     }
 
-    // Listing related methods
-    @GetMapping("/listing/{id}")
-    public String viewListing(@PathVariable Long id, Model model) {
+    // Muestra un listing específico con todos sus detalles
+    // Incluye comentarios, valoraciones, y estado de favorito para el usuario actual
+    @GetMapping("/listing/{listingId}")
+    public String viewListing(@PathVariable Long listingId, Model model, Authentication authentication) {
+        User user = getCurrentUser(authentication);
+        model.addAttribute("user", user);
         model.addAttribute("activePage", "community");
         
-        Listing listing = listingService.getListingById(id);
+        Listing listing = listingService.getListingById(listingId);
         if (listing == null) {
             return "redirect:/community";
         }
         model.addAttribute("listing", listing);
-        model.addAttribute("comments", commentService.getListingComments(id));
 
-        // Si ya hay un commentForm (por redirect), no lo sobrescribas
+        model.addAttribute("userRating", ratingService.getUserRating(listingId, user.getId()));
+        model.addAttribute("isFavorite", user.getFavListings().contains(listingId));
+        model.addAttribute("totalFavorites", listingService.countTotalFavorites(listingId));
+        model.addAttribute("totalListings", userDetailsService.countTotalListings(listing.getUserId()));
+
+        model.addAttribute("comments", commentService.getListingComments(listingId));
+
         if (!model.containsAttribute("commentForm")) {
             model.addAttribute("commentForm", new CommentForm());
         }
@@ -89,142 +89,150 @@ public class CommunityController {
         return "community/show";
     }
 
-    @GetMapping("/user/{userId}/listings")
-    public String viewUserListings(@PathVariable Long userId, Model model) {
-        model.addAttribute("listings", listingService.getListingsByUserId(userId));
-        return "community/user-listings";
-    }
-
+    // Formulario de creación de nuevo listing
+    // Inicializa un formulario vacío y lo añade al modelo
     @GetMapping("/listing/create")
-    public String createListing(Model model) {
+    public String createListing(Model model, Authentication authentication) {
+        User user = getCurrentUser(authentication);
+        model.addAttribute("user", user);
+
         model.addAttribute("activePage", "community");
         model.addAttribute("listingForm", new ListingForm());
         return "community/create";
     }
 
+    // Procesa la creación de un nuevo listing
+    // Maneja la subida de imágenes (3-10) y video (opcional)
     @PostMapping("/listing/create")
-    public String createListing(
-        @Valid @ModelAttribute("listingForm") ListingForm form,
-        BindingResult result,
-        Model model,
-        HttpSession session
-    ) {
-        // Validación de tags (puede lanzar excepción)
-        try {
-            listingService.convertTags(form.getTags());
-        } catch (IllegalArgumentException e) {
-            result.rejectValue("tags", "error.tags", e.getMessage());
-        }
+    public String createListing(@Valid @ModelAttribute("listingForm") ListingForm form,
+                          BindingResult result,
+                          Model model, 
+                          Authentication authentication) {
+        User user = getCurrentUser(authentication);
+        model.addAttribute("user", user);
 
-        // Inicializar variables
-        List<String> imageUrls = null;
-        String videoUrl = null;
-
-        // Subir imágenes y video
-        try {
-            imageUrls = cloudinaryService.uploadImages(form.getImages());
-            videoUrl = cloudinaryService.uploadVideo(form.getVideo());
-        } catch (IllegalArgumentException e) {
-            if (e.getMessage().toLowerCase().contains("image")) {
-                result.rejectValue("images", "error.images", e.getMessage());
-            } else if (e.getMessage().toLowerCase().contains("video")) {
-                result.rejectValue("video", "error.video", e.getMessage());
-            } else {
-                result.reject("global", e.getMessage());
-            }
-        } catch (Exception e) {
-            result.reject("global", "Error uploading files: " + e.getMessage());
-        }
-
-        // Si hay errores, volver a la vista de creación
+        // Validación del formulario mediante anotaciones en ListingForm
         if (result.hasErrors()) {
             model.addAttribute("listingForm", form);
             return "community/create";
         }
 
-        // Crear listing
-        Listing listing = new Listing();
-        listing.setTitle(form.getTitle());
-        listing.setDescription(form.getDescription());
-        listing.setTags(listingService.convertTags(form.getTags()));
-        listing.setImages(imageUrls);
-        listing.setVideo(videoUrl);
+        try {
+            // Creación del listing con datos básicos
+            // El ID se genera automáticamente al guardar
+            Listing listing = new Listing();
+            listing.setTitle(form.getTitle());
+            listing.setDescription(form.getDescription());
+            listing.setOfficialUrl(form.getOfficialUrl());
+            listing.setTags(listingService.convertTags(form.getTags()));
+            listing.setUserId(user.getId());
+            listing.setUserName(user.getUserName());
+            
+            // Guardamos primero para obtener el ID
+            // Necesario para asociar imágenes y video
+            listing = listingService.createListing(listing);
 
-        // Obtener usuario de sesión y asignar campos
-        User user = (User) session.getAttribute("user");
-        listing.setUserId(user.getId());
-        listing.setUserName(user.getUserName());
+            // Subida de archivos multimedia
+            // Las validaciones de formato y cantidad se realizan en CloudinaryService
+            cloudinaryService.uploadImages(listing.getId(), form.getImages());
+            if (form.getVideo() != null && !form.getVideo().isEmpty()) {
+                cloudinaryService.uploadVideo(listing.getId(), form.getVideo());
+            }
 
-        listingService.createListing(listing);
+            return "redirect:/community/listing/" + listing.getId();
 
-        return "redirect:/community/listing/" + listing.getId();
+        } catch (Exception e) {
+            result.reject("global", "Error creating listing: " + e.getMessage());
+            model.addAttribute("listingForm", form);
+            return "community/create";
+        }
     }
 
+    // Formulario de edición de listing existente
+    // Carga los datos actuales del listing en el formulario
     @GetMapping("/listing/{listingId}/edit")
-    public String editListing(@PathVariable Long listingId, Model model) {
+    public String editListing(@PathVariable Long listingId, Model model, Authentication authentication) {
+        User user = getCurrentUser(authentication);
+        model.addAttribute("user", user);
         model.addAttribute("activePage", "community");
         
+        // Obtener listing existente o redirigir si no existe
         Listing listing = listingService.getListingById(listingId);
         if (listing == null) {
             return "redirect:/community";
         }
 
+        // Poblar el formulario con los datos actuales
+        // Las imágenes y video actuales se muestran en la vista
+        ListingForm form = new ListingForm();
+        form.setTitle(listing.getTitle());
+        form.setDescription(listing.getDescription());
+        form.setOfficialUrl(listing.getOfficialUrl());
+        form.setTags(String.join(", ", listing.getTags()));
+
+        model.addAttribute("listingForm", form);
         model.addAttribute("listing", listing);
         return "community/edit";
     }
 
+    // Procesa la actualización de un listing existente
+    // Permite actualizar datos básicos y opcionalmente multimedia
     @PostMapping("/listing/{listingId}/update")
-    public String updateListing(
-        @PathVariable Long listingId,
-        @Valid @ModelAttribute Listing listing,
-        BindingResult result,
-        @RequestParam("tags") String tags,
-        @RequestParam(value = "images", required = false) List<MultipartFile> images,
-        @RequestParam(value = "video", required = false) MultipartFile video,
-        Model model
-    ) {
-        listing.setId(listingId);
-        listing.setTags(listingService.convertTags(tags));
+    public String updateListing(@PathVariable Long listingId,
+                                @Valid @ModelAttribute("listingForm") ListingForm form,
+                                BindingResult result,
+                                Model model,
+                                Authentication authentication) {
+        User user = getCurrentUser(authentication);
+        model.addAttribute("user", user);
 
-        // Si se suben nuevas imágenes, reemplazar
-        if (images != null && !images.isEmpty() && !images.get(0).isEmpty()) {
-            try {
-                List<String> imageUrls = cloudinaryService.uploadImages(images);
-                listing.setImages(imageUrls);
-            } catch (IllegalArgumentException e) {
-                result.rejectValue("images", "error.listing", e.getMessage());
-                model.addAttribute("listing", listing);
-                return "community/edit";
-            } catch (Exception e) {
-                result.rejectValue("images", "error.listing", "Error uploading images");
-                model.addAttribute("listing", listing);
-                return "community/edit";
-            }
+        // Obtener listing existente o redirigir si no existe
+        Listing listing = listingService.getListingById(listingId);
+        if (listing == null) {
+            return "redirect:/community";
         }
-        // Video: si se sube uno nuevo, reemplazar
-        if (video != null && !video.isEmpty()) {
-            try {
-                String videoUrl = cloudinaryService.uploadVideo(video);
-                listing.setVideo(videoUrl);
-            } catch (Exception e) {
-                result.rejectValue("video", "error.listing", "Error uploading video");
-                model.addAttribute("listing", listing);
-                return "community/edit";
-            }
-        }
+        model.addAttribute("listing", listing);
 
-        // Si hay errores, volver a la vista de edición
+        // Validación del formulario mediante anotaciones en ListingForm
         if (result.hasErrors()) {
-            model.addAttribute("listing", listing);
+            model.addAttribute("listingForm", form);
             return "community/edit";
         }
 
-        listingService.updateListing(listing);
-        return "redirect:/community/listing/" + listingId;
+        try {
+            // Actualizar datos básicos del listing
+            listing.setTitle(form.getTitle());
+            listing.setDescription(form.getDescription());
+            listing.setOfficialUrl(form.getOfficialUrl());
+            listing.setTags(listingService.convertTags(form.getTags()));
+
+            // Actualizar multimedia solo si se proporcionan nuevos archivos
+            // Las validaciones de formato y cantidad se realizan en CloudinaryService
+            if (!form.getImages().isEmpty() && !form.getImages().get(0).isEmpty()) {
+                cloudinaryService.uploadImages(listingId, form.getImages());
+            }
+            if (form.getVideo() != null && !form.getVideo().isEmpty()) {
+                cloudinaryService.uploadVideo(listingId, form.getVideo());
+            }
+
+            listingService.updateListing(listing);
+            return "redirect:/community/listing/" + listingId;
+
+        } catch (Exception e) {
+            result.reject("global", "Error updating listing: " + e.getMessage());
+            model.addAttribute("listingForm", form);
+            model.addAttribute("listing", listing);
+            return "community/edit";
+        }
     }
 
+    // Elimina un listing y todos sus datos asociados
+    // Incluye imágenes, video, comentarios y valoraciones
     @PostMapping("/listing/{listingId}/remove")
-    public String removeListing(@PathVariable Long listingId) {
+    public String removeListing(@PathVariable Long listingId, Model model, Authentication authentication) {
+        User user = getCurrentUser(authentication);
+        model.addAttribute("user", user);
+
         Listing listing = listingService.getListingById(listingId);
 
         if (listing == null) {
@@ -235,30 +243,43 @@ public class CommunityController {
         return "redirect:/community";
     }
 
-    // Comment related methods
+    // Añade un nuevo comentario a un listing
+    // Requiere título y texto, asocia automáticamente el usuario actual
     @PostMapping("/listing/{listingId}/comment/post")
-    public String addComment(
-        @PathVariable Long listingId,
-        @Valid @ModelAttribute("commentForm") CommentForm form,
-        BindingResult result,
-        RedirectAttributes redirect,
-        HttpSession session
+    public String addComment(@PathVariable Long listingId, 
+                             @Valid @ModelAttribute("commentForm") CommentForm form,
+                             BindingResult result,
+                             RedirectAttributes redirect,
+                             Authentication authentication,
+                             Model model
     ) {
-        User user = (User) session.getAttribute("user");
+        User user = getCurrentUser(authentication);
+        model.addAttribute("user", user);
 
-        try {
-            commentService.createComment(listingId, user.getId(), form.getTitle(), form.getText());
-        } catch (Exception e) {
+        if (result.hasErrors()) {
             redirect.addFlashAttribute("org.springframework.validation.BindingResult.commentForm", result);
             redirect.addFlashAttribute("commentForm", form);
-            redirect.addFlashAttribute("commentError", e.getMessage());
             return "redirect:/community/listing/" + listingId;
         }
+
+        Comment comment = new Comment();
+        comment.setTitle(form.getTitle());
+        comment.setText(form.getText());
+        comment.setListingId(listingId);
+        comment.setUserId(user.getId());
+        comment.setUserName(user.getUserName());
+        commentService.createComment(comment);
+
         return "redirect:/community/listing/" + listingId;
     }
 
+    // Elimina un comentario específico de un listing
+    // Solo el propietario del comentario puede eliminarlo
     @PostMapping("/listing/{listingId}/comment/{commentId}/remove")
-    public String removeComment(@PathVariable Long listingId, @PathVariable Long commentId) {
+    public String removeComment(@PathVariable Long listingId, @PathVariable Long commentId, Model model, Authentication authentication) {
+        User user = getCurrentUser(authentication);
+        model.addAttribute("user", user);
+
         Comment comment = commentService.getCommentById(commentId);
 
         if (comment == null) {
@@ -269,10 +290,31 @@ public class CommunityController {
         return "redirect:/community/listing/" + listingId;
     }
 
+    // Añade o actualiza la valoración de un usuario para un listing
+    // La valoración debe estar entre 1 y 5 estrellas
     @PostMapping("/listing/{listingId}/rate")
-    public String rateListing(@PathVariable Long listingId, @RequestParam Double rating, HttpSession session) {
-        User user = (User) session.getAttribute("user");
+    public String rateListing(@PathVariable Long listingId, @RequestParam Double rating, Model model, Authentication authentication) {
+        User user = getCurrentUser(authentication);
+        model.addAttribute("user", user);
+
         ratingService.rateListing(listingId, user.getId(), rating);
+        return "redirect:/community/listing/" + listingId;
+    }
+
+    // Alterna el estado de favorito de un listing para el usuario actual
+    // Si ya es favorito lo quita, si no lo es lo añade
+    @PostMapping("/listing/{listingId}/favorite")
+    public String addToFavorites(@PathVariable Long listingId, Model model, Authentication authentication) {
+        User user = getCurrentUser(authentication);
+        model.addAttribute("user", user);
+
+        if (!user.getFavListings().contains(listingId)) {
+            user.getFavListings().add(listingId);
+        } else {
+            user.getFavListings().remove(listingId);
+        }
+
+        userRepository.save(user);
         return "redirect:/community/listing/" + listingId;
     }
 }

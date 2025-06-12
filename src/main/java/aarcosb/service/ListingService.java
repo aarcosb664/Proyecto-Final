@@ -18,60 +18,92 @@ public class ListingService {
     @Autowired
     private ListingRepository listingRepository;
 
+    // Obtiene una página de listings con sus imágenes
+    // La paginación se maneja a nivel de base de datos para eficiencia
+    // Las imágenes se cargan después para cada listing
     public Page<Listing> getAllListings(Pageable pageable) {
-        return listingRepository.findAll(pageable);
+        Page<Listing> listings = listingRepository.findAll(pageable);
+        listings.forEach(listing -> listing.setImages(listingRepository.findImagesByListingId(listing.getId())));
+        return listings;
     }
 
+    // Obtiene un listing específico por su ID
+    // Incluye la carga de sus imágenes asociadas
+    // Retorna null si no existe el listing
     public Listing getListingById(Long id) {
-        return listingRepository.findById(id).orElse(null);
+        Listing listing = listingRepository.findById(id).orElse(null);
+        listing.setImages(listingRepository.findImagesByListingId(id));
+        return listing;
     }
 
+    // Obtiene todos los listings de un usuario específico
+    // Incluye la carga de imágenes para cada listing
+    // Útil para mostrar el perfil del usuario
     public List<Listing> getListingsByUserId(Long userId) {
-        return listingRepository.findByUserId(userId);
+        List<Listing> listings = listingRepository.findByUserId(userId);
+        listings.forEach(listing -> listing.setImages(listingRepository.findImagesByListingId(listing.getId())));
+        return listings;
     }
 
+    // Convierte un string de tags separados por comas a un Set
+    // Ejemplo: "tag1, tag2, tag3" -> Set("tag1", "tag2", "tag3")
+    // Retorna null si no hay tags o el string está vacío
+    public Set<String> convertTags(String tags) {
+        if (tags == null || tags.trim().isEmpty()) {
+            return null;
+        }
+        return Arrays.stream(tags.split(","))
+                    .map(String::trim)
+                    .filter(tag -> !tag.isEmpty())
+                    .collect(Collectors.toSet());
+    }
+
+    // Crea un nuevo listing en la base de datos
+    // Genera automáticamente ID, fechas de creación y actualización
+    // Retorna el listing con sus imágenes cargadas
     public Listing createListing(Listing listing) {
-        return listingRepository.save(listing);
+        Listing saved = listingRepository.save(listing);
+        saved.setImages(listingRepository.findImagesByListingId(saved.getId()));
+        return saved;
     }
 
+    // Actualiza un listing existente
+    // Mantiene el ID y fecha de creación originales
+    // Actualiza la fecha de modificación automáticamente
     public Listing updateListing(Listing listing) {
-        return listingRepository.save(listing);
+        Listing saved = listingRepository.save(listing);
+        saved.setImages(listingRepository.findImagesByListingId(saved.getId()));
+        return saved;
     }
 
+    // Elimina un listing y todos sus datos asociados
+    // La eliminación en cascada se maneja a nivel de base de datos
+    // Incluye imágenes, video, comentarios y valoraciones
     public void deleteListing(Long id) {
         listingRepository.deleteById(id);
     }
 
-    public Set<String> convertTags(String tags) {
-        // Si el usuario no ha introducido ningun tag, se devuelve null
-        if (tags == null || tags.isEmpty()) {
-            return null;
-        }
-
-        // Se comprueba que el formato de los tags es correcto
-        String regexp = "^\\S+(,\\s*\\S+){1,100}$";
-        if (!tags.matches(regexp)) {
-            throw new IllegalArgumentException("The tags must have a length between 1 and 100, and separated by commas");
-        }
-
-        // Si el usuario ha introducido un tag con una coma al final, se elimina
-        if (tags.endsWith(",")) {
-            tags = tags.substring(0, tags.length() - 1);
-        }
-
-        /*
-         * 1. Se convierte el string en un array de strings, 
-         * 2. Se eliminan los espacios en blanco de cada tag,
-         * 3. Se convierte de nuevo a un set
-         */
-        return Arrays.asList(tags.split(",")).stream()
-                     .map(String::trim)
-                     .collect(Collectors.toSet());
+    // Cuenta el número total de usuarios que han marcado como favorito este listing
+    // Útil para mostrar la popularidad del listing
+    public int countTotalFavorites(Long listingId) {
+        return listingRepository.countTotalFavorites(listingId);
     }
 
+    // Obtiene todas las URLs de imágenes asociadas a un listing
+    // Usado internamente para cargar las imágenes de un listing
+    public List<String> getImagesByListingId(Long listingId) {
+        return listingRepository.findImagesByListingId(listingId);
+    }
+
+    // Busca y filtra listings según los criterios proporcionados
+    // Puede buscar por título, tags, valoración, fecha de creación o actualización
+    // También permite filtrar por rango de valoración y fechas
+    // Retorna una página de listings que coincidan con los criterios   
     public Page<Listing> searchAndFilter(String query, Double minRating, Double maxRating, Date dateFrom, Date dateTo, Pageable pageable) {
         // Si query es null o solo espacios, pásalo como null al repo (NO devuelvas vacío)
         String q = (query == null || query.trim().isEmpty()) ? null : query.trim().toLowerCase();
-        return listingRepository.searchAndFilter(q, minRating, maxRating, dateFrom, dateTo, pageable);
+        Page<Listing> listings = listingRepository.searchAndFilter(q, minRating, maxRating, dateFrom, dateTo, pageable);
+        listings.forEach(listing -> listing.setImages(listingRepository.findImagesByListingId(listing.getId())));
+        return listings;
     }
 } 

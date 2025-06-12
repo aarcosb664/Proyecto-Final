@@ -1,32 +1,33 @@
 package aarcosb.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import aarcosb.model.repository.PlayerRepository;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
+import org.springframework.security.core.Authentication;
+import aarcosb.model.entity.User;
 import aarcosb.model.repository.UserRepository;
-import java.security.Principal;
-import jakarta.servlet.http.HttpSession;
+import aarcosb.model.repository.PlayerRepository;
 
 @Controller
 public class IndexController {
-    @Autowired
-    private PlayerRepository playerRepository;
 
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PlayerRepository playerRepository;
+
     @GetMapping("/")
-    public String index(Model model, Principal principal, HttpSession session) {
-        model.addAttribute("players", playerRepository.findTop5ByOrderByScoreDesc());
+    public String index(Model model, Authentication authentication) {
         model.addAttribute("activePage", "index");
         
-        // Si el usuario no está en la sesión, añadirlo
-        if (principal != null && session.getAttribute("user") == null) {
-            session.setAttribute("user", userRepository.findByEmail(principal.getName()));
+        if (authentication != null) {
+            User user = userRepository.findByEmail(authentication.getName());
+            model.addAttribute("user", user);
         }
         
+        model.addAttribute("players", playerRepository.findTop5ByOrderByScoreDesc());
         return "index";
     }
 }

@@ -20,12 +20,7 @@ public class CommentService {
         return commentRepository.findByListingId(listingId);
     }
 
-    public Comment createComment(Long listingId, Long userId, String title, String text) {
-        Comment comment = new Comment();
-        comment.setListingId(listingId);
-        comment.setUserId(userId);
-        comment.setTitle(title);
-        comment.setText(text);
+    public Comment createComment(Comment comment) {
         return commentRepository.save(comment);
     }
 

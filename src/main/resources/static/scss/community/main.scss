@@ -1,12 +1,10 @@
-@use 'globals';
-@use 'base' as *;
-@use 'base/vars' as *;
-@use 'base/mixins' as *;
+@use '../globals';
+@use '../base' as *;
 
+// Card styles (unique to main)
 .card {
   height: 500px;
   overflow: hidden;
-
   * {
     transition: transform 0.3s ease-in-out;
   }
@@ -39,6 +37,7 @@
   }
 }
 
+// Grid tags (unique to main)
 .grid-tags {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -49,34 +48,4 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.page-link {
-  @include text-neon($white);
-  background-color: $black !important;
-
-  &:hover, 
-  &:focus {
-    @include text-neon($cyan);
-    border: 1px $cyan solid;
-  }
-}
-
-.page-item.active .page-link {
-  @include border-neon-sm($blue);
-  @include text-neon($blue);
-}
-
-.page-item.disabled .page-link {
-  color: $gray !important;
-  border-color: $gray !important;
-}
-
-.modal-grid {
-  width: 100%;
-  display: inline-grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  align-items: center;
-  justify-items: space-between;
-  gap: 1rem;
-}
+} 

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import aarcosb.model.entity.Rating;
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 @Repository
 public interface RatingRepository extends JpaRepository<Rating, Long> {
@@ -14,5 +13,5 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
     Rating findByListingIdAndUserId(Long listingId, Long userId);
 
     @Query("SELECT AVG(r.ratingValue) FROM Rating r WHERE r.listingId = :listingId")
-    Double findAverageRatingByListingId(@Param("listingId") Long listingId);
+    Double findAverageRatingByListingId(Long listingId);
 }

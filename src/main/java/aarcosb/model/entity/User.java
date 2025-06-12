@@ -1,5 +1,6 @@
 package aarcosb.model.entity;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,6 +14,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import java.util.Date;
+import java.util.List;
+import jakarta.persistence.PrePersist;
+import java.util.ArrayList;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -36,10 +41,22 @@ public class User {
     @Column(name = "profile_pic")
     private String profilePic;
 
+    @ElementCollection
+    @Column(name = "fav_listings")
+    private List<Long> favListings;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
     
     @Column(name = "created_at")
     private Date createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+        profilePic = "default.png";
+        favListings = new ArrayList<>();
+        role = Role.USER;
+    }
 }

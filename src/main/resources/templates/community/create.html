@@ -14,7 +14,7 @@
     <header th:insert="~{fragments/header :: header}"></header>
 
     <div class="container mt-3">
-        <div class="banner header-neon-white mb-3"><h1>Create Listing</h1></div>
+        <div class="banner header-neon-white mb-5"><h1>Create Listing</h1></div>
 
         <div class="row justify-content-center">
             <!-- Formulario -->
@@ -24,13 +24,24 @@
                   method="post"
                   enctype="multipart/form-data">
             
-                <!-- Título -->
-                <div class="mb-3 col-md-8">
-                    <label class="form-label label-required text-neon-white" for="title">Title</label>
-                    <input th:field="*{title}" maxlength="100" required
-                           class="form-control form-custom text-neon-white"
-                           th:errorclass="is-invalid">
-                    <div class="invalid-feedback text-neon-red" th:errors="*{title}"></div>
+                <div class="row g-3 mb-3">
+                    <!-- Title -->
+                    <div class="col-md-6">
+                        <label class="form-label label-required text-neon-white" for="title">Title</label>
+                        <input th:field="*{title}" maxlength="100" required
+                               class="form-control form-custom text-neon-white"
+                               th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'">
+                        <div class="invalid-feedback text-neon-red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                    </div>
+
+                    <!-- URL oficial -->
+                    <div class="col-md-6">
+                        <label class="form-label label-required text-neon-white" for="officialUrl">Official URL</label>
+                        <input th:field="*{officialUrl}" maxlength="50" required
+                               class="form-control form-custom text-neon-white"
+                               th:errorclass="is-invalid">
+                        <div class="invalid-feedback text-neon-red" th:errors="*{officialUrl}"></div>
+                    </div>
                 </div>
 
                 <!-- Descripción -->
@@ -42,20 +53,11 @@
                     <div class="invalid-feedback text-neon-red" th:errors="*{description}"></div>
                 </div>
 
-                <!-- URL oficial -->
-                <div class="mb-3">
-                    <label class="form-label label-required text-neon-white" for="officialUrl">Official URL</label>
-                    <input th:field="*{officialUrl}" maxlength="50" required
-                           class="form-control form-custom text-neon-white"
-                           th:errorclass="is-invalid">
-                    <div class="invalid-feedback text-neon-red" th:errors="*{officialUrl}"></div>
-                </div>
-
                 <div class="row g-3">
                     <!-- Imágenes -->
                     <div class="col-md-6">
                         <label class="form-label label-required text-neon-white" for="images">Images (3-10)</label>
-                        <input type="file" multiple required accept=".png,.jpeg"
+                        <input type="file" multiple required accept=".png, .jpg, .jpeg"
                                id="imagesInput"
                                th:field="*{images}"
                                class="form-control form-custom text-neon-white"
@@ -66,7 +68,7 @@
                     <!-- Video -->
                     <div class="col-md-6">
                         <label class="form-label text-neon-white" for="video">Video</label>
-                        <input type="file" accept=".mp4,.flv,.webm,.mov,.avi,.wmv"
+                        <input type="file" accept=".mp4, .mov, .avi, .wmv, .flv, .webm, .mkv"
                             id="videoInput"
                             th:field="*{video}"
                             class="form-control form-custom text-neon-white"
@@ -88,8 +90,8 @@
                 <div class="row mt-4">
                     <div class="form-group col-md-4">
                         <button type="submit" class="btn-neon-green w-100 mb-4 mb-md-0">
-                            <i class="bi bi-plus"></i> 
-                            Create
+                            <i class="bi bi-check"></i> 
+                            Save
                         </button>
                     </div>
                     <div class="form-group col-md-4">

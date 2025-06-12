@@ -2,106 +2,191 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" th:href="@{img/logo.png}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" th:href="@{/img/logo.png}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link th:href="@{css/community.css}" rel="stylesheet">
-    <title th:text="${anuncio.title}"></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link th:href="@{/css/community/edit.css}" rel="stylesheet">
+    <title>Edit Listing</title>
 </head>
-<body class="bg-dark text-white">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Editar anuncio</h1>
+<body>
+    <header th:insert="~{fragments/header :: header}"></header>
 
-                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-                    <ul>
-                        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
-                    </ul>
+    <div class="container py-4">
+        <!-- Título -->
+        <div class="banner header-neon-white mb-5"><h1>Edit Listing</h1></div>
+
+        <!-- Formulario principal -->
+        <form th:action="@{/community/listing/{id}/update(id=${listing.id})}"
+              method="post"
+              th:object="${listingForm}"
+              enctype="multipart/form-data"
+              class="needs-validation" novalidate>
+            
+            <div class="row mb-5 g-5">
+                <!-- Galería (Carrusel + Thumbnails) -->
+                <div class="col-lg-8">
+                    <div class="row">
+                        <!-- Carrusel principal -->
+                        <div class="col-12">
+                            <div class="carousel-wrapper border-neon-pink">
+                                <!-- Swiper principal -->
+                                <div class="swiper mainSwiper">
+                                    <div class="swiper-wrapper">
+                                        <!-- Vídeo -->
+                                        <div th:if="${!#strings.isEmpty(listing.video)}" class="swiper-slide">
+                                            <div class="ratio ratio-16x9">
+                                                <video th:src="${listing.video}" controls class="carousel-video" muted></video>
+                                            </div>
+                                        </div>
+                                        <!-- Imágenes -->
+                                        <div th:each="img,iterStat : ${listing.images}" class="swiper-slide">
+                                            <div class="ratio ratio-16x9">
+                                                <img th:src="${img}" alt="Listing image">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Flechas de navegación -->
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fila de miniaturas -->
+                        <div class="col-12">
+                            <div class="thumbnails-wrapper p-0 pt-3">
+                                <!-- Thumbnail Swiper -->
+                                <div class="swiper thumbSwiper">
+                                    <div class="swiper-wrapper">
+                                        <!-- Video Thumbnail -->
+                                        <div th:if="${!#strings.isEmpty(listing.video)}" class="ratio ratio-16x9 swiper-slide">
+                                            <video th:src="${listing.video}" class="img-fluid preview-thumb" muted></video>
+                                        </div>
+                                        <!-- Image Thumbnails -->
+                                        <div th:each="img, iStat : ${listing.images}" class="ratio ratio-16x9 swiper-slide">
+                                            <img th:src="${img}" class="img-fluid preview-thumb" alt="Image thumbnail">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <form th:action="@{/community/{id}(id=${anuncio.id})}" method="POST" th:object="${anuncio}" class="form-neon needs-validation" novalidate>
-                    <input type="hidden" name="_method" value="PUT">
-                    
-                    <div class="row">
-                        <!-- Titulo -->
-                        <div class="form-group col-md-8 mb-3">
-                            <label for="titulo" class="form-label text-neon-white">Title *</label>
-                            <input type="text" class="form-control text-neon-white" id="titulo" th:field="*{titulo}" required>
-                            <div class="invalid-feedback text-neon-red">Title is required.</div>
+                <!-- Card con inputs -->
+                <div class="col-lg-4">
+                    <div class="card border-neon-cyan text-center p-4 py-5 h-100">
+                        <!-- Título -->
+                        <div class="mb-4">
+                            <label class="form-label text-neon-white" for="title">Title</label>
+                            <input id="title" th:field="*{title}" maxlength="100" required
+                                   class="form-control form-custom text-neon-white mb-3"
+                                   th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'">
+                            <div class="invalid-feedback text-neon-red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
                         </div>
 
-                        <!-- Tipo -->
-                        <div class="form-group col-md-2 mb-3">
-                            <label for="tipo" class="form-label text-neon-white">Type (optional)</label>
-                            <select class="form-control text-neon-white" id="tipo" th:field="*{tipo}">
-                                <option value="">Select an option</option>
-                                <option value="compra" th:selected="${anuncio.tipo == 'compra'}">Buy</option>
-                                <option value="venta" th:selected="${anuncio.tipo == 'venta'}">Sell</option>
-                            </select>
+                        <!-- URL oficial -->
+                        <div class="mb-4">
+                            <label class="form-label text-neon-white" for="officialUrl">Official URL</label>
+                            <input id="officialUrl" th:field="*{officialUrl}" maxlength="50" required
+                                   class="form-control form-custom text-neon-white"
+                                   th:errorclass="is-invalid">
+                            <div class="invalid-feedback text-neon-red" th:errors="*{officialUrl}"></div>
                         </div>
 
-                        <!-- Precio -->
-                        <div class="form-group col-md-2 mb-3">
-                            <label for="precio" class="form-label text-neon-white">Price</label>
-                            <input type="number" class="form-control text-neon-white" id="precio" th:field="*{precio}" min="1" step="0.01">
-                            <div class="invalid-feedback text-neon-red"></div>
+                        <!-- Tags actuales -->
+                        <div>
+                            <p class="text-neon-white">Tags</p>
+                            <span th:each="tag : ${listing.tags}" class="badge badge-tag me-3" th:text="${tag}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección inferior -->
+            <div class="row g-5">
+                <div class="col-lg-8">
+                    <!-- Imágenes y video -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label text-neon-white" for="images">Images (3-10)</label>
+                            <input type="file" multiple accept=".png, .jpg, .jpeg"
+                                   id="imagesInput"
+                                   th:field="*{images}"
+                                   class="form-control form-custom text-neon-white"
+                                   th:errorclass="is-invalid">
+                            <div class="invalid-feedback text-neon-red" th:errors="*{images}"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-neon-white" for="video">Video</label>
+                            <input type="file" accept=".mp4, .mov, .avi, .wmv, .flv, .webm, .mkv"
+                                id="videoInput"
+                                th:field="*{video}"
+                                class="form-control form-custom text-neon-white"
+                                th:errorclass="is-invalid">
+                            <div class="invalid-feedback text-neon-red" th:errors="*{video}"></div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <!-- Descripcion -->
-                        <div class="form-group mb-3">
-                            <label for="descripcion" class="form-label text-neon-white">Description *</label>
-                            <textarea class="form-control text-neon-white" id="descripcion" rows="4" th:field="*{descripcion}" required></textarea>
-                            <div class="invalid-feedback text-neon-red">Description is required.</div>
-                        </div>
+                    <!-- Descripción -->
+                    <div class="mb-4">
+                        <label class="form-label text-neon-white" for="description">Description</label>
+                        <textarea id="description" th:field="*{description}" rows="4" maxlength="500" required
+                                  class="form-control form-custom text-neon-white"
+                                  th:errorclass="is-invalid"></textarea>
+                        <div class="invalid-feedback text-neon-red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
                     </div>
 
-                    <div class="row">
-                        <!-- Email -->
-                        <div class="form-group col-md-6 mb-3">
-                            <label for="email" class="form-label text-neon-white">Email *</label>
-                            <input type="email" class="form-control text-neon-white" id="email" th:field="*{email}" required>
-                            <div class="invalid-feedback text-neon-red">Enter a valid email.</div>
-                        </div>
-
-                        <!-- Telefono -->
-                        <div class="form-group col-md-6 mb-3">
-                            <label for="telefono" class="form-label text-neon-white">Phone *</label>
-                            <input type="text" class="form-control text-neon-white" id="telefono" th:field="*{telefono}" maxlength="9" pattern="[0-9]{9}" required>
-                            <div class="invalid-feedback text-neon-red">Phone must have 9 digits.</div>
-                        </div>
+                    <!-- Tags -->
+                    <div class="mb-4">
+                        <label class="form-label text-neon-white" for="tags">Tags (comma separated)</label>
+                        <input id="tags" th:field="*{tags}"
+                               class="form-control form-custom text-neon-white"
+                               th:errorclass="is-invalid">
+                        <div class="invalid-feedback text-neon-red" th:errors="*{tags}"></div>
                     </div>
 
                     <!-- Botones -->
-                    <div class="row mt-3">
+                    <div class="row mt-4">
                         <div class="form-group col-md-4">
-                            <button type="submit" class="btn btn-primary w-100 text-neon-white">
-                                <i class="fas fa-save me-1"></i>Save changes
+                            <button type="submit" class="btn-neon-green w-100 mb-4 mb-md-0">
+                                <i class="bi bi-check"></i> 
+                                Save
                             </button>
                         </div>
-
                         <div class="form-group col-md-4">
-                            <button type="reset" class="btn btn-danger w-100 text-neon-white">
-                                <i class="fas fa-undo me-1"></i>Reset
+                            <button type="reset" class="btn-neon-red w-100 mb-4 mb-md-0">
+                                <i class="bi bi-eraser me-1"></i> 
+                                Reset
                             </button>
                         </div>
-
                         <div class="form-group col-md-4">
-                            <a th:href="@{/community/{id}(id=${anuncio.id})}" class="btn btn-secondary w-100 text-neon-white">
-                                <i class="fas fa-times me-1"></i>Cancel
+                            <a th:href="@{/community/listing/{id}(id=${listing.id})}" class="btn-neon-gray w-100 d-block text-center">
+                                <i class="bi bi-x me-1"></i> 
+                                Cancel
                             </a>
                         </div>
                     </div>
-                </form>
+                </div>
+
+                <!-- Preview -->
+                <div class="col-lg-4">
+                    <div id="previewCarousel">
+                        <div id="videoPreviewContainer"></div>
+                        <div id="imagePreviewContainer" class="mb-3"></div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script th:src="@{/js/validation.js}"></script>
+    <footer th:insert="~{fragments/footer :: footer}"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script th:src="@{/js/listing-utils.js}"></script>
+    <script th:src="@{/js/preview.js}"></script>
 </body>
-</html> 
+</html>
