@@ -1,0 +1,130 @@
+@use 'sass:color';
+@use '../base' as *;
+
+.navbar {
+	background-color: $black;
+
+	.navbar-toggler {
+		border-color: $blue;
+	}
+
+	.navbar-collapse {
+		transition: all 0.3s;
+		
+		@media (max-width: 991px) {
+			border: 1px solid $blue;
+			border-radius: 8px;
+			margin-top: 0.5rem !important;
+		}
+    }
+
+	.nav-link {
+			color: rgba($white, 0.8);
+			transition: all 0.3s;
+			font-weight: 500;
+
+			&:hover, &:focus {
+			color: $white !important;
+			transform: scale(1.1) !important;
+
+			@media (min-width: 991px) {
+				color: $white !important;
+				transform: translateY(-2px) !important;
+			}
+			}
+	}
+
+	.dropdown {
+		.dropdown-toggle {
+			color: $blue;
+			transition: color 0.3s;
+
+			&::after {
+				margin-top: 5px;
+				margin-left: 10px;
+				font-size: 1.5rem;
+			}
+
+			.user-name {
+				display: none;
+				
+				@media (min-width: 1200px) {
+					display: inline;
+				}
+			}
+		}
+
+		&:hover {
+			.dropdown-toggle {
+				color: $pink;
+			}
+
+			img.rounded-circle {
+				border-color: $pink;
+				transform: scale(1.05);
+			}
+        }
+        
+        img.rounded-circle {
+            border: 2px solid $blue;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            background-color: $black;
+            border: 1px solid $blue;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            margin-top: 10px;
+            animation: fadeIn 0.3s ease-out;
+
+            @media (max-width: 991px) {
+                left: auto;
+                right: 0;
+                margin-top: 0.5rem;
+            }
+            
+            .dropdown-item {
+                color: #fff;
+                
+                &:hover, &:focus {
+                background-color: rgba($blue, 0.2);
+                }
+            }
+            
+            .dropdown-divider {
+                border-color: $blue;
+            }
+            
+            .btn-link {
+                color: $red;
+                
+                &:hover {
+                    color: rgba($red, 0.8);
+                }
+            }
+        }
+    }
+  
+    @media (max-width: 991px) {
+        .navbar-nav .nav-item {
+            margin: 8px 0;
+            text-align: center;
+                
+            &:hover {
+                background-color: rgba($blue, 0.1);
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.navbar.fixed-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+}

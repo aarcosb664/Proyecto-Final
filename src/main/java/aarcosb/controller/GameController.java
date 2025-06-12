@@ -12,8 +12,7 @@ import aarcosb.model.repository.PlayerRepository;
 @Controller
 public class GameController {
 
-    @Autowired
-    private PlayerRepository playerRepository;
+    @Autowired private PlayerRepository playerRepository;
 
     @GetMapping("/game")
     public String game() {

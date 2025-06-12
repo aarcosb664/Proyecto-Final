@@ -55,7 +55,6 @@ public class CommunityController {
         Sort sortBy = order.equals("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
         Pageable pageable = PageRequest.of(page - 1, size, sortBy);
 
-        model.addAttribute("activePage", "community");
         model.addAttribute("listings",
         listingService.searchAndFilter(query, minRating, maxRating, dateFrom, dateTo, pageable));
         return "community/main";
@@ -67,7 +66,6 @@ public class CommunityController {
     public String viewListing(@PathVariable Long listingId, Model model, Authentication authentication) {
         User user = getCurrentUser(authentication);
         model.addAttribute("user", user);
-        model.addAttribute("activePage", "community");
         
         Listing listing = listingService.getListingById(listingId);
         if (listing == null) {
@@ -75,6 +73,8 @@ public class CommunityController {
         }
         model.addAttribute("listing", listing);
 
+        User listingUser = userRepository.findById(listing.getUserId()).orElse(null);
+        model.addAttribute("listingUserProfilePic", listingUser.getProfilePic());
         model.addAttribute("userRating", ratingService.getUserRating(listingId, user.getId()));
         model.addAttribute("isFavorite", user.getFavListings().contains(listingId));
         model.addAttribute("totalFavorites", listingService.countTotalFavorites(listingId));
@@ -96,7 +96,6 @@ public class CommunityController {
         User user = getCurrentUser(authentication);
         model.addAttribute("user", user);
 
-        model.addAttribute("activePage", "community");
         model.addAttribute("listingForm", new ListingForm());
         return "community/create";
     }
@@ -107,7 +106,8 @@ public class CommunityController {
     public String createListing(@Valid @ModelAttribute("listingForm") ListingForm form,
                           BindingResult result,
                           Model model, 
-                          Authentication authentication) {
+                          Authentication authentication) 
+    {
         User user = getCurrentUser(authentication);
         model.addAttribute("user", user);
 
@@ -154,7 +154,6 @@ public class CommunityController {
     public String editListing(@PathVariable Long listingId, Model model, Authentication authentication) {
         User user = getCurrentUser(authentication);
         model.addAttribute("user", user);
-        model.addAttribute("activePage", "community");
         
         // Obtener listing existente o redirigir si no existe
         Listing listing = listingService.getListingById(listingId);
@@ -182,7 +181,8 @@ public class CommunityController {
                                 @Valid @ModelAttribute("listingForm") ListingForm form,
                                 BindingResult result,
                                 Model model,
-                                Authentication authentication) {
+                                Authentication authentication) 
+    {
         User user = getCurrentUser(authentication);
         model.addAttribute("user", user);
 
@@ -251,8 +251,8 @@ public class CommunityController {
                              BindingResult result,
                              RedirectAttributes redirect,
                              Authentication authentication,
-                             Model model
-    ) {
+                             Model model) 
+    {
         User user = getCurrentUser(authentication);
         model.addAttribute("user", user);
 

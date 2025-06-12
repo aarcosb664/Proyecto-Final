@@ -6,7 +6,9 @@
   position: relative;
   height: 85vh;
   
-  @media (max-width: 992px) { height: auto; }
+  @media (max-width: 992px) { 
+    height: auto; 
+  }
 }
 
 .rhombus-wrapper {
@@ -16,7 +18,6 @@
   width: 60%;
   border: 3px solid transparent;
   border-radius: 1rem;
-  animation: borderGlow 2.5s infinite alternate;
   transform: skew(-15deg, 0);
   
   @media (max-width: 992px) {
@@ -30,26 +31,17 @@
 }
 
 .rhombus-red-wrapper {
+  @include border-neon($red);
   left: -10%;
   --glow-color: 255, 73, 73;
   border-color: $red;
 }
 
 .rhombus-blue-wrapper {
+  @include border-neon($blue);
   right: -10%;
   --glow-color: 68, 153, 255;
   border-color: $blue;
-}
-
-@keyframes borderGlow {
-  0%, 100% {
-    box-shadow: 0 0 18px 2px rgba(var(--glow-color), 0.45);
-    border-color: rgba(var(--glow-color), 0.7);
-  }
-  50% {
-    box-shadow: 0 0 32px 6px rgba(var(--glow-color), 0.7);
-    border-color: rgba(var(--glow-color), 1);
-  }
 }
 
 .rhombus {
@@ -59,7 +51,9 @@
   justify-content: center;
   transform: skew(15deg, 0);
   
-  @media (max-width: 992px) { transform: none; }
+  @media (max-width: 992px) { 
+    transform: none; 
+  }
 }
 
 .rhombus-content {
@@ -100,7 +94,9 @@
 .table {
   height: 85%;
 
-  @media (max-width: 992px) { margin: 10px 0 20px 0; }
+  @media (max-width: 992px) { 
+    margin: 10px 0 20px 0; 
+  }
 }
 
 .hero-stats {
@@ -132,6 +128,8 @@
       opacity: 0.8;
     }
     
-    @media (max-width: 992px) { justify-content: space-evenly; }
+    @media (max-width: 992px) { 
+      justify-content: space-evenly; 
+    }
   }
 }

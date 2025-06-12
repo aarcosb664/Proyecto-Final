@@ -55,7 +55,7 @@ public class User {
     @PrePersist
     protected void onCreate() {
         createdAt = new Date();
-        profilePic = "default.png";
+        profilePic = "/img/default.png";
         favListings = new ArrayList<>();
         role = Role.USER;
     }

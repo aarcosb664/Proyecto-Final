@@ -12,14 +12,14 @@ import aarcosb.model.repository.ListingRepository;
 import aarcosb.model.entity.Listing;
 import java.util.List;
 import aarcosb.util.FileUploadUtil;
+import aarcosb.model.entity.User;
+import aarcosb.model.repository.UserRepository;
 
 @Service
 public class CloudinaryService {
-    @Autowired
-    private Cloudinary cloudinary;
-
-    @Autowired
-    private ListingRepository listingRepository;
+    @Autowired private Cloudinary cloudinary;
+    @Autowired private ListingRepository listingRepository;
+    @Autowired private UserRepository userRepository;
 
     // Método privado para subir un archivo (imagen o video) a Cloudinary
     // Determina automáticamente si es imagen o video basado en el tipo de contenido
@@ -105,5 +105,23 @@ public class CloudinaryService {
         listing.setVideo(response.getUrl());
 
         listingRepository.save(listing);
+    }
+
+    // Sube una imagen de perfil de usuario
+    // Realiza validaciones de formato: solo JPG, PNG y JPEG permitidos
+    // Retorna la URL pública del recurso en Cloudinary
+    @Transactional
+    public void uploadUserProfilePic(final User user, final MultipartFile image) {
+        if (image == null || image.isEmpty()) {
+            return;
+        }
+        
+        FileUploadUtil.assertImageAllowed(image);
+
+        final String fileName = FileUploadUtil.getFileName(image.getOriginalFilename());
+        final CloudinaryResponse response = upload(image, fileName);
+        user.setProfilePic(response.getUrl());
+        
+        userRepository.save(user);
     }
 } 

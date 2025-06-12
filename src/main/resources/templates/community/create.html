@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <header th:insert="~{fragments/header :: header}"></header>
+    <header th:replace="~{fragments/header :: header}"></header>
 
     <div class="container mt-3">
         <div class="banner header-neon-white mb-5"><h1>Create Listing</h1></div>
@@ -101,7 +101,7 @@
                         </button>
                     </div>
                     <div class="form-group col-md-4">
-                        <a th:href="@{/community}" class="btn-neon-gray w-100 d-block text-center">
+                        <a href="javascript:history.back()" class="btn-neon-gray w-100 d-block text-center">
                             <i class="bi bi-x me-1"></i> 
                             Cancel
                         </a>
@@ -119,9 +119,8 @@
         </div>
     </div>
 
-    <footer th:insert="~{fragments/footer :: footer}"></footer>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/js/preview.js}"></script>
 </body>
 </html>

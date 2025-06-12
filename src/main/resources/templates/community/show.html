@@ -12,12 +12,12 @@
 </head>
 
 <body>
-    <header th:insert="~{fragments/header :: header}"></header>
+    <header th:replace="~{fragments/header :: header}"></header>
 
     <div class="container py-4 mt-5">
         <!-- Navegación superior -->
         <div class="d-flex justify-content-between w-100 mb-4">
-            <a th:href="@{/community}" class="btn btn-outline-neon-blue">
+            <a href="javascript:history.back()" class="btn btn-outline-neon-blue">
                 <i class="bi bi-arrow-left-short"></i> 
                 Back
             </a>
@@ -93,8 +93,8 @@
                 <!-- Información del usuario -->
                 <div class="d-flex align-items-center justify-content-center mx-auto gap-3 mb-4">
                     <!-- Imagen de perfil -->
-                    <div class="flex-shrink-0" style="width: 100px;">
-                        <img th:src="@{/img/default.png}" class="img-fluid rounded-circle border-neon-blue p-1" alt="Profile picture">
+                    <div class="flex-shrink-0">
+                        <img th:src="@{${listingUserProfilePic}}" width="100" height="100" class="rounded-circle border-neon-blue p-1" alt="Profile picture">
                     </div>
                     
                     <!-- Detalles del usuario -->
@@ -188,7 +188,7 @@
 
                     <!-- Ver perfil del usuario (para otros) -->
                     <a th:unless="${#strings.equals(user.id, listing.userId)}"
-                        th:href="@{/community/user/{userId}(userId=${listing.userId})}" 
+                        th:href="@{/profile/{userId}(userId=${listing.userId})}" 
                         class="btn-outline-neon-green w-100">
                         <i class="bi bi-person me-2"></i>
                         View Profile
@@ -282,9 +282,8 @@
         </div>
     </div>
 
-    <footer th:insert="~{fragments/footer :: footer}"></footer>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script th:src="@{/js/listing-utils.js}"></script>
 </body>

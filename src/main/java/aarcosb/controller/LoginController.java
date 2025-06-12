@@ -28,17 +28,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class LoginController {
     
-    @Autowired
-    private UserRepository userRepository;
-    
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    
-    @Autowired
-    private UserDetailsService userDetailsService;
-    
-    @Autowired
-    private SecurityContextRepository securityContextRepository;
+    @Autowired private UserRepository userRepository;
+    @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired private UserDetailsService userDetailsService;
+    @Autowired private SecurityContextRepository securityContextRepository;
     
     /**
      * Muestra la página de login

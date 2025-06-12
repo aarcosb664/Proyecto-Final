@@ -1,43 +1,44 @@
 @use '../globals';
 @use '../base' as *;
 
-// Card styles (unique to main)
+// Estilos de las tarjetas
 .card {
   height: 500px;
   overflow: hidden;
+
   * {
     transition: transform 0.3s ease-in-out;
   }
-}
 
-.card-img-top-container {
-  height: 200px;
-}
-
-.card-img-top {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-}
-
-.card:hover {
   .card-img-top-container {
-    transform: translateY(150%);
-    display: flex;
-    overflow: visible;
-    flex-direction: column;
-    border: none !important;
+    height: 200px;
+  }
+  
+  .card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
   }
 
-  .card-body,
-  .card-footer {
-    transform: translateY(150%);
+  &:hover {
+    .card-img-top-container {
+      transform: translateY(150%);
+      display: flex;
+      overflow: visible;
+      flex-direction: column;
+      border: none !important;
+    }
+  
+    .card-body,
+    .card-footer {
+      transform: translateY(150%);
+    }
   }
 }
 
-// Grid tags (unique to main)
+// Grid de tags
 .grid-tags {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
