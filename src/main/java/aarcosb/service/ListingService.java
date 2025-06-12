@@ -31,9 +31,7 @@ public class ListingService {
     // Incluye la carga de sus imágenes asociadas
     // Retorna null si no existe el listing
     public Listing getListingById(Long id) {
-        Listing listing = listingRepository.findById(id).orElse(null);
-        listing.setImages(listingRepository.findImagesByListingId(id));
-        return listing;
+        return listingRepository.findByIdWithImages(id);
     }
 
     // Obtiene todos los listings de un usuario específico

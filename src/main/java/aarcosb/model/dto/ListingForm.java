@@ -19,7 +19,7 @@ public class ListingForm {
     private String title;
 
     @NotBlank(message = "Description is required")
-    @Size(min = 30, max = 500, message = "30 to 500 characters are required")
+    @Size(min = 30, max = 999, message = "30 to 999 characters are required")
     private String description;
 
     @NotBlank(message = "Official URL is required")

@@ -88,17 +88,21 @@ input {
   }
 }
 
+.form-control {
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    -webkit-text-fill-color: $white !important;
+    caret-color: $white !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}
+
 label {
   @include text-neon-sm($gray);
   font-weight: 500;
-
-  .label-required {
-    &::before {
-      content: "*";
-      color: $red;
-      margin-right: 0.25rem;
-    }
-  }
 }
 
 .crop { 

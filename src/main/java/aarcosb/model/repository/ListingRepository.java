@@ -18,6 +18,9 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
     @Query(value = "SELECT image_url FROM listing_images WHERE listing_id = :listingId", nativeQuery = true)
     List<String> findImagesByListingId(@Param("listingId") Long listingId);
 
+    @Query("SELECT DISTINCT l FROM Listing l LEFT JOIN FETCH l.images WHERE l.id = :id")
+    Listing findByIdWithImages(@Param("id") Long id);
+
     @Query("SELECT s FROM Listing s JOIN s.tags t WHERE t = LOWER(:tag)")
     List<Listing> retrieveByTag(String tag);
 

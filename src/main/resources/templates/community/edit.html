@@ -77,28 +77,28 @@
 
                 <!-- Card con inputs -->
                 <div class="col-lg-4">
-                    <div class="card border-neon-cyan text-center p-4 py-5 h-100">
+                    <div class="card border-neon-cyan p-4 py-5 h-100">
                         <!-- Título -->
                         <div class="mb-4">
-                            <label class="form-label text-neon-white" for="title">Title</label>
+                            <label class="form-label label-required text-neon-white" for="title">Title</label>
                             <input id="title" th:field="*{title}" maxlength="100" required
                                    class="form-control form-custom text-neon-white mb-3"
                                    th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'">
-                            <div class="invalid-feedback text-neon-red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
                         </div>
 
                         <!-- URL oficial -->
                         <div class="mb-4">
-                            <label class="form-label text-neon-white" for="officialUrl">Official URL</label>
+                            <label class="form-label label-required text-neon-white" for="officialUrl">Official URL</label>
                             <input id="officialUrl" th:field="*{officialUrl}" maxlength="50" required
                                    class="form-control form-custom text-neon-white"
                                    th:errorclass="is-invalid">
-                            <div class="invalid-feedback text-neon-red" th:errors="*{officialUrl}"></div>
+                            <div class="invalid-feedback" th:errors="*{officialUrl}"></div>
                         </div>
 
                         <!-- Tags actuales -->
                         <div>
-                            <p class="text-neon-white">Tags</p>
+                            <p class="text-neon-white mt-5">Tags</p>
                             <span th:each="tag : ${listing.tags}" class="badge badge-tag me-3" th:text="${tag}"></span>
                         </div>
                     </div>
@@ -111,13 +111,13 @@
                     <!-- Imágenes y video -->
                     <div class="row g-3 mb-4">
                         <div class="col-md-6">
-                            <label class="form-label text-neon-white" for="images">Images (3-10)</label>
+                            <label class="form-label label-required text-neon-white" for="images">Images (3-10)</label>
                             <input type="file" multiple accept=".png, .jpg, .jpeg"
                                    id="imagesInput"
                                    th:field="*{images}"
                                    class="form-control form-custom text-neon-white"
                                    th:errorclass="is-invalid">
-                            <div class="invalid-feedback text-neon-red" th:errors="*{images}"></div>
+                            <div class="invalid-feedback" th:errors="*{images}"></div>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label text-neon-white" for="video">Video</label>
@@ -126,17 +126,17 @@
                                 th:field="*{video}"
                                 class="form-control form-custom text-neon-white"
                                 th:errorclass="is-invalid">
-                            <div class="invalid-feedback text-neon-red" th:errors="*{video}"></div>
+                            <div class="invalid-feedback" th:errors="*{video}"></div>
                         </div>
                     </div>
 
                     <!-- Descripción -->
                     <div class="mb-4">
-                        <label class="form-label text-neon-white" for="description">Description</label>
-                        <textarea id="description" th:field="*{description}" rows="4" maxlength="500" required
+                        <label class="form-label label-required text-neon-white" for="description">Description</label>
+                        <textarea id="description" th:field="*{description}" rows="4" maxlength="999" required
                                   class="form-control form-custom text-neon-white"
                                   th:errorclass="is-invalid"></textarea>
-                        <div class="invalid-feedback text-neon-red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
                     </div>
 
                     <!-- Tags -->
@@ -145,7 +145,7 @@
                         <input id="tags" th:field="*{tags}"
                                class="form-control form-custom text-neon-white"
                                th:errorclass="is-invalid">
-                        <div class="invalid-feedback text-neon-red" th:errors="*{tags}"></div>
+                        <div class="invalid-feedback" th:errors="*{tags}"></div>
                     </div>
 
                     <!-- Botones -->

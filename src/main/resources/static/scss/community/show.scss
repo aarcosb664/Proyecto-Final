@@ -1,5 +1,6 @@
 @use '../globals';
 @use '../base' as *;
+@use 'sass:list';
 
 .rating {
   display: flex;
@@ -74,7 +75,7 @@
 
   @for $i from 1 through 9 {
     &:nth-child(#{$i}) {
-      @include badge(nth($colors, $i));
+      @include badge(list.nth($colors, $i));
     }
   }
 }

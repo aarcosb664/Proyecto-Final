@@ -1823,6 +1823,13 @@ input[type=password]::-ms-reveal, input[type=password]::-ms-clear, input[type=pa
   display: none !important;
 }
 
+.form-control:-webkit-autofill, .form-control:-webkit-autofill:hover, .form-control:-webkit-autofill:focus, .form-control:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 label {
   color: #888888 !important;
   text-shadow: 0 0 2px rgba(136, 136, 136, 0.4), 0 0 4px rgba(136, 136, 136, 0.2);
@@ -1830,11 +1837,6 @@ label {
   font-weight: 400;
   line-height: 1.4;
   font-weight: 500;
-}
-label .label-required::before {
-  content: "*";
-  color: #ff1744;
-  margin-right: 0.25rem;
 }
 
 .crop {
@@ -1966,6 +1968,11 @@ label .label-required::before {
   --pulse-color: #888888;
   background: rgba(136, 136, 136, 0.2);
   color: #888888;
+}
+
+.label-required::before {
+  content: "* ";
+  color: #ff1744;
 }
 
 #previewCarousel {
