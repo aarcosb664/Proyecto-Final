@@ -1159,41 +1159,59 @@
     transform: translateY(-2px) !important;
   }
 }
-.navbar .dropdown .dropdown-toggle {
+.navbar .dropdown * {
+  transition: all 0.3s ease-in-out;
+}
+.navbar .dropdown .dropdown-toggle.isUser {
   color: #00bfff;
-  transition: color 0.3s;
+}
+.navbar .dropdown .dropdown-toggle.isUser .rounded-circle {
+  border: 2px solid #00bfff;
+}
+.navbar .dropdown .dropdown-toggle.isUser:hover {
+  color: #ff4fd8;
+}
+.navbar .dropdown .dropdown-toggle.isUser:hover .rounded-circle {
+  border: 2px solid #ff4fd8;
+  transform: scale(1.05);
+}
+.navbar .dropdown .dropdown-toggle.isAdmin {
+  color: #ff4fd8;
+}
+.navbar .dropdown .dropdown-toggle.isAdmin .rounded-circle {
+  border: 2px solid #ff4fd8;
+}
+.navbar .dropdown .dropdown-toggle.isAdmin:hover {
+  color: #00bfff;
+}
+.navbar .dropdown .dropdown-toggle.isAdmin:hover .rounded-circle {
+  border: 2px solid #00bfff;
+  transform: scale(1.05);
 }
 .navbar .dropdown .dropdown-toggle::after {
+  content: "";
   margin-top: 5px;
   margin-left: 10px;
   font-size: 1.5rem;
 }
-.navbar .dropdown .dropdown-toggle .user-name {
-  display: none;
-}
-@media (min-width: 1200px) {
-  .navbar .dropdown .dropdown-toggle .user-name {
-    display: inline;
-  }
-}
-.navbar .dropdown:hover .dropdown-toggle {
-  color: #ff4fd8;
-}
-.navbar .dropdown:hover img.rounded-circle {
-  border-color: #ff4fd8;
-  transform: scale(1.05);
-}
-.navbar .dropdown img.rounded-circle {
-  border: 2px solid #00bfff;
-  transition: border-color 0.3s, transform 0.3s;
-}
 .navbar .dropdown .dropdown-menu {
   position: absolute;
   background-color: #000000;
-  border: 1px solid #00bfff;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   margin-top: 10px;
   animation: fadeIn 0.3s ease-out;
+}
+.navbar .dropdown .dropdown-menu.isUser {
+  border: 2px solid #00bfff;
+}
+.navbar .dropdown .dropdown-menu.isUser .dropdown-divider {
+  border: 1px solid #00bfff;
+}
+.navbar .dropdown .dropdown-menu.isAdmin {
+  border: 2px solid #ff4fd8;
+}
+.navbar .dropdown .dropdown-menu.isAdmin .dropdown-divider {
+  border: 1px solid #ff4fd8;
 }
 @media (max-width: 991px) {
   .navbar .dropdown .dropdown-menu {
@@ -1203,13 +1221,10 @@
   }
 }
 .navbar .dropdown .dropdown-menu .dropdown-item {
-  color: #fff;
+  color: #ffffff;
 }
 .navbar .dropdown .dropdown-menu .dropdown-item:hover, .navbar .dropdown .dropdown-menu .dropdown-item:focus {
   background-color: rgba(0, 191, 255, 0.2);
-}
-.navbar .dropdown .dropdown-menu .dropdown-divider {
-  border-color: #00bfff;
 }
 .navbar .dropdown .dropdown-menu .btn-link {
   color: #ff1744;
@@ -1356,25 +1371,6 @@
   color: #fff;
 }
 
-@property --mask {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-:root {
-  --shimmer-hue-1: 213deg;
-  --shimmer-sat-1: 95%;
-  --shimmer-lit-1: 91%;
-  --shimmer-hue-2: 248deg;
-  --shimmer-sat-2: 100%;
-  --shimmer-lit-2: 86%;
-  --shimmer-hue-3: 293deg;
-  --shimmer-sat-3: 78%;
-  --shimmer-lit-3: 89%;
-  --card-body-bg: #ffffff;
-  --card-body-color: #000000;
-}
-
 .navbar.border-bottom-custom::after {
   content: "";
   position: absolute;
@@ -1382,9 +1378,15 @@
   bottom: 0;
   width: 100%;
   height: 2px;
-  background: #00ffff;
-  box-shadow: 0px 2px 8px 1px #00ffff, 0px 4px 16px 2px #00ffff;
   pointer-events: none;
+}
+.navbar.border-bottom-custom.isUser::after {
+  background: #00fff7;
+  box-shadow: 0px 2px 8px 1px #00fff7, 0px 4px 16px 2px #00fff7;
+}
+.navbar.border-bottom-custom.isAdmin::after {
+  background: #ff4fd8;
+  box-shadow: 0px 2px 8px 1px #ff4fd8, 0px 4px 16px 2px #ff4fd8;
 }
 
 .glow-on-hover {
@@ -1580,6 +1582,11 @@
     background-position: 200% 50%;
   }
 }
+@property --mask {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
 .speckyboy-shimmer {
   position: relative;
   border-radius: 16px;
@@ -1689,29 +1696,6 @@
     height: 100% !important;
     min-height: 48px;
     box-sizing: border-box;
-  }
-}
-.border-bottom-animated {
-  position: relative;
-}
-.border-bottom-animated::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.2) 80%, transparent 100%);
-  background-size: 200% 100%;
-  animation: borderFlow 3s infinite linear;
-}
-
-@keyframes borderFlow {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: 0 0;
   }
 }
 * {

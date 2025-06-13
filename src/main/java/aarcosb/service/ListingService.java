@@ -15,8 +15,7 @@ import java.util.Date;
 @Service
 public class ListingService {
 
-    @Autowired
-    private ListingRepository listingRepository;
+    @Autowired private ListingRepository listingRepository;
 
     // Obtiene una página de listings con sus imágenes
     // La paginación se maneja a nivel de base de datos para eficiencia

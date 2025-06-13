@@ -38,6 +38,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         );
     }
 
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
+
     public List<Listing> getListings(Long userId) {
         return listingRepository.findByUserId(userId);
     }

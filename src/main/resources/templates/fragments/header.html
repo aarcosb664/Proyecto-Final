@@ -1,22 +1,29 @@
-<nav th:fragment="header" class="navbar navbar-expand-lg fixed-top border-bottom-custom py-2" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<nav th:fragment="header" class="navbar navbar-expand-lg border-bottom-custom fixed-top py-2"
+     th:classappend="${currentUser.role.name() == 'USER' ? 'isUser' : 'isAdmin'}">
     <div class="container d-flex align-items-center justify-content-between">
         <!-- PERFIL (móvil: último; desktop: último) -->
         <div class="order-3 order-lg-3 d-flex align-items-center">
             <div class="dropdown me-2" sec:authorize="isAuthenticated()">
-                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img th:src="@{${user.profilePic}}" alt="User" width="50" height="50" class="rounded-circle me-2">
-                    <span class="user-name" th:text="${user.userName}">Username</span>
+                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" 
+                   id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+                   th:classappend="${currentUser.role.name() == 'USER' ? 'isUser' : 'isAdmin'}">
+                    <img th:src="@{${currentUser.profilePic}}" alt="User" width="50" height="50" class="rounded-circle me-2">
+                    <span class="d-none d-xl-block" th:text="${currentUser.userName}">Username</span>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" th:href="@{'/profile/' + ${user.id}}">Profile</a></li>
-                    <li><a class="dropdown-item" th:href="@{'/profile/' + ${user.id} + '#settings'}">Settings</a></li>
-                    <li><a class="dropdown-item" th:href="@{'/profile/' + ${user.id} + '#myListings'}">My Listings</a></li>
-                    <li><a class="dropdown-item" th:href="@{'/profile/' + ${user.id} + '#myFavorites'}">Favorites</a></li>
-                    <li><a class="dropdown-item" th:href="@{'/profile/' + ${user.id} + '#stats'}">My Stats</a></li>
-                    <li><a class="dropdown-item" th:href="@{'/profile/' + ${user.id} + '#history'}">History</a></li>
+                <ul class="dropdown-menu dropdown-menu-end" 
+                    aria-labelledby="userDropdown"
+                    th:classappend="${currentUser.role.name() == 'USER' ? 'isUser' : 'isAdmin'}">
+
+                    <li><a class="dropdown-item" th:href="@{'/profile/' + ${currentUser.id}}">Profile</a></li>
+                    <li><a class="dropdown-item" th:href="@{'/profile/' + ${currentUser.id} + '#settings'}">Settings</a></li>
+                    <li><a class="dropdown-item" th:if="${currentUser.role.name() == 'USER'}" th:href="@{'/profile/' + ${currentUser.id} + '#myListings'}">My Listings</a></li>
+                    <li><a class="dropdown-item" th:href="@{'/profile/' + ${currentUser.id} + '#myFavorites'}">Favorites</a></li>
+                    <li><a class="dropdown-item" th:if="${currentUser.role.name() == 'USER'}" th:href="@{'/profile/' + ${currentUser.id} + '#stats'}">My Stats</a></li>
+                    <li><a class="dropdown-item" th:if="${currentUser.role.name() == 'USER'}" th:href="@{'/profile/' + ${currentUser.id} + '#history'}">History</a></li>
                     <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item btn-link" th:if="${currentUser.role.name() == 'ADMIN'}" th:href="@{/admin/panel}">Control Panel</a></li>
                     <li>
-                        <form th:action="@{/logout}" method="post" class="dropdown-item p-0">
+                        <form th:action="@{/logout}" method="post" class="dropdown-item btn-link p-0">
                             <button type="submit" class="btn btn-link text-decoration-none w-100 text-start px-3 py-1">Sign out</button>
                         </form>
                     </li>

@@ -17,30 +17,40 @@
         <div class="row">
             <div class="col-12 col-md-1 pt-3 z-n1"></div>
             <div class="pt-3 position-fixed z-0">
-                <h5><a href="#settings" class="nav-link">
-                    <i class="bi bi-gear-fill me-2"></i> 
-                    Settings
-                </a></h5>
+                <h5>
+                    <a href="#settings" class="nav-link">
+                        <i class="bi bi-gear-fill me-2"></i> 
+                        Settings
+                    </a>
+                </h5>
 
-                <h5><a href="#favorites" class="nav-link mt-3">
-                    <i class="bi bi-list-check me-2"></i> 
-                    My Listings
-                </a></h5>
+                <h5 th:if="${currentUser.id != id or currentUser.role.name() != 'ADMIN'}">
+                    <a href="#myListings" class="nav-link mt-3">
+                        <i class="bi bi-list-check me-2"></i> 
+                        My Listings
+                    </a>
+                </h5>
 
-                <h5><a href="#myFavorites" class="nav-link mt-3">
-                    <i class="bi bi-heart-fill me-2"></i> 
-                    Favorites
-                </a></h5>
+                <h5>
+                    <a href="#myFavorites" class="nav-link mt-3">
+                        <i class="bi bi-heart-fill me-2"></i> 
+                        Favorites
+                    </a>
+                </h5>
 
-                <h5><a href="#stats" class="nav-link mt-3">
-                    <i class="bi bi-bar-chart-fill me-2"></i>
-                    Stats
-                </a></h5>
+                <h5 th:if="${currentUser.id != id or currentUser.role.name() != 'ADMIN'}">
+                    <a href="#stats" class="nav-link mt-3">
+                        <i class="bi bi-bar-chart-fill me-2"></i>
+                        Stats
+                    </a>
+                </h5>
 
-                <h5><a href="#history" class="nav-link mt-3">
-                    <i class="bi bi-clock-history me-2"></i>
-                    History
-                </a></h5>
+                <h5 th:if="${currentUser.id != id or currentUser.role.name() != 'ADMIN'}">
+                    <a href="#history" class="nav-link mt-3">
+                        <i class="bi bi-clock-history me-2"></i>
+                        History
+                    </a>
+                </h5>
             </div>
 
             <div class="col-md-1 d-flex justify-content-center">
@@ -61,8 +71,13 @@
                                     <img th:src="@{${user.profilePic}}" width="150" height="150" alt="Profile picture" class="rounded-circle border border-2">
                                 </div>
 
-                                <form th:action="@{/profile/updateProfilePic}" method="post" id="profilePicForm" enctype="multipart/form-data">
+                                <form th:action="@{/profile/updateProfilePic}" 
+                                      method="post" 
+                                      id="profilePicForm" 
+                                      enctype="multipart/form-data">
+
                                     <label for="profilePic" class="form-label">Change Profile Picture</label>
+                                    <input type="hidden" name="id" th:value="${user.id}">
                                     <input type="file" class="form-control" id="profilePicInput" name="profilePic" accept=".png, .jpg, .jpeg">
                                     <div class="invalid-feedback" th:if="${hasError}" th:text="${error}"></div>
 
@@ -103,14 +118,14 @@
                     </div>
                 </div>
 
-                <div id="myListings" class="border-bottom pb-3 mb-3">
+                <div id="myListings" class="border-bottom pb-3 mb-3" th:if="${currentUser.id != id or currentUser.role.name() != 'ADMIN'}">
                     <h1 class="header-neon-white pt-2">
                         <i class="bi bi-list-check me-2"></i>
                         My Listings
                         <span th:text="'(' + ${totalListings} + ' total)'"></span>
                     </h1>
                     
-                    <div class="row mt-5" th:if="${!#lists.isEmpty(myListings)}">
+                    <div class="row mt-5" th:if="${!myListings.empty}">
                         <div class="col-xl-4 col-lg-6 col-md-6 mb-4" th:each="listing : ${myListings}">
                             <div th:replace="~{fragments/listing_card :: listing_card(listing=${listing})}"></div>
                         </div>
@@ -124,21 +139,21 @@
                         <span th:text="'(' + ${totalFavorites} + ' total)'"></span>
                     </h1>
 
-                    <div class="row mt-5" th:if="${!#lists.isEmpty(myFavorites)}">
+                    <div class="row mt-5" th:if="${!myFavorites.empty}">
                         <div class="col-xl-4 col-lg-6 col-md-6 mb-4" th:each="listing : ${myFavorites}">
                             <div th:replace="~{fragments/listing_card :: listing_card(listing=${listing})}"></div>
                         </div>
                     </div>
                 </div>
 
-                <div id="stats" class="border-bottom pb-3 mb-3">
+                <div id="stats" class="border-bottom pb-3 mb-3" th:if="${currentUser.id != id or currentUser.role.name() != 'ADMIN'}">
                     <h1 class="header-neon-white pt-2">
                         <i class="bi bi-bar-chart-fill me-2"></i>
                         Stats
                     </h1>
                 </div>
 
-                <div id="history" class="border-bottom pb-3 mb-3">
+                <div id="history" class="border-bottom pb-3 mb-3" th:if="${currentUser.id != id or currentUser.role.name() != 'ADMIN'}">
                     <h1 class="header-neon-white pt-2">
                         <i class="bi bi-clock-history me-2"></i>
                         History

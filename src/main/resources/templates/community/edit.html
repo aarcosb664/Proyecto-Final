@@ -163,7 +163,7 @@
                             </button>
                         </div>
                         <div class="form-group col-md-4">
-                            <a href="javascript:history.back()" class="btn-neon-gray w-100 d-block text-center">
+                            <a th:href="@{/community/listing/{id}(id=${listing.id})}" class="btn-neon-gray w-100 d-block text-center">
                                 <i class="bi bi-x me-1"></i> 
                                 Cancel
                             </a>

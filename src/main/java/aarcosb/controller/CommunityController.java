@@ -31,7 +31,8 @@ public class CommunityController {
     @Autowired private UserRepository userRepository;
 
     // Método auxiliar para obtener el usuario actual a partir de la autenticación
-    private User getCurrentUser(Authentication authentication) {
+    private User getCurrentUser(Authentication authentication) 
+    {
         return userRepository.findByEmail(authentication.getName());
     }
 
@@ -49,8 +50,8 @@ public class CommunityController {
                         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateTo,
                         Model model, Authentication authentication) 
     {
-        User user = getCurrentUser(authentication);
-        model.addAttribute("user", user);
+        User currentUser = getCurrentUser(authentication);
+        model.addAttribute("currentUser", currentUser);
 
         Sort sortBy = order.equals("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
         Pageable pageable = PageRequest.of(page - 1, size, sortBy);
@@ -63,9 +64,10 @@ public class CommunityController {
     // Muestra un listing específico con todos sus detalles
     // Incluye comentarios, valoraciones, y estado de favorito para el usuario actual
     @GetMapping("/listing/{listingId}")
-    public String viewListing(@PathVariable Long listingId, Model model, Authentication authentication) {
-        User user = getCurrentUser(authentication);
-        model.addAttribute("user", user);
+    public String viewListing(@PathVariable Long listingId, Model model, Authentication authentication) 
+    {
+        User currentUser = getCurrentUser(authentication);
+        model.addAttribute("currentUser", currentUser);
         
         Listing listing = listingService.getListingById(listingId);
         if (listing == null) {
@@ -75,8 +77,8 @@ public class CommunityController {
 
         User listingUser = userRepository.findById(listing.getUserId()).orElse(null);
         model.addAttribute("listingUserProfilePic", listingUser.getProfilePic());
-        model.addAttribute("userRating", ratingService.getUserRating(listingId, user.getId()));
-        model.addAttribute("isFavorite", user.getFavListings().contains(listingId));
+        model.addAttribute("userRating", ratingService.getUserRating(listingId, currentUser.getId()));
+        model.addAttribute("isFavorite", currentUser.getFavListings().contains(listingId));
         model.addAttribute("totalFavorites", listingService.countTotalFavorites(listingId));
         model.addAttribute("totalListings", userDetailsService.countTotalListings(listing.getUserId()));
 
@@ -92,9 +94,14 @@ public class CommunityController {
     // Formulario de creación de nuevo listing
     // Inicializa un formulario vacío y lo añade al modelo
     @GetMapping("/listing/create")
-    public String createListing(Model model, Authentication authentication) {
-        User user = getCurrentUser(authentication);
-        model.addAttribute("user", user);
+    public String createListing(Model model, Authentication authentication) 
+    {
+        User currentUser = getCurrentUser(authentication);
+        model.addAttribute("currentUser", currentUser);
+
+        if (currentUser.getRole() == Role.ADMIN) {
+            return "redirect:/community";
+        }
 
         model.addAttribute("listingForm", new ListingForm());
         return "community/create";
@@ -108,8 +115,12 @@ public class CommunityController {
                           Model model, 
                           Authentication authentication) 
     {
-        User user = getCurrentUser(authentication);
-        model.addAttribute("user", user);
+        User currentUser = getCurrentUser(authentication);
+        model.addAttribute("currentUser", currentUser);
+
+        if (currentUser.getRole() == Role.ADMIN) {
+            return "redirect:/community";
+        }
 
         // Validación del formulario mediante anotaciones en ListingForm
         if (result.hasErrors()) {
@@ -125,8 +136,8 @@ public class CommunityController {
             listing.setDescription(form.getDescription());
             listing.setOfficialUrl(form.getOfficialUrl());
             listing.setTags(listingService.convertTags(form.getTags()));
-            listing.setUserId(user.getId());
-            listing.setUserName(user.getUserName());
+            listing.setUserId(currentUser.getId());
+            listing.setUserName(currentUser.getUserName());
             
             // Guardamos primero para obtener el ID
             // Necesario para asociar imágenes y video
@@ -151,14 +162,14 @@ public class CommunityController {
     // Formulario de edición de listing existente
     // Carga los datos actuales del listing en el formulario
     @GetMapping("/listing/{listingId}/edit")
-    public String editListing(@PathVariable Long listingId, Model model, Authentication authentication) {
-        User user = getCurrentUser(authentication);
-        model.addAttribute("user", user);
-        
-        // Obtener listing existente o redirigir si no existe
+    public String editListing(@PathVariable Long listingId, Model model, Authentication authentication) 
+    {
+        User currentUser = getCurrentUser(authentication);
+        model.addAttribute("currentUser", currentUser);
+
         Listing listing = listingService.getListingById(listingId);
-        if (listing == null) {
-            return "redirect:/community";
+        if (listing == null || currentUser.getRole() == Role.ADMIN || !currentUser.getId().equals(listing.getUserId())) {
+            return "redirect:/community/listing/" + listingId;
         }
 
         // Poblar el formulario con los datos actuales
@@ -183,14 +194,20 @@ public class CommunityController {
                                 Model model,
                                 Authentication authentication) 
     {
-        User user = getCurrentUser(authentication);
-        model.addAttribute("user", user);
+        User currentUser = getCurrentUser(authentication);
+        model.addAttribute("currentUser", currentUser);
 
         // Obtener listing existente o redirigir si no existe
         Listing listing = listingService.getListingById(listingId);
         if (listing == null) {
             return "redirect:/community";
         }
+
+        // Check if user is authorized (must be owner)
+        if (currentUser.getRole() != Role.ADMIN && !currentUser.getId().equals(listing.getUserId())) {
+            return "redirect:/community/listing/" + listingId;
+        }
+
         model.addAttribute("listing", listing);
 
         // Validación del formulario mediante anotaciones en ListingForm
@@ -228,15 +245,19 @@ public class CommunityController {
 
     // Elimina un listing y todos sus datos asociados
     // Incluye imágenes, video, comentarios y valoraciones
-    @PostMapping("/listing/{listingId}/remove")
-    public String removeListing(@PathVariable Long listingId, Model model, Authentication authentication) {
-        User user = getCurrentUser(authentication);
-        model.addAttribute("user", user);
+    @PostMapping("/listing/{listingId}/delete")
+    public String deleteListing(@PathVariable Long listingId, Model model, Authentication authentication) 
+    {
+        User currentUser = getCurrentUser(authentication);
+        model.addAttribute("currentUser", currentUser);
 
         Listing listing = listingService.getListingById(listingId);
-
         if (listing == null) {
             return "redirect:/community";
+        }
+
+        if (currentUser.getRole() != Role.ADMIN && !currentUser.getId().equals(listing.getUserId())) {
+            return "redirect:/community/listing/" + listingId;
         }
 
         listingService.deleteListing(listingId);
@@ -253,8 +274,12 @@ public class CommunityController {
                              Authentication authentication,
                              Model model) 
     {
-        User user = getCurrentUser(authentication);
-        model.addAttribute("user", user);
+        User currentUser = getCurrentUser(authentication);
+        model.addAttribute("currentUser", currentUser);
+
+        if (currentUser.getRole() == Role.ADMIN) {
+            return "redirect:/community/listing/" + listingId;
+        }
 
         if (result.hasErrors()) {
             redirect.addFlashAttribute("org.springframework.validation.BindingResult.commentForm", result);
@@ -266,8 +291,8 @@ public class CommunityController {
         comment.setTitle(form.getTitle());
         comment.setText(form.getText());
         comment.setListingId(listingId);
-        comment.setUserId(user.getId());
-        comment.setUserName(user.getUserName());
+        comment.setUserId(currentUser.getId());
+        comment.setUserName(currentUser.getUserName());
         commentService.createComment(comment);
 
         return "redirect:/community/listing/" + listingId;
@@ -275,14 +300,16 @@ public class CommunityController {
 
     // Elimina un comentario específico de un listing
     // Solo el propietario del comentario puede eliminarlo
-    @PostMapping("/listing/{listingId}/comment/{commentId}/remove")
-    public String removeComment(@PathVariable Long listingId, @PathVariable Long commentId, Model model, Authentication authentication) {
-        User user = getCurrentUser(authentication);
-        model.addAttribute("user", user);
+    @PostMapping("/listing/{listingId}/comment/{commentId}/delete")
+    public String deleteComment(@PathVariable Long listingId, @PathVariable Long commentId, Model model, Authentication authentication) 
+    {
+        User currentUser = getCurrentUser(authentication);
+        model.addAttribute("currentUser", currentUser);
 
         Comment comment = commentService.getCommentById(commentId);
 
-        if (comment == null) {
+
+        if (currentUser.getRole() != Role.ADMIN && !currentUser.getId().equals(comment.getUserId()) || comment == null) {
             return "redirect:/community/listing/" + listingId;
         }
 
@@ -293,28 +320,40 @@ public class CommunityController {
     // Añade o actualiza la valoración de un usuario para un listing
     // La valoración debe estar entre 1 y 5 estrellas
     @PostMapping("/listing/{listingId}/rate")
-    public String rateListing(@PathVariable Long listingId, @RequestParam Double rating, Model model, Authentication authentication) {
-        User user = getCurrentUser(authentication);
-        model.addAttribute("user", user);
+    public String rateListing(@PathVariable Long listingId, @RequestParam Double rating, Model model, Authentication authentication) 
+    {
+        User currentUser = getCurrentUser(authentication);
+        model.addAttribute("currentUser", currentUser);
 
-        ratingService.rateListing(listingId, user.getId(), rating);
+        Listing listing = listingService.getListingById(listingId);
+        if (listing == null || currentUser.getRole() == Role.ADMIN || currentUser.getId().equals(listing.getUserId())) {
+            return "redirect:/community/listing/" + listingId;
+        }
+
+        ratingService.rateListing(listingId, currentUser.getId(), rating);
         return "redirect:/community/listing/" + listingId;
     }
 
     // Alterna el estado de favorito de un listing para el usuario actual
     // Si ya es favorito lo quita, si no lo es lo añade
     @PostMapping("/listing/{listingId}/favorite")
-    public String addToFavorites(@PathVariable Long listingId, Model model, Authentication authentication) {
-        User user = getCurrentUser(authentication);
-        model.addAttribute("user", user);
+    public String addToFavorites(@PathVariable Long listingId, Model model, Authentication authentication) 
+    {
+        User currentUser = getCurrentUser(authentication);
+        model.addAttribute("currentUser", currentUser);
 
-        if (!user.getFavListings().contains(listingId)) {
-            user.getFavListings().add(listingId);
-        } else {
-            user.getFavListings().remove(listingId);
+        Listing listing = listingService.getListingById(listingId);
+        if (listing == null) {
+            return "redirect:/community/listing/" + listingId;
         }
 
-        userRepository.save(user);
+        if (!currentUser.getFavListings().contains(listingId)) {
+            currentUser.getFavListings().add(listingId);
+        } else {
+            currentUser.getFavListings().remove(listingId);
+        }
+
+        userRepository.save(currentUser);
         return "redirect:/community/listing/" + listingId;
     }
 }

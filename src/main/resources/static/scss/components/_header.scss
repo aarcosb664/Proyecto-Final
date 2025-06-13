@@ -19,64 +19,78 @@
     }
 
 	.nav-link {
-			color: rgba($white, 0.8);
-			transition: all 0.3s;
-			font-weight: 500;
+        color: rgba($white, 0.8);
+        transition: all 0.3s;
+        font-weight: 500;
 
-			&:hover, &:focus {
-			color: $white !important;
-			transform: scale(1.1) !important;
+        &:hover, 
+        &:focus {
+            color: $white !important;
+            transform: scale(1.1) !important;
 
-			@media (min-width: 991px) {
-				color: $white !important;
-				transform: translateY(-2px) !important;
-			}
-			}
+            @media (min-width: 991px) {
+                color: $white !important;
+                transform: translateY(-2px) !important;
+            }
+        }
 	}
 
 	.dropdown {
+        * { 
+            transition: all 0.3s ease-in-out; 
+        }
+
 		.dropdown-toggle {
-			color: $blue;
-			transition: color 0.3s;
+            &.isUser  { 
+                color: $blue;
+                .rounded-circle { border: 2px solid $blue; }
+
+                &:hover {
+                    color: $pink;
+                    .rounded-circle { 
+                        border: 2px solid $pink; 
+                        transform: scale(1.05);
+                    }
+                }
+            }
+
+            &.isAdmin { 
+                color: $pink;
+                .rounded-circle { border: 2px solid $pink; }
+
+                &:hover {
+                    color: $blue;
+                    .rounded-circle { 
+                        border: 2px solid $blue; 
+                        transform: scale(1.05);
+                    }
+                }
+            }
 
 			&::after {
+                content: '';
 				margin-top: 5px;
 				margin-left: 10px;
 				font-size: 1.5rem;
 			}
-
-			.user-name {
-				display: none;
-				
-				@media (min-width: 1200px) {
-					display: inline;
-				}
-			}
 		}
-
-		&:hover {
-			.dropdown-toggle {
-				color: $pink;
-			}
-
-			img.rounded-circle {
-				border-color: $pink;
-				transform: scale(1.05);
-			}
-        }
-        
-        img.rounded-circle {
-            border: 2px solid $blue;
-            transition: border-color 0.3s, transform 0.3s;
-        }
         
         .dropdown-menu {
             position: absolute;
             background-color: $black;
-            border: 1px solid $blue;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             margin-top: 10px;
             animation: fadeIn 0.3s ease-out;
+
+            &.isUser  { 
+                border: 2px solid $blue; 
+                .dropdown-divider { border: 1px solid $blue; }
+            }
+
+            &.isAdmin { 
+                border: 2px solid $pink; 
+                .dropdown-divider { border: 1px solid $pink; }
+            }
 
             @media (max-width: 991px) {
                 left: auto;
@@ -85,15 +99,11 @@
             }
             
             .dropdown-item {
-                color: #fff;
+                color: $white;
                 
                 &:hover, &:focus {
-                background-color: rgba($blue, 0.2);
+                    background-color: rgba($blue, 0.2);
                 }
-            }
-            
-            .dropdown-divider {
-                border-color: $blue;
             }
             
             .btn-link {

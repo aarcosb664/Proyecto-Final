@@ -21,8 +21,8 @@
             <form class="col-lg-9 needs-validation form-neon" novalidate
                   th:action="@{/community/listing/create}" 
                   th:object="${listingForm}"
-                  method="post"
-                  enctype="multipart/form-data">
+                  enctype="multipart/form-data"
+                  method="post">
             
                 <div class="row g-3 mb-3">
                     <!-- Title -->
@@ -80,7 +80,7 @@
                 <!-- Tags -->
                 <div class="my-4">
                     <label class="form-label text-neon-white" for="tags">Tags (comma separated)</label>
-                    <input th:field="*{tags}" placeholder="tag1, tag2"
+                    <input th:field="*{tags}" placeholder="tag1, tag2..."
                         class="form-control form-custom text-neon-white"
                         th:errorclass="is-invalid">
                     <div class="invalid-feedback" th:errors="*{tags}"></div>
@@ -101,7 +101,7 @@
                         </button>
                     </div>
                     <div class="form-group col-md-4">
-                        <a href="javascript:history.back()" class="btn-neon-gray w-100 d-block text-center">
+                        <a th:href="@{/community}" class="btn-neon-gray w-100 d-block text-center">
                             <i class="bi bi-x me-1"></i> 
                             Cancel
                         </a>
@@ -111,7 +111,7 @@
 
             <!-- Previews -->
             <div class="col-lg-3 mt-4 mt-lg-0">
-                <div id="previewCarousel" style="max-height: 525px; overflow-y: auto;">
+                <div id="previewCarousel">
                     <div id="videoPreviewContainer"></div>
                     <div id="imagePreviewContainer" class="mb-3"></div>
                 </div>

@@ -32,8 +32,9 @@ public class WebSecurityConfig {
             )
             .authorizeHttpRequests(authz ->  authz
                 .requestMatchers("/api/**").permitAll()
-                .requestMatchers("/", "/login", "/register", "/game").permitAll()
+                .requestMatchers("/", "/login", "/register", "/game", "/ranking").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/img/**", "/video/**").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .exceptionHandling(exception -> exception

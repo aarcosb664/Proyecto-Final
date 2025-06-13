@@ -15,24 +15,25 @@ public class GameController {
     @Autowired private PlayerRepository playerRepository;
 
     @GetMapping("/game")
-    public String game() {
+    public String game() 
+    {
         return "game";
     }
     
     @GetMapping("/ranking")
-    public String ranking(Model model) {
+    public String ranking(Model model) 
+    {
         model.addAttribute("players", playerRepository.findTop5ByOrderByScoreDesc());
         return "ranking";
     }
     
     @PostMapping("/ranking")
-    public String saveRanking(
-            @RequestParam("userName") String userName,
-            @RequestParam("userId") Long userId,
-            @RequestParam("score") int score,
-            @RequestParam("destroyedBlocks") int destroyedBlocks,
-            Model model) {
-        
+    public String saveRanking(@RequestParam("userName") String userName,
+                              @RequestParam("userId") Long userId,
+                              @RequestParam("score") int score,
+                              @RequestParam("destroyedBlocks") int destroyedBlocks,
+                              Model model)
+    {
         // Create and save player
         playerRepository.save(new Player(userName, userId, score, destroyedBlocks));
         

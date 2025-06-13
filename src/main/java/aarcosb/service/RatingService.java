@@ -10,10 +10,8 @@ import aarcosb.model.repository.ListingRepository;
 @Service
 @Transactional
 public class RatingService {
-    @Autowired
-    private RatingRepository ratingRepository;
-    @Autowired
-    private ListingRepository listingRepository;
+    @Autowired private RatingRepository ratingRepository;
+    @Autowired private ListingRepository listingRepository;
 
     public double getAverageRating(Long listingId) {
         return ratingRepository.findAverageRatingByListingId(listingId);

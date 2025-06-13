@@ -32,12 +32,13 @@ public class LoginController {
     @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private UserDetailsService userDetailsService;
     @Autowired private SecurityContextRepository securityContextRepository;
-    
+
     /**
      * Muestra la página de login
      */
     @GetMapping("/login")
-    public String login(@RequestParam(defaultValue = "login") String tab, Model model, Principal principal) {
+    public String login(@RequestParam(defaultValue = "login") String tab, Model model, Principal principal) 
+    {
         // Si el usuario ya está autenticado, redirigir a la página de inicio
         if (principal != null) return "redirect:/";
 
@@ -54,11 +55,10 @@ public class LoginController {
      * Procesa el registro de usuarios
      */
     @PostMapping("/register")
-    public String register(
-            @Valid @ModelAttribute("user") UserDto dto,
-            BindingResult result, RedirectAttributes redirect,
-            HttpServletRequest request, HttpServletResponse response) {
-
+    public String register(@Valid @ModelAttribute("user") UserDto dto,
+                           BindingResult result, RedirectAttributes redirect,
+                           HttpServletRequest request, HttpServletResponse response) 
+    {
         // Si el email ya está registrado, rechazar el registro
         if (userRepository.existsByEmail(dto.getEmail())) {
             result.rejectValue("email", "duplicated", "Email ya registrado");

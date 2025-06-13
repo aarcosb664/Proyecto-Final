@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" th:href="@{/img/logo.png}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{/css/admin.css}" rel="stylesheet">
+    <title>Admin panel</title>
+</head>
+
+<body>
+    <header th:replace="~{fragments/header :: header}"></header>
+
+    <div class="container mt-5">
+        <h1 class="banner header-neon-white">Admin panel</h1>
+
+        <!-- User list -->
+        <div th:each="user : ${users}">
+            <div th:if="${user.role.name() != 'ADMIN'}" class="border-neon-blue-sm d-flex justify-content-between rounded-4 mb-4 p-4">
+                <!-- Información del usuario -->
+                <div class="d-flex align-items-center justify-content-center gap-3">
+                    <!-- Imagen de perfil -->
+                    <div class="flex-shrink-0">
+                        <img th:src="@{${user.profilePic}}" 
+                             width="100" height="100" 
+                             class="rounded-circle border-neon-blue" 
+                             alt="Profile picture"
+                             th:title="${user.userName}">
+                    </div>
+                    
+                    <!-- Detalles del usuario -->
+                    <div>
+                        <h5 class="header-neon-blue-sm text-start m-0">
+                            <span th:text="${user.userName}"></span>
+                            <span class="text-neon-pink pb-3" th:text="${'(' + user.role.name() + ')'}"></span>
+                        </h5>
+                        
+                        <div class="text-start text-neon-gray-sm mb-2">
+                            <small th:text="${user.email}">email</small>
+                        </div>
+                        
+                        <div class="text-start text-neon-orange-sm">
+                            <i class="bi bi-clock me-1"></i>
+                            <small th:text="${#dates.format(user.createdAt, 'dd/MM/yyyy HH:mm')}">created_at</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-column align-items-center justify-content-between">
+                    <button class="btn-neon-red" type="button" data-bs-toggle="modal" th:attr="data-bs-target='#deleteUser_' + ${user.id}">
+                        <i class="bi bi-trash"></i>
+                    </button> 
+
+                    <a th:href="@{/profile/{userId}(userId=${user.id})}"
+                        class="btn-neon-blue">
+                        <i class="bi bi-eye"></i>
+                    </a>
+                </div>
+
+                <!-- Modal para eliminar usuario -->
+                <div class="modal fade" th:id="${'deleteUser_' + user.id}" tabindex="-1" th:attr="aria-labelledby='deleteUser_' + ${user.id}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content rounded-4 bg-black border-neon-white text-neon-white">
+                            <div class="modal-header">
+                                <h5 class="modal-title header-neon-red-sm" th:id="${'deleteUser_' + user.id}">Delete User</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <p class="text-neon-white-sm">Are you sure you want to delete this user?</p>
+                                <p class="text-neon-white fw-bold">This action cannot be undone.</p>
+                                <form th:action="@{/admin/user/{id}/delete(id=${user.id})}"
+                                      method="POST">
+                                    <input type="hidden" name="userId" th:value="${user.id}">
+                                    <button type="submit" class="btn-neon-red w-100 my-3">
+                                        <i class="bi bi-trash me-2"></i>
+                                        Delete
+                                    </button>
+                                </form> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End user list -->
+
+        <div th:if="${users.empty}">
+            <h3 class="text-center header-neon-white ">
+                <i class="bi bi-chat-dots me-2"></i>
+                No users yet...
+            </h3>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>

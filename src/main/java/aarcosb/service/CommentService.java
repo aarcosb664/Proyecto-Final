@@ -9,8 +9,7 @@ import java.util.List;
 
 @Service
 public class CommentService {
-    @Autowired
-    private CommentRepository commentRepository;
+    @Autowired private CommentRepository commentRepository;
 
     public Comment getCommentById(Long commentId) {
         return commentRepository.findById(commentId).orElse(null);

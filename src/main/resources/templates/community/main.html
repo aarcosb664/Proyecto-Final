@@ -109,7 +109,8 @@
                                     </div>
                                     <div class="col">
                                         <label class="form-label mb-1">&nbsp;</label>
-                                        <a th:href="@{/community/listing/create}" class="btn-neon-green w-100 d-flex align-items-center justify-content-center">
+                                        <a th:href="@{/community/listing/create}" class="btn-neon-green w-100 d-flex align-items-center justify-content-center"
+                                           th:disabled="${currentUser.role.name() == 'ADMIN'}">
                                             <i class="bi bi-plus me-1"></i>
                                             Create
                                         </a>
@@ -120,9 +121,11 @@
                     </div>
                 </div>
 
+                <!-- Separador -->
                 <div class="border-bottom border-secondary mt-5"></div>
 
-                <div class="row mt-5" th:if="${!#lists.isEmpty(listings)}">
+                <!-- Cards de listings -->
+                <div class="row mt-5" th:if="${!listings.empty}">
                     <div class="col-xl-4 col-lg-6 col-md-6 mb-4" th:each="listing : ${listings}">
                         <a th:replace="~{fragments/listing_card :: listing_card(listing=${listing})}"></a>
                     </div>
@@ -130,7 +133,10 @@
 
                 <!-- Mensaje si no hay listings -->
                 <div th:if="${listings.empty}">
-                    <h3 class="text-center header-neon-white">No listings found :/</h3>
+                    <h3 class="text-center header-neon-white">
+                        <i class="bi bi-search me-2"></i>
+                        No listings found :/
+                    </h3>
                 </div>
                 
                 <nav th:replace="~{fragments/pagination :: pagination}"></nav>

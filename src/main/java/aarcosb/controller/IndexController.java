@@ -24,28 +24,38 @@ public class IndexController {
     @Autowired private UserDetailsServiceImpl userDetailsService;
 
     // Método auxiliar para obtener el usuario actual a partir de la autenticación
-    private User getCurrentUser(Authentication authentication) {
+    private User getCurrentUser(Authentication authentication) 
+    {
         return userRepository.findByEmail(authentication.getName());
     }
 
     @GetMapping("/")
-    public String index(Model model, Authentication authentication) {
-        if (authentication != null) {
-            User user = userRepository.findByEmail(authentication.getName());
-            model.addAttribute("user", user);
-        }
+    public String index(Model model, Authentication authentication) 
+    {
+        User currentUser = getCurrentUser(authentication);
+        model.addAttribute("currentUser", currentUser);
         
         model.addAttribute("players", playerRepository.findTop5ByOrderByScoreDesc());
         return "index";
     }
 
     @GetMapping("/profile/{id}")
-    public String profile(@PathVariable Long id, Model model) {
+    public String profile(@PathVariable Long id, Model model, Authentication authentication) 
+    {
+        // Verificar que el usuario está autenticado
+        User currentUser = getCurrentUser(authentication);
+        model.addAttribute("currentUser", currentUser);
+        
+        if (currentUser.getRole().name() == "USER" && !currentUser.getId().equals(id)) {
+            return "redirect:/";
+        }
+
         User user = userRepository.findById(id).orElse(null);
         if (user == null) {
             return "redirect:/";
         }
 
+        // Cargar datos del perfil
         model.addAttribute("user", user);
         model.addAttribute("myListings", userDetailsService.getListings(id));
         model.addAttribute("myFavorites", userDetailsService.getFavorites(id));
@@ -55,18 +65,25 @@ public class IndexController {
     }
 
     @PostMapping("/profile/updateProfilePic")
-    public String updateProfilePic(@RequestParam("profilePic") MultipartFile file,
-                                    Authentication authentication,
-                                    Model model) 
+    public String updateProfilePic(@RequestParam("id") Long id,
+                                   @RequestParam("profilePic") MultipartFile file,
+                                   Authentication authentication,
+                                   Model model) 
     {
         User user = getCurrentUser(authentication);
-        model.addAttribute("user", user);
+        model.addAttribute("currentUser", user);
+
+        // Obtener el usuario autenticado
+        if (user.getRole().name() == "USER" && !user.getId().equals(id)) {
+            return "redirect:/";
+        }
 
         // Subir la imagen a Cloudinary
         try {
             cloudinaryService.uploadUserProfilePic(user, file);
             return "redirect:/profile/" + user.getId();
         } catch (Exception e) {
+            model.addAttribute("currentUser", user);
             model.addAttribute("hasError", true);
             model.addAttribute("error", "Error updating profile picture: " + e.getMessage());
             return "profile";
