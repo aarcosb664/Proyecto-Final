@@ -62,11 +62,11 @@
                                 <div class="swiper thumbSwiper">
                                     <div class="swiper-wrapper">
                                         <!-- Video Thumbnail -->
-                                        <div th:if="${!#strings.isEmpty(listing.video)}" class="ratio ratio-16x9 swiper-slide">
+                                        <div th:if="${!#strings.isEmpty(listing.video)}" class="ratio ratio-16x9 swiper-slide me-3">
                                             <video th:src="${listing.video}" class="img-fluid preview-thumb" muted></video>
                                         </div>
                                         <!-- Image Thumbnails -->
-                                        <div th:each="img, iStat : ${listing.images}" class="ratio ratio-16x9 swiper-slide">
+                                        <div th:each="img, iStat : ${listing.images}" class="ratio ratio-16x9 swiper-slide me-3">
                                             <img th:src="${img}" class="img-fluid preview-thumb" alt="Image thumbnail">
                                         </div>
                                     </div>

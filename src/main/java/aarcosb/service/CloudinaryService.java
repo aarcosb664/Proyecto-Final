@@ -25,7 +25,7 @@ public class CloudinaryService {
     // Determina automáticamente si es imagen o video basado en el tipo de contenido
     // Genera un nombre de archivo único en la carpeta correspondiente
     // Retorna la URL pública y el ID del recurso en Cloudinary
-    private CloudinaryResponse upload(MultipartFile file, String fileName) {
+    private CloudinaryResponse upload(MultipartFile file, String fileName) throws Exception {
         try {
             String contentType = file.getContentType();
             String resourceType = (contentType != null && contentType.startsWith("image/")) ? "image" : "video";
@@ -43,9 +43,9 @@ public class CloudinaryService {
             
             return CloudinaryResponse.builder().publicId(publicId).url(url).build();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to read file bytes: " + e.getMessage(), e);
+            throw new Exception("Failed to read file bytes: " + e.getMessage(), e);
         } catch (Exception e) {
-            throw new RuntimeException("Unexpected error during upload: " + e.getMessage(), e);
+            throw new Exception("Unexpected error during upload: " + e.getMessage(), e);
         }
     }
 
@@ -56,7 +56,7 @@ public class CloudinaryService {
     // Si hay imágenes existentes, las elimina antes de subir las nuevas
     // Todas las imágenes se suben en una única transacción
     @Transactional
-    public void uploadImages(final Long listingId, final List<MultipartFile> images) {
+    public void uploadImages(final Long listingId, final List<MultipartFile> images) throws Exception {
         if (images == null || images.isEmpty() || images.get(0).isEmpty()) {
             return;
         }
@@ -90,15 +90,14 @@ public class CloudinaryService {
     // Si ya existe un video, lo reemplaza con el nuevo
     // La subida se realiza en una única transacción
     @Transactional
-    public void uploadVideo(final Long listingId, final MultipartFile video) {
+    public void uploadVideo(final Long listingId, final MultipartFile video) throws Exception {
         if (video == null || video.isEmpty()) {
             return;
         }
 
         FileUploadUtil.assertVideoAllowed(video);
         
-        final Listing listing = listingRepository.findById(listingId)
-            .orElseThrow(() -> new RuntimeException("Listing not found"));
+        final Listing listing = listingRepository.findById(listingId).orElseThrow(() -> new RuntimeException("Listing not found"));
         
         final String fileName = FileUploadUtil.getFileName(video.getOriginalFilename());
         final CloudinaryResponse response = upload(video, fileName);
@@ -111,7 +110,7 @@ public class CloudinaryService {
     // Realiza validaciones de formato: solo JPG, PNG y JPEG permitidos
     // Retorna la URL pública del recurso en Cloudinary
     @Transactional
-    public void uploadUserProfilePic(final User user, final MultipartFile image) {
+    public void uploadUserProfilePic(final User user, final MultipartFile image) throws Exception {
         if (image == null || image.isEmpty()) {
             return;
         }

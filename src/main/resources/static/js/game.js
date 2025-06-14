@@ -1,8 +1,6 @@
-// =============================
-// 🎮 GAME CONSTANTS - BREAKOUT
-// =============================
+// CONSTANTES
 
-// Canvas and context
+// Canvas y contexto
 const canvas = document.getElementById('miCanvas');
 const ctx = canvas.getContext('2d');
 const gameContainer = document.querySelector('.game-container');
@@ -10,30 +8,30 @@ const containerSize = Math.min(gameContainer.clientWidth, gameContainer.clientHe
 canvas.width = containerSize;
 canvas.height = containerSize;
 
-// Brick grid ranges
+// Rango de columnas y filas de los ladrillos
 const minCols = 12;
 const maxCols = 23;
 const minRows = 8;
 const maxRows = 19;
 
-// Points per brick type
+// Puntos por tipo de ladrillo
 const pointsNormal = 100;
 const pointsMetal = 200;
 const pointsLife = 1000;
 
-// Speeds and timeouts
+// Velocidades y tiempos
 const ballInitialVelocity = 3;
-const drawInterval = 10; // ms between frames
-const powerTimeout = 8000; // ms power duration
+const drawInterval = 10;
+const powerTimeout = 8000;
 
-// Ball properties
+// Propiedades de la pelota
 let ballX = containerSize / 2;
 let ballY = containerSize / 1.5;
 let ballVelocityX = 0;
 let ballVelocityY = ballInitialVelocity;
 let ballRadius = containerSize / 100;
 
-// Paddle properties
+// Propiedades de la paleta
 let paddleWidth = containerSize / 6;
 let paddleHeight = containerSize / 80;
 let paddleX = (containerSize - paddleWidth) / 2;
@@ -42,40 +40,23 @@ let paddleSpeed = 5;
 let rightPressed = false;
 let leftPressed = false;
 
-// Bricks
+// Laderillos
 let bricks = [];
 
-// Game state
+// Estado del juego
+let cols, rows, brickWidth, brickHeight;
 let lives = 3;
 let score = 0;
 let bricksDestroyed = 0;
 let totalBricksDestroyed = 0;
 let paused = true;
 let powerOn = false;
-let showingRanking = false;
 let gameLoop = null;
 
-// Colors and powers
+// Colores y poderes
 const ballColor = '#A52A2A';
 const paddleColor = '#A52A2A';
-const brickColors = {
-    normalBlue: 'blue',
-    normalGreen: 'green',
-    explosive: 'red',
-    metal: 'gray',
-    metalHit: 'yellow',
-    life: 'pink',
-    powerExplosive: 'orange',
-    powerExpand: 'olive'
-};
 
-let cols, rows, brickWidth, brickHeight;
-
-const powerTypes = {
-    none: 'none',
-    explosive: 'explosive',
-    expand: 'expand'
-};
 
 let powerTxt;
 const powerTxts = document.querySelectorAll("#powerTxt");
@@ -87,11 +68,9 @@ if (window.innerWidth < 992) {
 
 const mobileLeft = document.getElementById("mobileLeft");
 const mobileRight = document.getElementById("mobileRight");
-const mobileContainer = document.getElementById("mobileContainer");
 
-// =============================
-// 🎮 GAME LOGIC - BREAKOUT
-// =============================
+
+// LÓGICA DEL JUEGO
 
 function drawBall() {
     ctx.beginPath();
@@ -115,48 +94,44 @@ function drawPaddle() {
     ctx.closePath();
 }
 
+function getBrickAttributeAndColor(attributeChance) {
+    if        (attributeChance < 5)    { return { attribute: "explosive", color: "red"   };
+    } else if (attributeChance < 44)   { return { attribute: "normal",    color: "blue"  };
+    } else if (attributeChance < 88)   { return { attribute: "normal",    color: "green" };
+    } else if (attributeChance < 99.9) { return { attribute: "metal",     color: "gray"  };
+    } else { 
+        return { attribute: "life", color: "pink" };
+    }
+}
+
+function getBrickPowerAndColor(powerChance, currentColor) {
+    if        (powerChance < 2) { return { power: "explosive", color: "orange" };
+    } else if (powerChance < 4) { return { power: "expand",    color: "olive"  };
+    } else {
+        return { power: "none", color: currentColor };
+    }
+}
+
+function isValidIndex(index, max) {
+    return Number.isInteger(index) && index >= 0 && index < max;
+}
+
 function loadBricks() {
     cols = Math.floor(Math.random() * (maxCols - minCols + 1)) + minCols;
     rows = Math.floor(Math.random() * (maxRows - minRows + 1)) + minRows;
     brickWidth = canvas.width / cols;
     brickHeight = (canvas.height / 2) / rows;
     
-    bricks = [];
+    bricks = Array.from({ length: cols }, () => []);
     for (let col = 0; col < cols; col++) {
-        bricks[col] = [];
         for (let row = 0; row < rows; row++) {
             let attributeChance = Math.random() * 100;
-            let attribute, color;
-
-            if (attributeChance < 5) {
-                attribute = powerTypes.explosive;
-                color = brickColors.explosive;
-            } else if (attributeChance < 44) {
-                attribute = "normal";
-                color = brickColors.normalBlue;
-            } else if (attributeChance < 88) {
-                attribute = "normal";
-                color = brickColors.normalGreen;
-            } else if (attributeChance < 99.9) {
-                attribute = "metal";
-                color = brickColors.metal;
-            } else {
-                attribute = "life";
-                color = brickColors.life;
-            }
+            let { attribute, color } = getBrickAttributeAndColor(attributeChance);
 
             let powerChance = Math.random() * 100;
-            let power;
-
-            if (powerChance < 2) {
-                power = powerTypes.explosive;
-                color = brickColors.powerExplosive;
-            } else if (powerChance < 4) {
-                power = powerTypes.expand;
-                color = brickColors.powerExpand;
-            } else {
-                power = powerTypes.none;
-            }
+            let powerResult = getBrickPowerAndColor(powerChance, color);
+            let power = powerResult.power;
+            color = powerResult.color;
 
             bricks[col][row] = {
                 destroyed: false,
@@ -188,9 +163,35 @@ function drawBricks() {
     }
 }
 
+function handleBrickCollision(brick, col, row) {
+    if (powerOn && powerTxt.classList.contains('power-explosive')) {
+        brick.attribute = "explosive";
+    }
+
+    if (brick.attribute === "normal") {
+        score += pointsNormal;
+        brick.destroyed = true;
+    } else if (brick.attribute === "explosive") {
+        explode(col, row);
+    } else if (brick.attribute === "life") {
+        lives++;
+        brick.destroyed = true;
+        score += pointsLife;
+    } else if (brick.attribute === "metal") {
+        brick.color = "yellow";
+        brick.attribute = "normal";
+        score += pointsMetal;
+    }
+
+    bricksDestroyed++;
+    totalBricksDestroyed++;
+    setPower(brick);
+}
+
 function brickCollision() {
     for (let col = 0; col < cols; col++) {
         for (let row = 0; row < rows; row++) {
+            if (!isValidIndex(col, cols) || !isValidIndex(row, rows)) continue;
             const brick = bricks[col][row];
             if (!brick.destroyed &&
                 ballX + ballRadius > brick.x && ballX - ballRadius < brick.x + brickWidth &&
@@ -199,34 +200,34 @@ function brickCollision() {
                 if (ballY >= brick.y && ballY <= brick.y + brickHeight) ballVelocityX = -ballVelocityX;
                 if (ballX >= brick.x && ballX <= brick.x + brickWidth) ballVelocityY = -ballVelocityY;
 
-                if (powerOn && powerTxt.classList.contains('power-explosive')) {
-                    brick.attribute = powerTypes.explosive;
-                }
-
-                if (brick.attribute === "normal") {
-                    score += pointsNormal;
-                    brick.destroyed = true;
-                } else if (brick.attribute === powerTypes.explosive) {
-                    explode(col, row);
-                } else if (brick.attribute === "life") {
-                    lives++;
-                    brick.destroyed = true;
-                    score += pointsLife;
-                } else if (brick.attribute === "metal") {
-                    brick.color = brickColors.metalHit;
-                    brick.attribute = "normal";
-                    score += pointsMetal;
-                }
-
-                bricksDestroyed++;
-                totalBricksDestroyed++;
-                setPower(brick);
+                handleBrickCollision(brick, col, row);
             }
         }
     }
 }
 
+function handleAdjacentBrick(col, row) {
+    if (!isValidIndex(col, cols) || !isValidIndex(row, rows)) return;
+    const adjacent = bricks[col][row];
+    if (adjacent.attribute === "explosive" && !adjacent.destroyed) {
+        explode(col, row);
+    } else if (adjacent.attribute === "metal" && !adjacent.destroyed) {
+        adjacent.color = "yellow";
+        adjacent.attribute = "normal";
+        score += pointsMetal;
+    } else if (!adjacent.destroyed) {
+        adjacent.destroyed = true;
+        score += pointsNormal;
+        bricksDestroyed++;
+        totalBricksDestroyed++;
+    }
+    if (adjacent.power !== "none") {
+        setPower(adjacent);
+    }
+}
+
 function explode(col, row) {
+    if (!isValidIndex(col, cols) || !isValidIndex(row, rows)) return;
     const brick = bricks[col][row];
     if (!brick.destroyed) {
         brick.destroyed = true;
@@ -237,24 +238,7 @@ function explode(col, row) {
         for (let dCol = -1; dCol <= 1; dCol++) {
             for (let dRow = -1; dRow <= 1; dRow++) {
                 try {
-                    const adjacent = bricks[col + dCol][row + dRow];
-
-                    if (adjacent.attribute === powerTypes.explosive && !adjacent.destroyed) {
-                        explode(col + dCol, row + dRow);
-                    } else if (adjacent.attribute === "metal" && !adjacent.destroyed) {
-                        adjacent.color = brickColors.metalHit;
-                        adjacent.attribute = "normal";
-                        score += pointsMetal;
-                    } else if (!adjacent.destroyed) {
-                        adjacent.destroyed = true;
-                        score += pointsNormal;
-                        bricksDestroyed++;
-                        totalBricksDestroyed++;
-                    }
-
-                    if (adjacent.power !== powerTypes.none) {
-                        setPower(adjacent);
-                    }
+                    handleAdjacentBrick(col + dCol, row + dRow);
                 } catch (error) {
                     console.error("Error destroying adjacent bricks: ", error);
                 }
@@ -264,12 +248,12 @@ function explode(col, row) {
 }
 
 function setPower(brick) {
-    if (brick.power === powerTypes.explosive && !powerOn) {
+    if (brick.power === "explosive" && !powerOn) {
         powerTxt.innerHTML = 'Explosive';
         powerTxt.setAttribute("class", "power-explosive header-neon-red-sm");
     }
 
-    if (brick.power === powerTypes.expand && !powerOn) {
+    if (brick.power === "expand" && !powerOn) {
         powerTxt.innerHTML = 'Expand';
         powerTxt.setAttribute("class", "power-expand header-neon-green-sm");
     }
@@ -347,6 +331,62 @@ function reset() {
     paddleX = (canvas.width - paddleWidth) / 2;
 }
 
+function updateStatsUI() {
+    document.getElementById("lives").textContent = lives;
+    document.getElementById("score").textContent = score;
+    document.getElementById("destroyedBlocks").textContent = bricksDestroyed;
+    document.getElementById("rows").textContent = rows;
+    document.getElementById("columns").textContent = cols;
+    document.getElementById("livesMobile").textContent = lives;
+    document.getElementById("scoreMobile").textContent = score;
+    document.getElementById("destroyedBlocksMobile").textContent = bricksDestroyed;
+    document.getElementById("rowsMobile").textContent = rows;
+    document.getElementById("columnsMobile").textContent = cols;
+}
+
+function movePaddle() {
+    if (rightPressed && paddleX + paddleWidth < containerSize) {
+        paddleX += paddleSpeed;
+    }
+    if (leftPressed && paddleX > 0) {
+        paddleX -= paddleSpeed;
+    }
+}
+
+function handleBallWallCollision() {
+    if (ballX + ballVelocityX > containerSize - ballRadius || ballX + ballVelocityX < ballRadius) {
+        ballVelocityX = -ballVelocityX;
+    }
+    if (ballY + ballVelocityY < ballRadius) {
+        ballVelocityY = -ballVelocityY;
+    }
+}
+
+function handleBallPaddleCollision() {
+    if (
+        ballY + ballVelocityY > paddleY - ballRadius &&
+        ballX > paddleX &&
+        ballX < paddleX + paddleWidth
+    ) {
+        ballVelocityY = -ballVelocityY;
+        ballVelocityX = ((ballX - (paddleX + paddleWidth / 2)) / (paddleWidth / 2)) * 5;
+    }
+}
+
+function handleBallReset() {
+    if (lives <= 0) {
+        gameOver();
+        return true;
+    }
+    if (ballY + ballVelocityY > canvas.height - ballRadius) {
+        lives--;
+        reset();
+        pause();
+        return true;
+    }
+    return false;
+}
+
 function draw() {
     if (bricksDestroyed === cols * rows) {
         clearInterval(gameLoop);
@@ -365,54 +405,11 @@ function draw() {
     drawBricks();
     brickCollision();
 
-    document.getElementById("lives").innerHTML = lives;
-    document.getElementById("score").innerHTML = score;
-    document.getElementById("destroyedBlocks").innerHTML = bricksDestroyed;
-    document.getElementById("rows").innerHTML = rows;
-    document.getElementById("columns").innerHTML = cols;
-
-    document.getElementById("livesMobile").innerHTML = lives;
-    document.getElementById("scoreMobile").innerHTML = score;
-    document.getElementById("destroyedBlocksMobile").innerHTML = bricksDestroyed;
-    document.getElementById("rowsMobile").innerHTML = rows;
-    document.getElementById("columnsMobile").innerHTML = cols;
-
-    if (rightPressed && paddleX + paddleWidth < containerSize) { 
-        paddleX += paddleSpeed; 
-    }
-
-    if (leftPressed && paddleX > 0) { 
-        paddleX -= paddleSpeed; 
-    }
-
-    if (ballX + ballVelocityX > containerSize - ballRadius || ballX + ballVelocityX < ballRadius) {
-        ballVelocityX = -ballVelocityX;
-    }
-
-    if (ballY + ballVelocityY < ballRadius) {
-        ballVelocityY = -ballVelocityY;
-    }
-
-    if (
-        ballY + ballVelocityY > paddleY - ballRadius &&
-        ballX > paddleX &&
-        ballX < paddleX + paddleWidth
-    ) {
-        ballVelocityY = -ballVelocityY;
-        ballVelocityX = ((ballX - (paddleX + paddleWidth / 2)) / (paddleWidth / 2)) * 5;
-    }
-
-    if (lives <= 0) {
-        gameOver();
-        return;
-    }
-
-    if (ballY + ballVelocityY > canvas.height - ballRadius) {
-        lives--;
-        reset();
-        pause();
-        return;
-    }
+    updateStatsUI();
+    movePaddle();
+    handleBallWallCollision();
+    handleBallPaddleCollision();
+    if (handleBallReset()) return;
 
     ballX += ballVelocityX;
     ballY += ballVelocityY;
@@ -449,9 +446,9 @@ function pause() {
 }
 
 function showRanking() {
-    document.getElementById("finalScore").innerHTML = score;
-    document.getElementById("finalDestroyedBlocks").innerHTML = totalBricksDestroyed;
-    document.getElementById("finalDate").innerHTML = new Date().toLocaleDateString();
+    document.getElementById("finalScore").textContent = score;
+    document.getElementById("finalDestroyedBlocks").textContent = totalBricksDestroyed;
+    document.getElementById("finalDate").textContent = new Date().toLocaleDateString();
 
     document.getElementById("inputFinalScore").value = score;
     document.getElementById("inputFinalDestroyedBlocks").value = totalBricksDestroyed;
@@ -464,10 +461,6 @@ function showRanking() {
 
 function gameOver() {
     showRanking();
-}
-
-function reload() {
-    window.location.reload();
 }
 
 loadBricks();

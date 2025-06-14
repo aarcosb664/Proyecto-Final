@@ -10,8 +10,6 @@
     <title>Inicio</title>
 </head>
 
-<!-- TODO: tests unitarios, completar index, perfil y about (form de opiniones y feedback) -->
-
 <body>
     <header th:replace="~{fragments/header :: header}"></header>
 
@@ -74,7 +72,7 @@
                                     <td th:text="${player.userName != null ? player.userName : '-'}">name_placeholder</td>
                                     <td th:text="${player.score != null ? player.score : '-'}">0</td>
                                     <td th:text="${player.destroyedBlocks != null ? player.destroyedBlocks : '-'}">0</td>
-                                    <td th:text="${player.dateGame != null ? #dates.format(player.dateGame, 'MM/dd/yyyy HH:mm') : '-'}">01/01/2023</td>
+                                    <td th:text="${player.dateGame != null ? #temporals.format(player.dateGame, 'MM/dd/yyyy - HH:mm') : '-'}">01/01/2023</td>
                                 </tr>
                                 <!-- Añadir filas vacías si no hay suficientes jugadores -->
                                 <tr th:if="${#lists.size(players) < 5}" th:each="i : ${#numbers.sequence(1, 5 - #lists.size(players))}">

@@ -40,7 +40,7 @@ public class AdminController {
     {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
-            return "redirect:/admin/panel";
+            throw new IllegalArgumentException("User not found");
         }
         userDetailsServiceImpl.deleteUser(userId);
         return "redirect:/admin/panel";

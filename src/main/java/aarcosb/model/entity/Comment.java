@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -26,7 +26,7 @@ public class Comment {
     private String text;
 
     @Column(name = "created_at")
-    private Date createdAt;
+    private LocalDate createdAt;
 
     @Column(name = "user_id")
     private Long userId;
@@ -36,7 +36,7 @@ public class Comment {
 
     @PrePersist
     protected void onCreate() {
-        createdAt = new Date();
+        createdAt = LocalDate.now();
     }
 }
 

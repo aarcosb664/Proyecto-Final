@@ -9,9 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
-import java.util.Date;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import aarcosb.model.entity.*;
 import aarcosb.model.dto.*;
@@ -31,32 +29,24 @@ public class CommunityController {
     @Autowired private UserRepository userRepository;
 
     // Método auxiliar para obtener el usuario actual a partir de la autenticación
-    private User getCurrentUser(Authentication authentication) 
+    private User addCurrentUserToModel(Model model, Authentication authentication) 
     {
-        return userRepository.findByEmail(authentication.getName());
+        User currentUser = userRepository.findByEmail(authentication.getName());
+        model.addAttribute("currentUser", currentUser);
+        return currentUser;
     }
 
     // Página principal de la comunidad con paginación de listings
     // Muestra los listings más recientes primero, 12 por página por defecto
     @GetMapping("")
-    public String index(@RequestParam(defaultValue = "1") Integer page,
-                        @RequestParam(defaultValue = "9") Integer size,
-                        @RequestParam(defaultValue = "updatedAt") String sort,
-                        @RequestParam(defaultValue = "desc") String order,
-                        @RequestParam(defaultValue = "") String query,
-                        @RequestParam(required = false) Double minRating,
-                        @RequestParam(required = false) Double maxRating,
-                        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateFrom,
-                        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateTo,
-                        Model model, Authentication authentication) 
+    public String index(@ModelAttribute("filter") ListingFilterDTO filter, Model model, Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("currentUser", userRepository.findByEmail(authentication.getName()));
 
-        Sort sortBy = order.equals("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
-        Pageable pageable = PageRequest.of(page - 1, size, sortBy);
+        Sort sortBy = filter.getOrder().equals("desc") ? Sort.by(filter.getSort()).descending() : Sort.by(filter.getSort()).ascending();
+        Pageable pageable = PageRequest.of(filter.getPage() - 1, filter.getSize(), sortBy);
 
-        model.addAttribute("listings", listingService.searchAndFilter(query, minRating, maxRating, dateFrom, dateTo, pageable));
+        model.addAttribute("listings", listingService.searchAndFilter(filter.getQuery(), filter.getMinRating(), filter.getMaxRating(), filter.getDateFrom(), filter.getDateTo(), pageable));
         return "community/main";
     }
 
@@ -65,8 +55,7 @@ public class CommunityController {
     @GetMapping("/listing/{listingId}")
     public String viewListing(@PathVariable Long listingId, Model model, Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
+        User currentUser = addCurrentUserToModel(model, authentication);
         
         Listing listing = listingService.getListingById(listingId);
         if (listing == null) {
@@ -95,8 +84,7 @@ public class CommunityController {
     @GetMapping("/listing/create")
     public String createListing(Model model, Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
+        User currentUser = addCurrentUserToModel(model, authentication);
 
         if (currentUser.getRole() == Role.ADMIN) {
             return "redirect:/community";
@@ -114,8 +102,7 @@ public class CommunityController {
                           Model model, 
                           Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
+        User currentUser = addCurrentUserToModel(model, authentication);
 
         if (currentUser.getRole() == Role.ADMIN) {
             return "redirect:/community";
@@ -163,8 +150,7 @@ public class CommunityController {
     @GetMapping("/listing/{listingId}/edit")
     public String editListing(@PathVariable Long listingId, Model model, Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
+        User currentUser = addCurrentUserToModel(model, authentication);
 
         Listing listing = listingService.getListingById(listingId);
         if (listing == null || currentUser.getRole() == Role.ADMIN || !currentUser.getId().equals(listing.getUserId())) {
@@ -193,8 +179,7 @@ public class CommunityController {
                                 Model model,
                                 Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
+        User currentUser = addCurrentUserToModel(model, authentication);
 
         // Obtener listing existente o redirigir si no existe
         Listing listing = listingService.getListingById(listingId);
@@ -204,7 +189,7 @@ public class CommunityController {
 
         // Check if user is authorized (must be owner)
         if (currentUser.getRole() != Role.ADMIN && !currentUser.getId().equals(listing.getUserId())) {
-            return "redirect:/community/listing/" + listingId;
+            throw new IllegalArgumentException("User not authorized");
         }
 
         model.addAttribute("listing", listing);
@@ -247,8 +232,7 @@ public class CommunityController {
     @PostMapping("/listing/{listingId}/delete")
     public String deleteListing(@PathVariable Long listingId, Model model, Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
+        User currentUser = addCurrentUserToModel(model, authentication);
 
         Listing listing = listingService.getListingById(listingId);
         if (listing == null) {
@@ -256,7 +240,7 @@ public class CommunityController {
         }
 
         if (currentUser.getRole() != Role.ADMIN && !currentUser.getId().equals(listing.getUserId())) {
-            return "redirect:/community/listing/" + listingId;
+            throw new IllegalArgumentException("User not authorized");
         }
 
         listingService.deleteListing(listingId);
@@ -273,11 +257,10 @@ public class CommunityController {
                              Authentication authentication,
                              Model model) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
+        User currentUser = addCurrentUserToModel(model, authentication);
 
         if (currentUser.getRole() == Role.ADMIN) {
-            return "redirect:/community/listing/" + listingId;
+            throw new IllegalArgumentException("User not authorized");
         }
 
         if (result.hasErrors()) {
@@ -302,14 +285,13 @@ public class CommunityController {
     @PostMapping("/listing/{listingId}/comment/{commentId}/delete")
     public String deleteComment(@PathVariable Long listingId, @PathVariable Long commentId, Model model, Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
+        User currentUser = addCurrentUserToModel(model, authentication);
 
         Comment comment = commentService.getCommentById(commentId);
 
 
         if (currentUser.getRole() != Role.ADMIN && !currentUser.getId().equals(comment.getUserId()) || comment == null) {
-            return "redirect:/community/listing/" + listingId;
+            throw new IllegalArgumentException("User not authorized");
         }
 
         commentService.deleteComment(commentId);
@@ -321,12 +303,11 @@ public class CommunityController {
     @PostMapping("/listing/{listingId}/rate")
     public String rateListing(@PathVariable Long listingId, @RequestParam Double rating, Model model, Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
+        User currentUser = addCurrentUserToModel(model, authentication);
 
         Listing listing = listingService.getListingById(listingId);
         if (listing == null || currentUser.getRole() == Role.ADMIN || currentUser.getId().equals(listing.getUserId())) {
-            return "redirect:/community/listing/" + listingId;
+            throw new IllegalArgumentException("User not authorized");
         }
 
         ratingService.rateListing(listingId, currentUser.getId(), rating);
@@ -338,12 +319,11 @@ public class CommunityController {
     @PostMapping("/listing/{listingId}/favorite")
     public String addToFavorites(@PathVariable Long listingId, Model model, Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
+        User currentUser = addCurrentUserToModel(model, authentication);
 
         Listing listing = listingService.getListingById(listingId);
         if (listing == null) {
-            return "redirect:/community/listing/" + listingId;
+            throw new IllegalArgumentException("Listing not found");
         }
 
         if (!currentUser.getFavListings().contains(listingId)) {

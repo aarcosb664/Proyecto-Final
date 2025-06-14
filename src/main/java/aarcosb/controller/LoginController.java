@@ -40,7 +40,9 @@ public class LoginController {
     public String login(@RequestParam(defaultValue = "login") String tab, Model model, Principal principal) 
     {
         // Si el usuario ya está autenticado, redirigir a la página de inicio
-        if (principal != null) return "redirect:/";
+        if (principal != null) {
+            throw new IllegalArgumentException("User already authenticated");
+        }
 
         // Añadir el formulario de registro al modelo
         if (!model.containsAttribute("user")) {

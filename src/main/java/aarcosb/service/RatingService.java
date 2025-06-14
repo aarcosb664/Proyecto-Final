@@ -55,6 +55,7 @@ public class RatingService {
         if (avg == null) {
             avg = 0.0;
         }
+        
         listingRepository.updateRatingOnly(listingId, avg);
     }
 } 

@@ -21,7 +21,8 @@ public class GameController {
     @Autowired private UserRepository userRepository;
 
     // Método auxiliar para obtener el usuario actual a partir de la autenticación
-    private User getCurrentUser(Authentication authentication) {
+    private User getCurrentUser(Authentication authentication) 
+    {
         return userRepository.findByEmail(authentication.getName());
     }
 

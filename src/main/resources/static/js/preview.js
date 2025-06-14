@@ -1,42 +1,39 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // Imágenes
-    const imgInput   = document.getElementById("imagesInput");
-    const imgBox     = document.getElementById("imagePreviewContainer");
+document.addEventListener("DOMContentLoaded", function() {
+    let imgInput = document.getElementById("imagesInput");
+    let imgBox = document.getElementById("imagePreviewContainer");
 
-    imgInput?.addEventListener("change", () => {
-        // Limpia previas
-        imgBox.innerHTML = "";                                
-        [...imgInput.files].forEach(file => {
-            // Lee cada imagen
-            const reader = new FileReader();                    
-            reader.onload = e => {
-            imgBox.insertAdjacentHTML(
-                "beforeend",
-                `<img src="${e.target.result}"
-                    class="img-fluid rounded-3 mb-2"
-                    style="max-height:110px">`);
-            };
-            // Dispara onload
-            reader.readAsDataURL(file);
+    if (imgInput && imgBox) {
+        imgInput.addEventListener("change", function() {
+            imgBox.textContent = "";
+            for (let i = 0; i < imgInput.files.length; i++) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    let img = document.createElement("img");
+                    img.src = e.target.result;
+                    img.className = "img-fluid rounded-3 mb-2";
+                    img.style.maxHeight = "100px";
+                    imgBox.appendChild(img);
+                };
+                reader.readAsDataURL(imgInput.files[i]);
+            }
         });
-    });
+    }
 
-    // Video
-    const vidInput  = document.getElementById("videoInput");
-    const vidBox    = document.getElementById("videoPreviewContainer");
+    let vidInput = document.getElementById("videoInput");
+    let vidBox = document.getElementById("videoPreviewContainer");
 
-    vidInput?.addEventListener("change", () => {
-        // Limpia previa
-        vidBox.innerHTML = "";                                
-        if (!vidInput.files.length) return;
-    
-        // Crea blob URL
-        const url = URL.createObjectURL(vidInput.files[0]);   
-        vidBox.innerHTML =
-            `<video src="${url}" controls
-                    class="w-100 rounded-3 mb-3"
-                    style="max-height:240px"></video>`;
-        // Liberar memoria cuando el vídeo ya no se necesite
-        vidBox.querySelector("video").onload = () => URL.revokeObjectURL(url);
-    });
+    if (vidInput && vidBox) {
+        vidInput.addEventListener("change", function() {
+            vidBox.textContent = "";
+            if (!vidInput.files.length) return;
+            let url = URL.createObjectURL(vidInput.files[0]);
+            let video = document.createElement("video");
+            video.src = url;
+            video.controls = true;
+            video.className = "w-100 rounded-3 mb-3";
+            video.style.maxHeight = "240px";
+            video.onloadeddata = function() { URL.revokeObjectURL(url); };
+            vidBox.appendChild(video);
+        });
+    }
 });

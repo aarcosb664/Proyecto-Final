@@ -4,8 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.ArrayList;
 
@@ -50,21 +51,22 @@ public class Listing {
     private Long userId;
     
     @Column(name = "created_at")
-    private Date createdAt;
+    private LocalDate createdAt;
 
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDate updatedAt;
 
     @PrePersist
     protected void onCreate() {
-        createdAt = new Date();
-        updatedAt = new Date();
+        createdAt = LocalDate.now();
+        updatedAt = LocalDate.now();
         images = new ArrayList<>();
+        tags = new HashSet<>();
         rating = 0.0;
     }
 
     @PreUpdate
     protected void onUpdate() {
-        updatedAt = new Date();
+        updatedAt = LocalDate.now();
     }
 } 

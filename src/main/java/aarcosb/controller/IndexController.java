@@ -39,7 +39,6 @@ public class IndexController {
         return "index";
     }
 
-    
     @GetMapping("/profile/{id}")
     public String profile(@PathVariable Long id, Model model, Authentication authentication) 
     {
@@ -49,7 +48,7 @@ public class IndexController {
         
         User user = userRepository.findById(id).orElse(null);
         if (user == null) {
-            return "redirect:/";
+            throw new IllegalArgumentException("User not found");
         }
         
         // Cargar datos del perfil
@@ -65,32 +64,27 @@ public class IndexController {
     
     @PostMapping("/profile/updateProfilePic")
     public String updateProfilePic(@RequestParam("id") Long id,
-    @RequestParam("profilePic") MultipartFile file,
-    Authentication authentication,
-    Model model) 
+                                   @RequestParam("profilePic") MultipartFile file,
+                                   Authentication authentication,
+                                   Model model) 
     {
-        User user = getCurrentUser(authentication);
-        model.addAttribute("currentUser", user);
+        User currentUser = getCurrentUser(authentication);
+        model.addAttribute("currentUser", currentUser);
         
         // Obtener el usuario autenticado
-        if (user.getRole().name() == "USER" && !user.getId().equals(id)) {
-            return "redirect:/";
+        if (currentUser.getRole().name() == "USER" && !currentUser.getId().equals(id)) {
+            throw new IllegalArgumentException("User not authorized");
         }
         
         // Subir la imagen a Cloudinary
         try {
-            cloudinaryService.uploadUserProfilePic(user, file);
-            return "redirect:/profile/" + user.getId();
+            cloudinaryService.uploadUserProfilePic(currentUser, file);
+            return "redirect:/profile/" + currentUser.getId();
         } catch (Exception e) {
-            model.addAttribute("currentUser", user);
+            model.addAttribute("currentUser", currentUser);
             model.addAttribute("hasError", true);
             model.addAttribute("error", "Error updating profile picture: " + e.getMessage());
             return "profile";
         }
-    }
-    @GetMapping("/error")
-    public String error() 
-    {
-        return "error";
     }
 }

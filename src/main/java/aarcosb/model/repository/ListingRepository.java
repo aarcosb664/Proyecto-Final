@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import aarcosb.model.entity.Listing;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -49,8 +49,8 @@ public interface ListingRepository extends JpaRepository<Listing, Long> {
         @Param("query") String query,
         @Param("minRating") Double minRating,
         @Param("maxRating") Double maxRating,
-        @Param("dateFrom") Date dateFrom,
-        @Param("dateTo") Date dateTo,
+        @Param("dateFrom") LocalDate dateFrom,
+        @Param("dateTo") LocalDate dateTo,
         Pageable pageable
     );
 

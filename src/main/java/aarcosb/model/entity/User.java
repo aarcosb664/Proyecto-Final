@@ -13,7 +13,7 @@ import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import jakarta.persistence.PrePersist;
 import java.util.ArrayList;
@@ -50,11 +50,11 @@ public class User {
     private Role role;
     
     @Column(name = "created_at")
-    private Date createdAt;
+    private LocalDate createdAt;
 
     @PrePersist
     protected void onCreate() {
-        createdAt = new Date();
+        createdAt = LocalDate.now();
         profilePic = "/img/default.png";
         favListings = new ArrayList<>();
         role = Role.USER;

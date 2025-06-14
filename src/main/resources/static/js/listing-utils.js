@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Swiper
     const thumbSwiper = new Swiper(".thumbSwiper", {
         spaceBetween: 10,
         slidesPerView: 'auto',
@@ -24,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Rating functionality
     const input = document.getElementById('ratingInput');
     const form = document.getElementById('ratingForm');
-    const submit = document.getElementById('ratingSubmit');
     let rating = parseFloat(input.value) || 0;
     
     function paint(val) {
@@ -49,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let position = getPosition(lab, e);
             rating = position;
             paint(rating);
-            submit.click();
+            form.submit();
         };
     });
     

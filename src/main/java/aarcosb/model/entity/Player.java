@@ -1,6 +1,6 @@
 package aarcosb.model.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -38,11 +38,11 @@ public class Player {
     private int destroyedBlocks;
     
     @Column(name = "date_game")
-    private Date dateGame;
+    private LocalDate dateGame;
 
     @PrePersist
     protected void onCreate() {
         position = 0;
-        dateGame = new Date();
+        dateGame = LocalDate.now();
     }
 } 

@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Service
 public class ListingService {
@@ -87,7 +87,7 @@ public class ListingService {
     // Puede buscar por título, tags, valoración, fecha de creación o actualización
     // También permite filtrar por rango de valoración y fechas
     // Retorna una página de listings que coincidan con los criterios   
-    public Page<Listing> searchAndFilter(String query, Double minRating, Double maxRating, Date dateFrom, Date dateTo, Pageable pageable) {
+    public Page<Listing> searchAndFilter(String query, Double minRating, Double maxRating, LocalDate dateFrom, LocalDate dateTo, Pageable pageable) {
         // Si query es null o solo espacios, pásalo como null al repo (NO devuelvas vacío)
         String q = (query == null || query.trim().isEmpty()) ? null : query.trim().toLowerCase();
         Page<Listing> listings = listingRepository.searchAndFilter(q, minRating, maxRating, dateFrom, dateTo, pageable);
