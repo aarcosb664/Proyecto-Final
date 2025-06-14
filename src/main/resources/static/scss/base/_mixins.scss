@@ -34,38 +34,36 @@
 @mixin border-neon($color) {
   border: 3px solid $color;
   background: transparent;
-  animation: borderNeonPulse 5s ease-in-out infinite;
+  animation: borderNeonPulse 3s ease-in-out infinite;
   --pulse-color: #{$color};
 }
 
 @keyframes borderNeonPulse {
   0%, 100% {
     box-shadow:
-      0 0 0 5px rgba(0,0,0,0.18),
-      0 0 1.3rem var(--pulse-color, #fff);
+      0 0 1.1rem var(--pulse-color);
   }
   50% {
     box-shadow:
-      0 0 1.3rem var(--pulse-color, #fff);
+      0 0 1.4rem 2px var(--pulse-color);
   }
 }
 
 @mixin border-neon-sm($color) {
   border: 1.5px solid $color;
   background: transparent;
-  animation: borderNeonPulseSm 5s ease-in-out infinite;
+  animation: borderNeonPulseSm 2s linear infinite;
   --pulse-color: #{$color};
 }
 
 @keyframes borderNeonPulseSm {
   0%, 100% {
     box-shadow:
-      0 0 0 5px rgba(0,0,0,0.18),
-      0 0 0.9rem var(--pulse-color, #fff);
+      0 0 0.8rem var(--pulse-color);
   }
   50% {
     box-shadow:
-      0 0 0.9rem var(--pulse-color, #fff);
+      0 0 1.1rem 1px var(--pulse-color);
   }
 }
 

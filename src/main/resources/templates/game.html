@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" th:href="@{img/logo.png}">
@@ -7,108 +9,176 @@
     <link th:href="@{css/game.css}" rel="stylesheet">
     <title>Breakout!</title>
 </head>
-<body class="bg-dark text-white overflow-hidden">
+
+<body class="p-0">
     <div class="container-fluid p-0">
         <div class="row vh-100 m-0 g-0">
-            <!-- Canvas del juego - 9 columnas -->
-            <div class="col-9 p-0 h-100 position-relative">
+            <!-- Contenedor del juego -->
+            <div class="col-12 col-lg-9 mb-5 mb-lg-0 game-container">
                 <!-- Canvas que dibuja el juego -->
-                <canvas id="miCanvas" class="w-100 h-100 bg-light" width="1000" height="750"></canvas>
-                
-                <!-- Tutorial (emergente) - Está dentro del div del canvas -->
-                <div id="tutorial" class="position-absolute top-50 start-50 translate-middle bg-dark bg-opacity-75 text-white p-3 rounded shadow-lg z-3 w-75">
-                    <h1 class="border-bottom pb-2 text-center fw-bold">Cómo jugar</h1>
-                    <h5 class="mb-2"><i class="me-2">➤</i> Pulsa <kbd>Enter</kbd> para iniciar el juego y pausar/reanudar el juego</h5>
-                    <h5 class="mb-2"><i class="me-2">➤</i> Pulsa las flechas <kbd>←</kbd> <kbd>→</kbd> para mover la paleta</h5>
-                    <h5 class="mb-2"><i class="me-2">➤</i> Pulsa <kbd>R</kbd> para ver la clasificación</h5>
-                    <h5 class="mb-2"><i class="me-2">➤</i> Pulsa <kbd>Espacio</kbd> para usar el poder</h5>
+                <canvas id="miCanvas" class="bg-white"></canvas>
+
+                <!-- Tutorial (popup) --> 
+                <div id="tutorial" class="tutorial border-neon-white-sm">
+                    <span class="d-none d-lg-block">
+                        <h1 class="border-bottom pb-2 text-center fw-bold">How to play</h1>
+                        <h5 class="mb-3"><i class="me-2">➤</i> Press <kbd>Enter</kbd> to start the game and pause/resume the game</h5>
+                        <h5 class="mb-3"><i class="me-2">➤</i> Press the arrows <kbd>←</kbd> <kbd>→</kbd> to move the paddle</h5>
+                        <h5 class="mb-3"><i class="me-2">➤</i> Press <kbd>R</kbd> to see the ranking</h5>
+                        <h5 class="mb-3"><i class="me-2">➤</i> Press <kbd>Space</kbd> to use the power</h5>
+                    </span>
+
+                    <span class="d-block d-lg-none">
+                        <h1 class="border-bottom pb-2 text-center fw-bold">How to play</h1>
+                        <h5 class="mb-3"><i class="me-2">➤</i> Press below the arrows to start/pause the game</h5>
+                        <h5 class="mb-3"><i class="me-2">➤</i> Press the arrows <kbd>←</kbd> <kbd>→</kbd> to move the paddle</h5>
+                        <h5 class="mb-3"><i class="me-2">➤</i> Press the power icon to use the power</h5>
+                    </span>
                 </div>
+
+                <!-- Popup para guardar la información del jugador -->
+                <form id="rankingForm" class="ranking-form border-neon-white-sm d-none" method="post" th:action="@{/saveGame}" sec:authorize="isAuthenticated()">
+                    <input type="hidden" name="score" id="inputFinalScore" />
+                    <input type="hidden" name="destroyedBlocks" id="inputFinalDestroyedBlocks" />
+                    <input type="hidden" name="dateGame" id="inputFinalDate" />
+
+                    <h2 class="border-bottom pb-2 text-center fw-bold mb-3">Game Over!</h2>
+                    <h5 class="header-neon-white-sm mb-2 text-center">Your final score:</h5>
+
+                    <div class="text-start w-50 mx-auto mb-2">
+                        <p class="text-neon-white">
+                            <i class="bi bi-star-fill pe-1"></i> 
+                            <span class="d-none d-md-inline me-3">Score:</span> 
+                            <span class="text-neon-white-sm" id="finalScore">0</span>
+                        </p>
+                        <p class="text-neon-white">
+                            <i class="bi bi-bricks pe-1"></i> 
+                            <span class="d-none d-md-inline me-3">Blocks destroyed:</span> 
+                            <span class="text-neon-white-sm" id="finalDestroyedBlocks">0</span>
+                        </p>
+                        <p class="text-neon-white">
+                            <i class="bi bi-calendar4-event pe-1"></i> 
+                            <span class="d-none d-md-inline me-3">Date:</span> 
+                            <span class="text-neon-white-sm" id="finalDate">1970-01-01 - 00:00</span>
+                        </p>
+                    </div>
+
+                    <div class="mb-3 text-center">
+                        <input type="text" name="userName" id="playerName" placeholder="Your username" required class="form-control w-50 mx-auto text-center" />
+                    </div>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button type="submit" class="btn-neon-green w-100">Save</button>
+                        <button type="reset" onclick="reload()" class="btn-neon-red w-100">Cancel</button>
+                    </div>
+                </form>
             </div>
-            
-            <!-- Panel lateral - 3 columnas -->
-            <div class="col-3 p-2 h-100 bg-black overflow-hidden d-flex flex-column">
+
+            <!-- Información del juego -->
+            <div class="col-lg-3 d-none d-lg-block px-3 h-100 overflow-hidden d-flex flex-column justify-content-between">
                 <!-- Información -->
-                <fieldset class="border-neon-blue mb-3 p-3">
-                    <h4 class="mb-1 text-center fw-bold border-bottom pb-2 mb-3 header-neon-blue">Información</h4>
-                    <!-- Vidas -->
-                    <div class="d-flex align-items-center justify-content-center my-1">
-                        <img th:src="@{/img/vida.svg}" alt="Vida" class="me-2 icon-30" width="35" height="35"/>
-                        <h1 id="vidas" class="fs-4 m-0 text-neon-blue-sm">Lives</h1>
+                <fieldset class="d-flex flex-column justify-content-center align-items-center gap-3">
+                    <legend>Info</legend>
+
+                    <div class="d-flex align-items-center fs-4">
+                        <i class="bi bi-heart-fill pe-3"></i>
+                        <h2 id="lives" class="m-0">Lives</h2>
                     </div>
-                    <!-- Puntos -->
-                    <div class="d-flex align-items-center justify-content-center my-2">
-                        <img th:src="@{/img/puntuacion.svg}" alt="Puntuacion" class="me-2 icon-30" width="35" height="35"/>
-                        <h1 id="puntos" class="fs-4 m-0 text-neon-blue-sm">Points</h1>
+
+                    <div class="d-flex align-items-center fs-4">
+                        <i class="bi bi-star-fill pe-3"></i> 
+                        <h2 id="score" class="m-0">Score</h2>
                     </div>
-                    <!-- Bloques destruidos -->
-                    <div class="d-flex align-items-center justify-content-center my-2">
-                        <img th:src="@{/img/bloque.svg}" alt="BloquesDestruidos" class="me-2 icon-30" width="35" height="35"/>
-                        <h1 id="bloquesDestruidos" class="fs-4 m-0 text-neon-blue-sm">Destroyed</h1>
-                    </div>              
-                    <!-- Filas -->
-                    <div class="d-flex align-items-center justify-content-center my-2">
-                        <img th:src="@{/img/fila.svg}" alt="Fila" class="me-2 icon-30" width="35" height="35"/>
-                        <h1 id="filas" class="fs-4 m-0 text-neon-blue-sm">Rows</h1>
+
+                    <div class="d-flex align-items-center fs-4">
+                        <i class="bi bi-bricks pe-3"></i>
+                        <h2 id="destroyedBlocks" class="m-0">Destroyed</h2>
                     </div>
-                    <!-- Columnas -->
-                    <div class="d-flex align-items-center justify-content-center my-2">
-                        <img th:src="@{/img/columna.svg}" alt="Columna" class="me-2 icon-30" width="35" height="35"/>
-                        <h1 id="columnas" class="fs-4 m-0 text-neon-blue-sm">Columns</h1>
+
+                    <div class="d-flex align-items-center fs-4">
+                        <i class="bi bi-arrows-expand pe-3"></i>
+                        <h2 id="rows" class="m-0">Rows</h2>
+                    </div>
+
+                    <div class="d-flex align-items-center fs-4">
+                        <i class="bi bi-arrows-expand-vertical pe-3"></i>
+                        <h2 id="columns" class="m-0">Columns</h2>
                     </div>
                 </fieldset>
-                
-                <!-- Poder -->
-                <fieldset class="border-neon-red mb-3 p-3">
-                    <h4 class="mb-1 text-center fw-bold border-bottom pb-2 mb-3 header-neon-red">Poder</h4>
-                    <h1 id="poderTxt" class="text-center my-3 text-neon-red-sm">Nada</h1>
+
+                <!-- Power -->
+                <fieldset class="text-center">
+                    <legend>Power</legend>
+                    <h1 id="powerTxt">None</h1>
                 </fieldset>
-                
+
                 <!-- Opciones -->
-                <fieldset class="border-neon-green mb-3 p-3">
-                    <h4 class="mb-1 text-center fw-bold border-bottom pb-2 mb-3 header-neon-green">Opciones</h4>
-                    <div class="d-flex justify-content-around py-3">
-                        <button id="reanudar" onclick="reanudar()" class="mx-2 bg-transparent border-0 game-button"></button>
-                        <button id="pausar" onclick="pausar()" class="mx-2 bg-transparent border-0 game-button"></button>
-                        <button id="clasificacion" onclick="verRanking()" class="mx-2 bg-transparent border-0 game-button"></button>
+                <fieldset>
+                    <legend>Options</legend>
+
+                    <div class="d-flex justify-content-around">
+                        <button id="resume" onclick="resume()" class="bg-transparent border-0">
+                            <i class="bi bi-play-fill text-white fs-1"></i>
+                        </button>
+
+                        <button id="pause" onclick="pause()" class="bg-transparent border-0">
+                            <i class="bi bi-pause-fill text-white fs-1"></i>
+                        </button>
+
+                        <button id="rankingBtn" class="bg-transparent border-0">
+                            <a th:href="@{/ranking}" id="rankingLink">
+                                <i class="bi bi-trophy-fill text-white fs-3"></i>
+                            </a>
+                        </button>
                     </div>
                 </fieldset>
+
+                <!-- Botón de volver -->
+                <a href="javascript:history.back()" id="exit" class="btn btn-outline-neon-purple btn-exit fs-4 mt-4 w-100">Exit</a>
+            </div>
+
+            <div id="mobileContainer" class="col-12 d-block d-lg-none">
+                <div class="d-flex justify-content-center align-items-center gap-3 p-0 m-0">
+                    <div class="d-flex align-items-center fs-6">
+                        <i class="bi bi-heart-fill pe-1"></i>
+                        <h2 id="livesMobile" class="m-0"></h2>
+                    </div>
+
+                    <div class="d-flex align-items-center fs-6">
+                        <i class="bi bi-star-fill pe-1"></i> 
+                        <h2 id="scoreMobile" class="m-0"></h2>
+                    </div>
+
+                    <div class="d-flex align-items-center fs-6">
+                        <i class="bi bi-bricks pe-1"></i>
+                        <h2 id="destroyedBlocksMobile" class="m-0"></h2>
+                    </div>
+
+                    <div class="d-flex align-items-center fs-6">
+                        <i class="bi bi-arrows-expand pe-1"></i>
+                        <h2 id="rowsMobile" class="m-0"></h2>
+                    </div>
+
+                    <div class="d-flex align-items-center fs-6">
+                        <i class="bi bi-arrows-expand-vertical pe-1"></i>
+                        <h2 id="columnsMobile" class="m-0"></h2>
+                    </div>
+                </div>
+
+                <div class="controls-container d-flex justify-content-center">
+                    <i id="mobileLeft" class="bi bi-caret-left text-white"></i>
+                    <p class="fs-1 align-self-center px-5 pt-3">
+                        <span id="powerTxt">None</span>
+                    </p>
+                    <i id="mobileRight" class="bi bi-caret-right text-white"></i>
+                </div>
             </div>
         </div>
 
-        <!-- Ventana ranking -->
+        <!-- Enlace al ranking -->
         <a th:href="@{/ranking}" id="rankingLink" class="d-none">Ranking</a>
-        
-        <!-- Ventana emergente para guardar la información del jugador -->
-        <form id="ranking" method="post" th:action="@{/ranking}" sec:authorize="isAuthenticated()" 
-              class="position-fixed top-50 start-50 translate-middle bg-black bg-opacity-90 text-white rounded p-4 shadow-lg w-50 text-center z-3 d-none">
-            <h1 class="mb-3">Game Over!</h1>
-            <h2 class="mb-4 border-bottom pb-2">Your Final Score</h2>
-            <h3 id="puntuacionFinal" class="mb-2">Final Score: </h3>
-            <input type="hidden" name="score" id="inputPuntuacionFinal" />
-            <h3 id="bloquesDestruidosFinal" class="mb-2">Total Destroyed Blocks: </h3>
-            <input type="hidden" name="destroyedBlocks" id="inputBloquesDestruidosFinal" />
-            <h3 id="fecha" class="mb-4">Date: </h3>
-            <input type="hidden" name="dateGame" id="inputFechaFinal" />
-            <h1 class="mb-3">Enter your name:</h1>
-            <input type="text" name="userName" id="nombreJugador" placeholder="Name" required class="mb-3" />
-            <div class="d-flex justify-content-center gap-3">
-                <button type="submit" onclick="guardarRanking()" class="btn btn-success">Save</button>
-                <button type="reset" onclick="recargar()" class="btn btn-danger">Cancel</button>
-            </div>
-        </form>
-        
-        <!-- Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-        <script th:src="@{/js/game/constants.js}"></script>
-        <script th:src="@{/js/game/Ball.js}"></script>
-        <script th:src="@{/js/game/Paddle.js}"></script>
-        <script th:src="@{/js/game/Brick.js}"></script>
-        <script th:src="@{/js/game/PowerManager.js}"></script>
-        <script th:src="@{/js/game/BrickManager.js}"></script>
-        <script th:src="@{/js/game/InputManager.js}"></script>
-        <script th:src="@{/js/game/RankingManager.js}"></script>
-        <script th:src="@{/js/game/Game.js}"></script>
-        <script th:src="@{/js/add-placeholder.js}"></script>
-    </body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script th:src="@{/js/game.js}"></script>
+    </div>
+</body>
 </html>

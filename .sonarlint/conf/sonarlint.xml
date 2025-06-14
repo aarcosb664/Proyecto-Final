@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sonarlint xmlns="http://www.sonarsource.com/sonarlint/conf/1.0">
+    <rules>
+        <rule>
+            <key>java:S6813</key>
+            <severity>IGNORE</severity>
+        </rule>
+    </rules>
+</sonarlint> 

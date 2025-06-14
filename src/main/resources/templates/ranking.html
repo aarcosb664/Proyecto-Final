@@ -1,144 +1,90 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" th:href="@{img/logo.png}">
+    <link rel="icon" type="image/png" th:href="@{/img/logo.png}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link th:href="@{css/ranking.css}" rel="stylesheet">
+    <link th:href="@{/css/ranking.css}" rel="stylesheet">
     <title>Ranking</title>
-    <style>
-        body, html {
-            background-color: #121212;
-            color: #ffffff;
-            min-height: 100vh;
-        }
-        
-        .container {
-            padding: 30px 0;
-        }
-        
-        .ranking-title {
-            margin-bottom: 40px;
-            position: relative;
-            display: inline-block;
-            padding-bottom: 10px;
-        }
-        
-        .ranking-title::after {
-            content: '';
-            display: block;
-            position: absolute;
-            bottom: 0;
-            left: -100%;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #ffffff, #888888, transparent);
-            animation: flow 2s infinite linear;
-        }
-        
-        @keyframes flow {
-            from { left: -100%; }
-            to   { left: 100%; }
-        }
-        
-        .table-responsive {
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .table-responsive::before, .table-responsive::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #4499ff, #00ddff, transparent);
-            z-index: 1;
-        }
-        
-        .table-responsive::before {
-            top: 0;
-            left: -100%;
-            animation: flow 2s infinite linear;
-        }
-        
-        .table-responsive::after {
-            bottom: 0;
-            right: -100%;
-            animation: flow-reverse 2s infinite linear;
-        }
-        
-        @keyframes flow-reverse {
-            from { right: -100%; }
-            to   { right: 100%; }
-        }
-        
-        .btn-back {
-            background-color: #333;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .btn-back:hover {
-            background-color: #555;
-            color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .empty-message {
-            padding: 20px;
-            background-color: #1e1e1e;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-        }
-    </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1 class="ranking-title">Ranking</h1>
+    <header th:replace="~{fragments/header :: header}"></header>
+
+    <div class="container mt-5">
+        <h1 class="banner header-neon-white">Ranking</h1>
         
-        <!-- Show ranking in a table -->
-        <div class="table-responsive">
-            <table class="table table-dark table-animated">
+        <div class="table-container">
+            <table class="table table-dark table-striped table-bordered table-hover border-neon-blue">
                 <thead>
                     <tr>
-                        <th scope="col" style="width: 10%;">Position</th>
-                        <th scope="col" style="width: 20%;">Player</th>
-                        <th scope="col" style="width: 20%;">Score</th>
-                        <th scope="col">Destroyed Blocks</th>
-                        <th scope="col">Date</th>
+                        <th scope="col">
+                            Position
+                            <span class="arrow">
+                                <a class="text-white" th:href="'?sort=position&order=asc'"><i class="bi bi-sort-up"></i></a>
+                                <a class="text-white" th:href="'?sort=position&order=desc'"><i class="bi bi-sort-down"></i></a>
+                            </span>
+                        </th>
+
+                        <th scope="col">
+                            Player
+                            <span class="arrow">
+                                <a class="text-white" th:href="'?sort=userName&order=asc'"><i class="bi bi-sort-up"></i></a>
+                                <a class="text-white" th:href="'?sort=userName&order=desc'"><i class="bi bi-sort-down"></i></a>
+                            </span>
+                        </th>
+
+                        <th scope="col">
+                            Score
+                            <span class="arrow">
+                                <a class="text-white" th:href="'?sort=score&order=asc'"><i class="bi bi-sort-up"></i></a>
+                                <a class="text-white" th:href="'?sort=score&order=desc'"><i class="bi bi-sort-down"></i></a>
+                            </span>
+                        </th>
+
+                        <th scope="col">
+                            Blocks
+                            <span class="arrow">
+                                <a class="text-white" th:href="'?sort=destroyedBlocks&order=asc'"><i class="bi bi-sort-up"></i></a>
+                                <a class="text-white" th:href="'?sort=destroyedBlocks&order=desc'"><i class="bi bi-sort-down"></i></a>
+                            </span>
+                        </th>
+
+                        <th scope="col">
+                            Date&nbsp;
+                            <span class="arrow">
+                                <a class="text-white" th:href="'?sort=dateGame&order=asc'"><i class="bi bi-sort-up"></i></a>
+                                <a class="text-white" th:href="'?sort=dateGame&order=desc'"><i class="bi bi-sort-down"></i></a>
+                            </span>
+                        </th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    <tr th:each="player, iter : ${players}" th:if="${iter.index < 10}">
-                        <td th:text="${iter.index + 1}"></td>
-                        <td th:text="${player.userName}"></td>
+                    <tr th:each="player : ${players}" th:if="${!players.empty}" th:class="${player.userId == currentUser.id ? 'text-neon-pink' : ''}">
+                        <td th:text="${player.position}"></td>
+                        <td>
+                            <a th:href="@{/profile/{id}(id=${player.userId})}" class="text-white text-decoration-none" th:text="${player.userName}"></a>
+                        </td>
                         <td th:text="${player.score}"></td>
                         <td th:text="${player.destroyedBlocks}"></td>
-                        <td th:text="${#dates.format(player.dateGame, 'MM/dd/yyyy HH:mm')}"></td>
+                        <td th:text="${#dates.format(player.dateGame, 'MM/dd/yyyy - HH:mm')}"></td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="empty-message mt-4" th:if="${#lists.isEmpty(players)}">
+        <div class="header-neon-white text-center mt-4" th:if="${players.empty}">
             <h2>No ranking data available</h2>
         </div>
 
         <div class="mt-4">
-            <a th:href="@{/}" class="btn-back">Back to Game</a>
+            <a href="javascript:history.back()" class="btn btn-neon-red w-100 mt-4">Go back</a>
         </div>
     </div>
-    
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html> 

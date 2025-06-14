@@ -7,7 +7,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.GrantedAuthority;
 import aarcosb.model.entity.Listing;
+import aarcosb.model.entity.Player;
 import aarcosb.model.repository.ListingRepository;
+import aarcosb.model.repository.PlayerRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired private UserRepository userRepository;
     @Autowired private ListingRepository listingRepository;
+    @Autowired private PlayerRepository playerRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -61,5 +64,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public int countTotalFavorites(Long userId) {
         List<Listing> favorites = getFavorites(userId);
         return favorites != null ? favorites.size() : 0;
+    }
+
+    public List<Player> getGames(Long userId) {
+        return playerRepository.findByUserId(userId);
     }
 } 

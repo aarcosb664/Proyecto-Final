@@ -47,7 +47,7 @@ public class ListingService {
     // Retorna null si no hay tags o el string está vacío
     public Set<String> convertTags(String tags) {
         if (tags == null || tags.trim().isEmpty()) {
-            return null;
+            return Set.of();
         }
         return Arrays.stream(tags.split(","))
                     .map(String::trim)
@@ -55,22 +55,13 @@ public class ListingService {
                     .collect(Collectors.toSet());
     }
 
-    // Crea un nuevo listing en la base de datos
-    // Genera automáticamente ID, fechas de creación y actualización
-    // Retorna el listing con sus imágenes cargadas
-    public Listing createListing(Listing listing) {
-        Listing saved = listingRepository.save(listing);
-        saved.setImages(listingRepository.findImagesByListingId(saved.getId()));
-        return saved;
-    }
-
     // Actualiza un listing existente
     // Mantiene el ID y fecha de creación originales
     // Actualiza la fecha de modificación automáticamente
     public Listing updateListing(Listing listing) {
-        Listing saved = listingRepository.save(listing);
-        saved.setImages(listingRepository.findImagesByListingId(saved.getId()));
-        return saved;
+        Listing savedListing = listingRepository.save(listing);
+        savedListing.setImages(listingRepository.findImagesByListingId(savedListing.getId()));
+        return savedListing;
     }
 
     // Elimina un listing y todos sus datos asociados

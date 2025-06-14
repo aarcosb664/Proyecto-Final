@@ -27,6 +27,9 @@ public class Player {
 
     @Column(name = "user_id")
     private Long userId;
+
+    @Column(name = "position")
+    private int position;
     
     @Column(name = "score")
     private int score;
@@ -37,15 +40,9 @@ public class Player {
     @Column(name = "date_game")
     private Date dateGame;
 
-    public Player(String userName, Long userId, int score, int destroyedBlocks) {
-        this.userName = userName;
-        this.userId = userId;
-        this.score = score;
-        this.destroyedBlocks = destroyedBlocks;
-    }
-
     @PrePersist
     protected void onCreate() {
+        position = 0;
         dateGame = new Date();
     }
 } 

@@ -56,8 +56,7 @@ public class CommunityController {
         Sort sortBy = order.equals("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
         Pageable pageable = PageRequest.of(page - 1, size, sortBy);
 
-        model.addAttribute("listings",
-        listingService.searchAndFilter(query, minRating, maxRating, dateFrom, dateTo, pageable));
+        model.addAttribute("listings", listingService.searchAndFilter(query, minRating, maxRating, dateFrom, dateTo, pageable));
         return "community/main";
     }
 
@@ -141,7 +140,7 @@ public class CommunityController {
             
             // Guardamos primero para obtener el ID
             // Necesario para asociar imágenes y video
-            listing = listingService.createListing(listing);
+            listing = listingService.updateListing(listing);
 
             // Subida de archivos multimedia
             // Las validaciones de formato y cantidad se realizan en CloudinaryService

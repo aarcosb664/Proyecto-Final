@@ -1,0 +1,33 @@
+@use 'globals';
+@use 'base' as *;
+
+.table-container {
+    position: relative;
+}
+
+.table-container table {
+    width: 100%;
+    max-height: 550px;
+    border-collapse: collapse;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: block;
+
+    thead, tbody tr {
+        width: 100%;
+        display: table;
+        table-layout: fixed;
+    }
+
+    thead {
+        position: sticky;
+        z-index: 1;
+        top: 0;
+    }
+}
+
+.arrow {
+    width: fit-content;
+    height: fit-content;
+    color: white;
+}

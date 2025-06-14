@@ -33,15 +33,11 @@
 .rhombus-red-wrapper {
   @include border-neon($red);
   left: -10%;
-  --glow-color: 255, 73, 73;
-  border-color: $red;
 }
 
 .rhombus-blue-wrapper {
   @include border-neon($blue);
   right: -10%;
-  --glow-color: 68, 153, 255;
-  border-color: $blue;
 }
 
 .rhombus {

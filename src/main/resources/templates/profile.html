@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" th:href="@{/img/logo.png}">
@@ -10,6 +10,7 @@
     <link th:href="@{/css/profile.css}" rel="stylesheet">
     <title>Profile</title>
 </head>
+
 <body>
     <header th:replace="~{fragments/header :: header}"></header>
 
@@ -38,14 +39,7 @@
                     </a>
                 </h5>
 
-                <h5 th:if="${currentUser.id != id or currentUser.role.name() != 'ADMIN'}">
-                    <a href="#stats" class="nav-link mt-3">
-                        <i class="bi bi-bar-chart-fill me-2"></i>
-                        Stats
-                    </a>
-                </h5>
-
-                <h5 th:if="${currentUser.id != id or currentUser.role.name() != 'ADMIN'}">
+                <h5>
                     <a href="#history" class="nav-link mt-3">
                         <i class="bi bi-clock-history me-2"></i>
                         History
@@ -68,10 +62,11 @@
                         <div class="col-3">
                             <div class="d-flex flex-column align-items-center">
                                 <div class="profile-pic-container mb-3">
-                                    <img th:src="@{${user.profilePic}}" width="150" height="150" alt="Profile picture" class="rounded-circle border border-2">
+                                    <img th:src="@{${user.profilePic}}" width="150" height="150" alt="Pfp" class="rounded-circle border border-2">
                                 </div>
 
                                 <form th:action="@{/profile/updateProfilePic}" 
+                                      th:if="${currentUser.id == id or currentUser.role.name() == 'ADMIN'}"
                                       method="post" 
                                       id="profilePicForm" 
                                       enctype="multipart/form-data">
@@ -90,15 +85,15 @@
 
                         <div class="col-8 text-neon-white">
                             <div class="mb-3">
-                                <label class="form-label mb-0">Username:</label>
-                                <div class="text-neon-white-sm d-inline" th:text="${user.userName}"></div>
+                                <label for="userName" class="form-label mb-0">Username:</label>
+                                <div class="text-neon-white-sm d-inline" id="userName" th:text="${user.userName}"></div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label mb-0">Email:</label>
-                                <div class="text-neon-white-sm d-inline" th:text="${user.email}"></div>
+                                <label for="email" class="form-label mb-0">Email:</label>
+                                <div class="text-neon-white-sm d-inline" id="email" th:text="${user.email}"></div>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label mb-0">Password:</label>
+                            <div class="mb-3" th:if="${currentUser.id == id or currentUser.role.name() == 'ADMIN'}">
+                                <label for="passwordView" class="form-label mb-0">Password:</label>
                                 <div class="password-container">
                                     <input type="password" id="passwordView" th:value="${user.password}" class="form-control" readonly>
                                     <span class="toggle-password" toggle="#passwordView">
@@ -107,12 +102,12 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label mb-0">Role:</label>
-                                <div class="text-neon-white-sm d-inline" th:text="${user.role}"></div>
+                                <label for="role" class="form-label mb-0">Role:</label>
+                                <div class="text-neon-white-sm d-inline" id="role" th:text="${user.role}"></div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label mb-0">Created At:</label>
-                                <div class="text-neon-white-sm d-inline" th:text="${#dates.format(user.createdAt, 'dd/MM/yyyy HH:mm')}"></div>
+                                <label for="createdAt" class="form-label mb-0">Created At:</label>
+                                <div class="text-neon-white-sm d-inline" id="createdAt" th:text="${#dates.format(user.createdAt, 'dd/MM/yyyy HH:mm')}"></div>
                             </div>
                         </div>
                     </div>
@@ -146,18 +141,31 @@
                     </div>
                 </div>
 
-                <div id="stats" class="border-bottom pb-3 mb-3" th:if="${currentUser.id != id or currentUser.role.name() != 'ADMIN'}">
-                    <h1 class="header-neon-white pt-2">
-                        <i class="bi bi-bar-chart-fill me-2"></i>
-                        Stats
-                    </h1>
-                </div>
-
-                <div id="history" class="border-bottom pb-3 mb-3" th:if="${currentUser.id != id or currentUser.role.name() != 'ADMIN'}">
+                <div id="history" class="border-bottom pb-3 mb-3">
                     <h1 class="header-neon-white pt-2">
                         <i class="bi bi-clock-history me-2"></i>
                         History
                     </h1>
+
+                    <table class="table table-dark table-striped table-bordered table-hover border-neon-blue mt-5" th:if="${!allGames.empty}">
+                        <thead>
+                            <tr>
+                                <th scope="col">Player</th>
+                                <th scope="col">Score</th>
+                                <th scope="col">Blocks</th>
+                                <th scope="col">Date</th>
+                            </tr>
+                        </thead>
+        
+                        <tbody>
+                            <tr th:each="player : ${allGames}">
+                                <td th:text="${player.userName}"></td>
+                                <td th:text="${player.score}"></td>
+                                <td th:text="${player.destroyedBlocks}"></td>
+                                <td th:text="${#dates.format(player.dateGame, 'MM/dd/yyyy - HH:mm')}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

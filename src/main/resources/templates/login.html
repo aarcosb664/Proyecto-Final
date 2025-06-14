@@ -1,163 +1,164 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <link rel="icon" type="image/png" th:href="@{img/logo.png}">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <link th:href="@{css/login.css}" rel="stylesheet">
-        <title>Login</title>
-    </head>
-    <body>
-        <!-- Video de fondo -->
-        <video class="video-background" autoplay muted loop playsinline>
-            <source th:src="@{/video/login-bg.mp4}" type="video/mp4">
-        </video>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" th:href="@{img/logo.png}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link th:href="@{css/login.css}" rel="stylesheet">
+    <title>Login</title>
+</head>
 
-        <div class="login-container">
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <div class="card rounded-3 text-neon-white-sm">
-                        <!-- Tabs para iniciar sesión y registrarse -->
-                        <ul class="nav nav-tabs nav-fill" id="loginTabs" role="tablist">
-                            <li class="nav-item bg-black border-neon-red">
-                                <a class="nav-link h-100 py-3 fw-bold"
-                                th:classappend="${tab == 'login'} ? 'active' : ''"
-                                th:href="@{/login(tab='login')}"
-                                id="loginTab" role="tab" aria-controls="login"
-                                th:attr="aria-selected=${tab == 'login'} ? 'true' : 'false'">
-                                    Login
-                                </a>
-                            </li>
-                            <li class="nav-item bg-black border-neon-red">
-                                <a class="nav-link h-100 py-3 fw-bold"
-                                th:classappend="${tab == 'register'} ? 'active' : ''"
-                                th:href="@{/login(tab='register')}"
-                                id="registerTab" role="tab" aria-controls="register"
-                                th:attr="aria-selected=${tab == 'register'} ? 'true' : 'false'">
-                                    Register
-                                </a>
-                            </li>
-                        </ul>
+<body>
+    <!-- Video de fondo -->
+    <video class="video-background" autoplay muted loop playsinline>
+        <source th:src="@{/video/login-bg.mp4}" type="video/mp4">
+    </video>
 
-                        <div class="card-body bg-black border-neon-red border-top-0 p-4 tab-transition">
-                            <div id="loginTabsContent" class="tab-content">
-                                <!-- Iniciar sesión -->
-                                <div class="tab-pane fade" th:id="'login'" role="tabpanel" aria-labelledby="loginTab"
-                                    th:classappend="${tab == 'login'} ? 'show active' : ''">
+    <div class="login-container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card rounded-3 text-neon-white-sm">
+                    <!-- Tabs para iniciar sesión y registrarse -->
+                    <ul class="nav nav-tabs nav-fill" id="loginTabs" role="tablist">
+                        <li class="nav-item bg-black border-neon-red">
+                            <a class="nav-link h-100 py-3 fw-bold"
+                            th:classappend="${tab == 'login'} ? 'active' : ''"
+                            th:href="@{/login(tab='login')}"
+                            id="loginTab" role="tab" aria-controls="login"
+                            th:attr="aria-selected=${tab == 'login'} ? 'true' : 'false'">
+                                Login
+                            </a>
+                        </li>
+                        <li class="nav-item bg-black border-neon-red">
+                            <a class="nav-link h-100 py-3 fw-bold"
+                            th:classappend="${tab == 'register'} ? 'active' : ''"
+                            th:href="@{/login(tab='register')}"
+                            id="registerTab" role="tab" aria-controls="register"
+                            th:attr="aria-selected=${tab == 'register'} ? 'true' : 'false'">
+                                Register
+                            </a>
+                        </li>
+                    </ul>
 
-                                    <div th:if="${param.error} and ${tab}=='login'" class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
-                                        <b>Error:</b> Incorrect email or password.
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <div class="card-body bg-black border-neon-red border-top-0 p-4 tab-transition">
+                        <div id="loginTabsContent" class="tab-content">
+                            <!-- Iniciar sesión -->
+                            <div class="tab-pane fade" th:id="'login'" role="tabpanel" aria-labelledby="loginTab"
+                                th:classappend="${tab == 'login'} ? 'show active' : ''">
+
+                                <div th:if="${param.error} and ${tab}=='login'" class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                                    <b>Error:</b> Incorrect email or password.
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+
+                                <form th:action="@{/login}" method="post" class="needs-validation row" id="loginForm" novalidate>
+                                    <div class="form-floating mb-3 col-12">
+                                        <input type="email" id="emailLogin" name="username" class="form-control" required>
+                                        <label class="label-required" for="emailLogin">Email</label>
+                                        <div class="invalid-feedback">Please enter a valid email.</div>
                                     </div>
 
-                                    <form th:action="@{/login}" method="post" class="needs-validation row" id="loginForm" novalidate>
-                                        <div class="form-floating mb-3 col-12">
-                                            <input type="email" id="emailLogin" name="username" class="form-control" required>
-                                            <label class="label-required" for="emailLogin">Email</label>
-                                            <div class="invalid-feedback">Please enter a valid email.</div>
-                                        </div>
+                                    <div class="form-floating mb-3 col-12">
+                                        <input type="password" id="passwordLogin" name="password" class="form-control" required>
+                                        <label class="label-required" for="passwordLogin">Password</label>
+                                        <div class="invalid-feedback">Please enter a valid password.</div>
+                                        <span class="toggle-password" toggle="#passwordLogin">
+                                            <i class="bi bi-eye-slash"></i>
+                                        </span>
+                                    </div>
 
-                                        <div class="form-floating mb-3 col-12">
-                                            <input type="password" id="passwordLogin" name="password" class="form-control" required>
-                                            <label class="label-required" for="passwordLogin">Password</label>
-                                            <div class="invalid-feedback">Please enter a valid password.</div>
-                                            <span class="toggle-password" toggle="#passwordLogin">
-                                                <i class="bi bi-eye-slash"></i>
-                                            </span>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <button type="submit" class="btn-neon-blue w-100 mt-3 py-2">Login</button>
-                                        </div>
-                                    </form>
-                                </div>
-
-                                <!-- Registrarse -->
-                                <div class="tab-pane fade" th:id="'register'" role="tabpanel" aria-labelledby="registerTab"
-                                    th:classappend="${tab == 'register'} ? 'show active' : ''">
-
-                                    <form th:action="@{/register}" th:object="${user}" method="post" class="needs-validation row" id="registerForm" novalidate>
-                                        <div class="form-floating mb-3 col-12">
-                                            <input th:field="*{userName}" id="userNameRegister" class="form-control" th:errorclass="is-invalid" required>
-                                            <label class="label-required" for="userNameRegister">Username</label>
-                                            <div class="invalid-feedback" th:errors="*{userName}"></div>
-                                        </div>
-
-                                        <div class="form-floating mb-3 col-12">
-                                            <input th:field="*{email}" id="emailRegister" class="form-control" th:errorclass="is-invalid" required>
-                                            <label class="label-required" for="emailRegister">Email</label>
-                                            <div class="invalid-feedback" th:errors="*{email}"></div>
-                                        </div>
-
-                                        <div class="form-floating mb-3 col-12 col-md-6">
-                                            <input type="password" th:field="*{password}" id="passwordRegister" class="form-control" th:errorclass="is-invalid" required>
-                                            <label class="label-required" for="passwordRegister">Password</label>
-                                            <div class="invalid-feedback" th:errors="*{password}"></div>
-                                            <span class="toggle-password" toggle="#passwordRegister">
-                                                <i class="bi bi-eye-slash"></i>
-                                            </span>
-                                        </div>
-
-                                        <div class="form-floating mb-3 col-12 col-md-6">
-                                            <input type="password" th:field="*{confirmPassword}" id="confirmPasswordRegister" class="form-control" th:errorclass="is-invalid" required>
-                                            <label class="label-required" for="confirmPasswordRegister">Confirm Password</label>
-                                            <div class="invalid-feedback" th:errors="*{confirmPassword}"></div>
-                                            <span class="toggle-password" toggle="#confirmPasswordRegister">
-                                                <i class="bi bi-eye-slash"></i>
-                                            </span>
-                                        </div>
-
-                                        <div class="col-12">
-                                            <button type="submit" class="btn-neon-blue w-100 mt-3 py-2">Register</button>
-                                        </div>
-                                    </form>
-                                </div>
-
-                                <div class="divider"></div>
-
-                                <h6 class="text-center">
-                                    Log in to access the page or register if you don't have an account...
-                                    <span class="d-block text-break mt-1">Or play directly as a guest!</span>
-                                    <span class="d-block small mt-3">Note: You won't be able to save your games if you don't have an account</span>
-                                </h6>
-
-                                <a th:href="@{/game}" class="d-block text-center btn-neon-green w-100 mt-4">Play as guest</a>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn-neon-blue w-100 mt-3 py-2">Login</button>
+                                    </div>
+                                </form>
                             </div>
+
+                            <!-- Registrarse -->
+                            <div class="tab-pane fade" th:id="'register'" role="tabpanel" aria-labelledby="registerTab"
+                                th:classappend="${tab == 'register'} ? 'show active' : ''">
+
+                                <form th:action="@{/register}" th:object="${user}" method="post" class="needs-validation row" id="registerForm" novalidate>
+                                    <div class="form-floating mb-3 col-12">
+                                        <input th:field="*{userName}" id="userNameRegister" class="form-control" th:errorclass="is-invalid" required>
+                                        <label class="label-required" for="userNameRegister">Username</label>
+                                        <div class="invalid-feedback" th:errors="*{userName}"></div>
+                                    </div>
+
+                                    <div class="form-floating mb-3 col-12">
+                                        <input th:field="*{email}" id="emailRegister" class="form-control" th:errorclass="is-invalid" required>
+                                        <label class="label-required" for="emailRegister">Email</label>
+                                        <div class="invalid-feedback" th:errors="*{email}"></div>
+                                    </div>
+
+                                    <div class="form-floating mb-3 col-12 col-md-6">
+                                        <input type="password" th:field="*{password}" id="passwordRegister" class="form-control" th:errorclass="is-invalid" required>
+                                        <label class="label-required" for="passwordRegister">Password</label>
+                                        <div class="invalid-feedback" th:errors="*{password}"></div>
+                                        <span class="toggle-password" toggle="#passwordRegister">
+                                            <i class="bi bi-eye-slash"></i>
+                                        </span>
+                                    </div>
+
+                                    <div class="form-floating mb-3 col-12 col-md-6">
+                                        <input type="password" th:field="*{confirmPassword}" id="confirmPasswordRegister" class="form-control" th:errorclass="is-invalid" required>
+                                        <label class="label-required" for="confirmPasswordRegister">Confirm Password</label>
+                                        <div class="invalid-feedback" th:errors="*{confirmPassword}"></div>
+                                        <span class="toggle-password" toggle="#confirmPasswordRegister">
+                                            <i class="bi bi-eye-slash"></i>
+                                        </span>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button type="submit" class="btn-neon-blue w-100 mt-3 py-2">Register</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <h6 class="text-center">
+                                Log in to access the page or register if you don't have an account...
+                                <span class="d-block text-break mt-1">Or play directly as a guest!</span>
+                                <span class="d-block small mt-3">Note: You won't be able to save your games if you don't have an account</span>
+                            </h6>
+
+                            <a th:href="@{/game}" class="d-block text-center btn-neon-green w-100 mt-4">Play as guest</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script th:src="@{/js/show-password.js}"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                document.querySelectorAll('input').forEach(input => {
-                input.placeholder = '';
-                });
-
-                if (!document.URL.includes('register')) {
-                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                    const forms = document.querySelectorAll('.needs-validation')
-
-                    // Loop over them and prevent submission
-                    Array.from(forms).forEach(form => {
-                        form.addEventListener('submit', event => {
-                        if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
-
-                        form.classList.add('was-validated')
-                        }, false)
-                    })
-                }
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/show-password.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('input').forEach(input => {
+            input.placeholder = '';
             });
-        </script>
-    </body>
+
+            if (!document.URL.includes('register')) {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                const forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                    }, false)
+                })
+            }
+        });
+    </script>
+</body>
 </html>

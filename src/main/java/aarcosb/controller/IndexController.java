@@ -39,6 +39,7 @@ public class IndexController {
         return "index";
     }
 
+    
     @GetMapping("/profile/{id}")
     public String profile(@PathVariable Long id, Model model, Authentication authentication) 
     {
@@ -46,38 +47,36 @@ public class IndexController {
         User currentUser = getCurrentUser(authentication);
         model.addAttribute("currentUser", currentUser);
         
-        if (currentUser.getRole().name() == "USER" && !currentUser.getId().equals(id)) {
-            return "redirect:/";
-        }
-
         User user = userRepository.findById(id).orElse(null);
         if (user == null) {
             return "redirect:/";
         }
-
+        
         // Cargar datos del perfil
         model.addAttribute("user", user);
+        model.addAttribute("currentUser", currentUser);
         model.addAttribute("myListings", userDetailsService.getListings(id));
         model.addAttribute("myFavorites", userDetailsService.getFavorites(id));
         model.addAttribute("totalListings", userDetailsService.countTotalListings(id));
         model.addAttribute("totalFavorites", userDetailsService.countTotalFavorites(id));
+        model.addAttribute("allGames", userDetailsService.getGames(id));
         return "profile";
     }
-
+    
     @PostMapping("/profile/updateProfilePic")
     public String updateProfilePic(@RequestParam("id") Long id,
-                                   @RequestParam("profilePic") MultipartFile file,
-                                   Authentication authentication,
-                                   Model model) 
+    @RequestParam("profilePic") MultipartFile file,
+    Authentication authentication,
+    Model model) 
     {
         User user = getCurrentUser(authentication);
         model.addAttribute("currentUser", user);
-
+        
         // Obtener el usuario autenticado
         if (user.getRole().name() == "USER" && !user.getId().equals(id)) {
             return "redirect:/";
         }
-
+        
         // Subir la imagen a Cloudinary
         try {
             cloudinaryService.uploadUserProfilePic(user, file);
@@ -88,5 +87,10 @@ public class IndexController {
             model.addAttribute("error", "Error updating profile picture: " + e.getMessage());
             return "profile";
         }
+    }
+    @GetMapping("/error")
+    public String error() 
+    {
+        return "error";
     }
 }
