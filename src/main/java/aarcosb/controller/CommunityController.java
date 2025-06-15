@@ -7,11 +7,12 @@ import aarcosb.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -27,18 +28,16 @@ public class CommunityController {
     @Autowired private UserRepository userRepository;
 
     // Añade el usuario actual al modelo y lo retorna
-    private User addCurrentUserToModel(Model model, Authentication authentication) 
+    private User getCurrentUser(UserDetails userDetails) 
     {
-        User currentUser = userRepository.findByEmail(authentication.getName());
-        model.addAttribute("currentUser", currentUser);
-        return currentUser;
+        return (userDetails != null) ? userRepository.findByEmail(userDetails.getUsername()) : null;
     }
 
     // Página principal de la comunidad con filtros y paginación de listings
     @GetMapping("")
-    public String index(@ModelAttribute("filter") ListingFilterDTO filter, Model model, Authentication authentication) 
+    public String index(@ModelAttribute("filter") ListingFilterDTO filter, Model model, @AuthenticationPrincipal UserDetails userDetails) 
     {
-        model.addAttribute("currentUser", userRepository.findByEmail(authentication.getName()));
+        model.addAttribute("currentUser", getCurrentUser(userDetails));
 
         // Ordena los listings por el campo y la dirección especificados en el filtro
         Sort sortBy = filter.getOrder().equals("desc") ? Sort.by(filter.getSort()).descending() : Sort.by(filter.getSort()).ascending();
@@ -51,9 +50,10 @@ public class CommunityController {
 
     // Muestra los detalles de un listing, comentarios y favoritos
     @GetMapping("/listing/{listingId}")
-    public String viewListing(@PathVariable Long listingId, Model model, Authentication authentication) 
+    public String viewListing(@PathVariable Long listingId, Model model, @AuthenticationPrincipal UserDetails userDetails) 
     {
-        User currentUser = addCurrentUserToModel(model, authentication);
+        User currentUser = getCurrentUser(userDetails);
+        model.addAttribute("currentUser", currentUser);
         Listing listing = listingService.getListingById(listingId);
 
         // Si el listing no existe, lanza una excepción
@@ -81,9 +81,10 @@ public class CommunityController {
 
     // Formulario para crear un nuevo listing
     @GetMapping("/listing/create")
-    public String createListing(Model model, Authentication authentication) 
+    public String createListing(Model model, @AuthenticationPrincipal UserDetails userDetails) 
     {
-        User currentUser = addCurrentUserToModel(model, authentication);
+        User currentUser = getCurrentUser(userDetails);
+        model.addAttribute("currentUser", currentUser);
 
         // Si el usuario es admin, lanza una excepción
         if (currentUser.getRole() == Role.ADMIN) {
@@ -100,9 +101,10 @@ public class CommunityController {
     public String createListing(@Valid @ModelAttribute("listingForm") ListingForm form,
                                 BindingResult result,
                                 Model model, 
-                                Authentication authentication) 
+                                @AuthenticationPrincipal UserDetails userDetails) 
     {
-        User currentUser = addCurrentUserToModel(model, authentication);
+        User currentUser = getCurrentUser(userDetails);
+        model.addAttribute("currentUser", currentUser);
 
         // Si el usuario es admin, lanza una excepción
         if (currentUser.getRole() == Role.ADMIN) {
@@ -143,9 +145,10 @@ public class CommunityController {
 
     // Formulario para editar un listing existente
     @GetMapping("/listing/{listingId}/edit")
-    public String editListing(@PathVariable Long listingId, Model model, Authentication authentication) 
+    public String editListing(@PathVariable Long listingId, Model model, @AuthenticationPrincipal UserDetails userDetails) 
     {
-        User currentUser = addCurrentUserToModel(model, authentication);
+        User currentUser = getCurrentUser(userDetails);
+        model.addAttribute("currentUser", currentUser);
         Listing listing = listingService.getListingById(listingId);
 
         // Si el listing no existe, lanza una excepción
@@ -171,9 +174,10 @@ public class CommunityController {
                                 @Valid @ModelAttribute("listingForm") ListingForm form,
                                 BindingResult result,
                                 Model model,
-                                Authentication authentication) 
+                                @AuthenticationPrincipal UserDetails userDetails) 
     {
-        User currentUser = addCurrentUserToModel(model, authentication);
+        User currentUser = getCurrentUser(userDetails);
+        model.addAttribute("currentUser", currentUser);
         Listing listing = listingService.getListingById(listingId);
 
         // Si el listing no existe, lanza una excepción
@@ -224,9 +228,10 @@ public class CommunityController {
 
     // Elimina un listing y todos sus datos asociados
     @PostMapping("/listing/{listingId}/delete")
-    public String deleteListing(@PathVariable Long listingId, Model model, Authentication authentication) 
+    public String deleteListing(@PathVariable Long listingId, Model model, @AuthenticationPrincipal UserDetails userDetails) 
     {
-        User currentUser = addCurrentUserToModel(model, authentication);
+        User currentUser = getCurrentUser(userDetails);
+        model.addAttribute("currentUser", currentUser);
         Listing listing = listingService.getListingById(listingId);
 
         // Si el listing no existe, lanza una excepción
@@ -249,10 +254,11 @@ public class CommunityController {
                              @Valid @ModelAttribute("commentForm") CommentForm form,
                              BindingResult result,
                              RedirectAttributes redirect,
-                             Authentication authentication,
+                             @AuthenticationPrincipal UserDetails userDetails,
                              Model model) 
     {
-        User currentUser = addCurrentUserToModel(model, authentication);
+        User currentUser = getCurrentUser(userDetails);
+        model.addAttribute("currentUser", currentUser);
 
         // Si el usuario es admin, lanza una excepción
         if (currentUser.getRole() == Role.ADMIN) {
@@ -282,9 +288,10 @@ public class CommunityController {
     public String deleteComment(@PathVariable Long listingId, 
                                 @PathVariable Long commentId, 
                                 Model model, 
-                                Authentication authentication) 
+                                @AuthenticationPrincipal UserDetails userDetails) 
     {
-        User currentUser = addCurrentUserToModel(model, authentication);
+        User currentUser = getCurrentUser(userDetails);
+        model.addAttribute("currentUser", currentUser);
         Comment comment = commentService.getCommentById(commentId);
 
         // Si el usuario no es admin y no es el propietario del comentario, lanza una excepción
@@ -301,9 +308,10 @@ public class CommunityController {
     public String rateListing(@PathVariable Long listingId, 
                               @RequestParam Double rating, 
                               Model model, 
-                              Authentication authentication) 
+                              @AuthenticationPrincipal UserDetails userDetails) 
     {
-        User currentUser = addCurrentUserToModel(model, authentication);
+        User currentUser = getCurrentUser(userDetails);
+        model.addAttribute("currentUser", currentUser);
         Listing listing = listingService.getListingById(listingId);
 
         // Si el listing no existe, lanza una excepción
@@ -317,9 +325,10 @@ public class CommunityController {
 
     // Alterna el estado de favorito de un listing para el usuario actual
     @PostMapping("/listing/{listingId}/favorite")
-    public String addToFavorites(@PathVariable Long listingId, Model model, Authentication authentication) 
+    public String addToFavorites(@PathVariable Long listingId, Model model, @AuthenticationPrincipal UserDetails userDetails) 
     {
-        User currentUser = addCurrentUserToModel(model, authentication);
+        User currentUser = getCurrentUser(userDetails);
+        model.addAttribute("currentUser", currentUser);
         Listing listing = listingService.getListingById(listingId);
 
         // Si el listing no existe, lanza una excepción
