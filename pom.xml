@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>aarcosb</groupId>
 	<artifactId>final</artifactId>
-	<version>1.1.1</version>
+	<version>1.2.0</version>
 	<name>final</name>
 	<description>Proyecto final</description>
 	<url/>
@@ -29,6 +29,7 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+	<packaging>war</packaging>
 	<dependencies>
 
 		<dependency>
@@ -166,22 +167,12 @@
 	<profiles>
 		<profile>
 			<id>dev</id>
-			<build>
-				<filters>
-					<filter>src/main/resources/dev.properties</filter>
-				</filters>
-			</build>
 			<properties>
 				<activeProfile>dev</activeProfile>
 			</properties>
 		</profile>
 		<profile>
 			<id>prod</id>
-			<build>
-				<filters>
-					<filter>src/main/resources/prod.properties</filter>
-				</filters>
-			</build>
 			<properties>
 				<activeProfile>prod</activeProfile>
 			</properties>

@@ -4,7 +4,8 @@ import aarcosb.model.entity.User;
 import aarcosb.model.repository.UserRepository;
 import aarcosb.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,16 +19,16 @@ public class AdminController {
     @Autowired private UserDetailsServiceImpl userDetailsServiceImpl;
 
     // Obtiene el usuario autenticado actual usando el email
-    private User getCurrentUser(Authentication authentication) 
+    private User getCurrentUser(UserDetails userDetails) 
     {
-        return userRepository.findByEmail(authentication.getName());
+        return (userDetails != null) ? userRepository.findByEmail(userDetails.getUsername()) : null;
     }
 
     // Muestra el panel de administración con el usuario actual y la lista de usuarios
     @GetMapping("/panel")
-    public String admin(Model model, Authentication authentication) 
+    public String admin(Model model, @AuthenticationPrincipal UserDetails userDetails) 
     {
-        User currentUser = getCurrentUser(authentication);
+        User currentUser = getCurrentUser(userDetails);
         model.addAttribute("currentUser", currentUser);
 
         // Añade la lista de usuarios al modelo

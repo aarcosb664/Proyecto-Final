@@ -7,7 +7,8 @@ import aarcosb.service.GameService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,16 +21,15 @@ public class GameController {
     @Autowired private UserRepository userRepository;
 
     // Obtiene el usuario autenticado actual usando el email
-    private User getCurrentUser(Authentication authentication) 
-    {
-        return userRepository.findByEmail(authentication.getName());
+    private User getCurrentUser(UserDetails userDetails) {
+        return (userDetails != null) ? userRepository.findByEmail(userDetails.getUsername()) : null;
     }
 
     // Muestra la vista principal del juego con el usuario actual
     @GetMapping("/game")
-    public String game(Authentication authentication, Model model) 
+    public String game(@AuthenticationPrincipal UserDetails userDetails, Model model) 
     {
-        User currentUser = getCurrentUser(authentication);
+        User currentUser = getCurrentUser(userDetails);
         model.addAttribute("currentUser", currentUser);
 
         return "game";
@@ -39,9 +39,10 @@ public class GameController {
     @GetMapping("/ranking")
     public String ranking(@RequestParam(defaultValue = "score") String sort,
                           @RequestParam(defaultValue = "desc") String order,
-                          Authentication authentication, Model model) 
+                          @AuthenticationPrincipal UserDetails userDetails, 
+                          Model model) 
     {
-        User currentUser = getCurrentUser(authentication);
+        User currentUser = getCurrentUser(userDetails);
         model.addAttribute("currentUser", currentUser);
 
         // Establece la posición de todos los jugadores
@@ -62,10 +63,10 @@ public class GameController {
     public String saveRanking(@RequestParam("userName") String userName,
                               @RequestParam("score") int score,
                               @RequestParam("destroyedBlocks") int destroyedBlocks,
-                              Authentication authentication,
+                              @AuthenticationPrincipal UserDetails userDetails,
                               Model model)
     {
-        User currentUser = getCurrentUser(authentication);
+        User currentUser = getCurrentUser(userDetails);
         model.addAttribute("currentUser", currentUser);
         
         // Crea y guarda el jugador con los datos de la partida
