@@ -57,6 +57,20 @@
     .form-control {
         display: inline !important;
         width: fit-content !important;
+    }   
+}
+
+.profile-pic-container {
+    img {
+        width: 150px;
+        height: 150px;
+        display: block;
+        object-fit: cover;
+
+        @media (max-width: 768px) {
+            width: 100px;
+            height: 100px;
+        }
     }
 }
 

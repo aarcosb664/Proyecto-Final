@@ -4,7 +4,8 @@
   "description": "Compilación de estilos SCSS para el proyecto final",
   "scripts": {
     "sass": "sass --watch src/main/resources/static/scss:src/main/resources/static/css",
-    "sass:build": "sass src/main/resources/static/scss:src/main/resources/static/css"
+    "sass:build": "sass src/main/resources/static/scss:src/main/resources/static/css",
+    "sass:purge": "sass src/main/resources/static/scss:src/main/resources/static/css --style compressed"
   },
   "devDependencies": {
     "sass": "^1.70.0"
