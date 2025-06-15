@@ -1,22 +1,26 @@
 <div th:fragment="modal_page" class="modal fade" id="pageNumber" tabindex="-1" aria-labelledby="pageNumber" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content rounded-4 bg-black border-neon-white text-neon-white">
+            <!-- Cabecera del modal -->
             <div class="modal-header">
                 <h5 class="modal-title text-center" id="pageNumber">Go to page...</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
+            <!-- Cuerpo del modal -->
             <div class="modal-body">
+                <!-- Formulario para ir a la página -->
                 <form th:action="@{/community}" method="GET">
                     <input type="hidden" name="size" th:value="${listings.size}">
-                    <input type="hidden" name="sort" th:value="${param.sort}">
-                    <input type="hidden" name="order" th:value="${param.order}">
+                    <input type="hidden" name="sort" th:value="${param.sort != null ? param.sort : 'updatedAt'}">
+                    <input type="hidden" name="order" th:value="${param.order != null ? param.order : 'desc'}">
                     <input type="hidden" name="query" th:value="${param.query}">
                     <input type="hidden" name="minRating" th:value="${param.minRating}">
                     <input type="hidden" name="maxRating" th:value="${param.maxRating}">
                     <input type="hidden" name="dateFrom" th:value="${param.dateFrom}">
                     <input type="hidden" name="dateTo" th:value="${param.dateTo}">
                     
+                    <!-- Filtros de la página -->
                     <div class="row mx-auto">
                         <div class="col-4 border-neon-blue-sm text-neon-blue text-center p-1">
                             Min: 1
@@ -32,6 +36,7 @@
                         </div>
                     </div>
 
+                    <!-- Botón para ir a la página -->
                     <button type="submit" class="btn-neon-green text-neon-white mt-3 w-100">Go</button>
                 </form>
             </div>

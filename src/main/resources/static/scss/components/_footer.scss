@@ -1,42 +1,42 @@
 @use '../base' as *;
 
 .footer-social {
-  background: $purple;
+  	background: $purple;
 }
 
 .footer-links {
-  .footer-hr {
-    width: 40px;
-    background: $purple;
-    height: 2px;
-    opacity: 0.5;
-    margin-bottom: 0.5rem;
-  }
+	.footer-hr {
+		width: 40px;
+		background: $purple;
+		height: 2px;
+		opacity: 0.5;
+		margin-bottom: 0.5rem;
+	}
 
-  h6 {
-    letter-spacing: 1px;
-    font-weight: 700;
-    color: $blue;
-    margin-bottom: 0.5rem;
+	h6 {
+		letter-spacing: 1px;
+		font-weight: 700;
+		color: $blue;
+		margin-bottom: 0.5rem;
 
-    @media (max-width: 768px) {
-      margin-top: 0.75rem;
-    }
-  }
-  
-  .footer-link {
-    text-decoration: none;
-    transition: color 0.3s, transform 0.3s;
-    display: inline-block;
+		@media (max-width: 768px) {
+			margin-top: 0.75rem;
+		}
+	}
+	
+	.footer-link {
+		text-decoration: none;
+		transition: color 0.3s, transform 0.3s;
+		display: inline-block;
 
-    &:hover {
-      color: $yellow !important;
-      transform: translateX(8px);
-    }
-  }
+		&:hover {
+			color: $yellow !important;
+			transform: translateX(8px);
+		}
+	}
 }
 
 .footer-copyright {
-  border-top: 1px solid $white;
-  margin-bottom: 0.3rem;
+	border-top: 1px solid $white;
+	margin-bottom: 0.3rem;
 }

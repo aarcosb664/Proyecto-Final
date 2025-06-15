@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" th:href="@{/img/logo.png}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{/css/index.css}" rel="stylesheet">
+    <title>About</title>
+</head>
+<body>
+    <header th:replace="~{fragments/header :: header}"></header>
+
+    <div class="container mt-5 mb-5">
+        <!-- Título -->
+        <h1 class="header-neon-white text-center mb-4"><i class="bi bi-info-circle me-2"></i>About this Project</h1>
+
+        <!-- Información del proyecto -->
+        <div class="row d-flex justify-content-center mb-5">
+            <div class="col-lg-8">
+                <div class="card border-neon-blue p-4 bg-black text-neon-white">
+                    <h2 class="header-neon-blue text-center mb-4">Breakout! - Final DAW Project</h2>
+
+                    <p class="text-neon-white-sm mb-3">
+                        This project is a modern web version of the classic Breakout game, created as the final project for the DAW cycle by <b>Alejandro Arcos Bellido</b>.
+                        <br>Enjoy the game, compete in the ranking, and discover other games from the community!
+                    </p>
+
+                    <ul class="list-unstyled mb-0">
+                        <li><i class="bi bi-controller me-2 text-neon-red"></i>Classic arcade gameplay with a modern twist</li>
+                        <li><i class="bi bi-stars me-2 text-neon-green"></i>Power-ups, levels, and global ranking</li>
+                        <li><i class="bi bi-people-fill me-2 text-neon-blue"></i>Community-driven content</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tecnologías utilizadas -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8">
+                <div class="card border-neon-green p-4 bg-black text-neon-white">
+                    <h3 class="header-neon-green text-center mb-4">
+                        <i class="bi bi-tools pe-2"></i>
+                        Technologies Used
+                    </h3>
+
+                    <div class="d-flex flex-wrap gap-4 justify-content-center">
+                        <span class="fs-4"><i class="bi bi-bootstrap-fill text-neon-purple me-2"></i>Bootstrap 5</span>
+                        <span class="fs-4"><i class="bi bi-filetype-js text-neon-yellow me-2"></i>JavaScript</span>
+                        <span class="fs-4"><i class="bi bi-filetype-html text-neon-red me-2"></i>HTML5</span>
+                        <span class="fs-4"><i class="bi bi-filetype-css text-neon-blue me-2"></i>CSS3</span>
+                        <span class="fs-4"><i class="bi bi-file-earmark-code text-neon-green me-2"></i>Spring Boot</span>
+                        <span class="fs-4"><i class="bi bi-tree text-neon-green me-2"></i>Thymeleaf</span>
+                        <span class="fs-4"><i class="bi bi-database-fill-gear text-neon-yellow me-2"></i>MySQL</span>
+                        <span class="fs-4"><i class="bi bi-github text-neon-white me-2"></i>GitHub</span>
+                        <span class="fs-4"><i class="bi bi-cloud-fill text-neon-blue me-2"></i>Cloudinary</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ayuda externa -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8">
+                <div class="card border-neon-red p-4 bg-black text-neon-white">
+                    <h3 class="header-neon-red text-center mb-4">
+                        <i class="bi bi-people-fill me-2"></i>
+                        External help
+                    </h3>
+
+                    <p class="text-neon-white-sm mb-0">
+                        <span class="fs-4">
+                            <a href="https://stackoverflow.com/" class="text-neon-white-sm text-decoration-none">
+                                <i class="bi bi-stack-overflow text-neon-yellow me-2"></i> Stack Overflow
+                            </a>
+                            <p>For general questions, troubleshooting, etc.</p>
+                        </span>
+
+                        <span class="fs-4">
+                            <a href="https://freefrontend.com/" class="text-neon-white-sm text-decoration-none">
+                                <i class="bi bi-palette-fill text-neon-pink me-2"></i> Freefrontend
+                            </a>
+                            <p>For web page design inspiration, UI ideas, etc.</p>
+                        </span>
+
+                        <span class="fs-4">
+                            <a href="https://www.w3schools.com/" class="text-neon-white-sm text-decoration-none">
+                                <i class="bi bi-journal-code text-neon-green me-2"></i> W3Schools
+                            </a>
+                            <p>For learning HTML, CSS, JavaScript, etc.</p>
+                        </span>
+
+                        <span class="fs-4">
+                            <a href="https://www.youtube.com/" class="text-neon-white-sm text-decoration-none">
+                                <i class="bi bi-youtube text-neon-red me-2"></i> YouTube
+                            </a>
+                            <p>For tutorials, videos, and more.</p>
+                        </span>
+
+                        <span class="fs-4">
+                            <a href="https://www.chatgpt.com/" class="text-neon-white-sm text-decoration-none">
+                                <i class="bi bi-robot text-neon-blue me-2"></i> ChatGPT
+                            </a>
+                            <p>For explanations, questions, suggestions, time management, etc.</p>
+                        </span>
+
+                        <span class="fs-4">
+                            <a href="https://coderabbit.com/" class="text-neon-white-sm text-decoration-none">
+                                <i class="bi bi-terminal text-neon-green me-2"></i> Coderabbit
+                            </a>
+                            <p>For code analysis, suggestions, etc.</p>
+                        </span>
+                        
+                        <span class="fs-4">
+                            <a href="https://www.codacy.com/" class="text-neon-white-sm text-decoration-none">
+                                <i class="bi bi-shield-check text-neon-green me-2"></i> Codacy
+                            </a>
+                            <p>For code analysis, suggestions, etc.</p>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario de feedback -->
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-neon-purple p-4 bg-black text-neon-white">
+                    <h3 class="header-neon-white mb-3"><i class="bi bi-chat-dots me-2"></i>Feedback & Opinions</h3>
+                    <form method="post" th:action="@{/send-email}" class="needs-validation" novalidate>
+                        <!-- Campo para el asunto -->
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="subject" name="subject" required>
+                            <div class="invalid-feedback">Please enter the subject.</div>
+                        </div>
+
+                        <!-- Campo para el cuerpo -->
+                        <div class="mb-3">
+                            <label for="body" class="form-label">Body</label>
+                            <textarea class="form-control" id="body" name="body" rows="4" required></textarea>
+                            <div class="invalid-feedback">Please enter your message.</div>
+                        </div>
+
+                        <!-- Botón para enviar el feedback -->
+                        <button type="submit" class="btn-neon-blue w-100 mt-3">Send Feedback</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+    <script>
+        // Bootstrap validation
+        (() => {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+</body>
+</html> 

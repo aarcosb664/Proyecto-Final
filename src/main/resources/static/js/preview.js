@@ -1,42 +1,44 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // Imágenes
-    const imgInput   = document.getElementById("imagesInput");
-    const imgBox     = document.getElementById("imagePreviewContainer");
+document.addEventListener("DOMContentLoaded", function() {
+    // Función para previsualizar los archivos
+    function previewFiles(inputId, containerId, createElementFn) {
+        const input = document.getElementById(inputId);
+        const container = document.getElementById(containerId);
+        if (!input || !container) {
+            return;
+        }
+        input.addEventListener("change", function() {
+            container.textContent = "";
+            if (!input.files.length) {
+                return;
+            }
+            createElementFn(input.files, container);
+        });
+    }
 
-    imgInput?.addEventListener("change", () => {
-        // Limpia previas
-        imgBox.innerHTML = "";                                
-        [...imgInput.files].forEach(file => {
-            // Lee cada imagen
-            const reader = new FileReader();                    
-            reader.onload = e => {
-            imgBox.insertAdjacentHTML(
-                "beforeend",
-                `<img src="${e.target.result}"
-                    class="img-fluid rounded-3 mb-2"
-                    style="max-height:110px">`);
+    // Función para previsualizar las imágenes
+    previewFiles("imagesInput", "imagePreviewContainer", (files, container) => {
+        Array.from(files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                img.className = "img-fluid rounded-3 mb-2";
+                img.style.maxHeight = "100px";
+                container.appendChild(img);
             };
-            // Dispara onload
             reader.readAsDataURL(file);
         });
     });
 
-    // Video
-    const vidInput  = document.getElementById("videoInput");
-    const vidBox    = document.getElementById("videoPreviewContainer");
-
-    vidInput?.addEventListener("change", () => {
-        // Limpia previa
-        vidBox.innerHTML = "";                                
-        if (!vidInput.files.length) return;
-    
-        // Crea blob URL
-        const url = URL.createObjectURL(vidInput.files[0]);   
-        vidBox.innerHTML =
-            `<video src="${url}" controls
-                    class="w-100 rounded-3 mb-3"
-                    style="max-height:240px"></video>`;
-        // Liberar memoria cuando el vídeo ya no se necesite
-        vidBox.querySelector("video").onload = () => URL.revokeObjectURL(url);
+    // Función para previsualizar los videos
+    previewFiles("videoInput", "videoPreviewContainer", (files, container) => {
+        const url = URL.createObjectURL(files[0]);
+        const video = document.createElement("video");
+        video.src = url;
+        video.controls = true;
+        video.className = "w-100 rounded-3 mb-3";
+        video.style.maxHeight = "240px";
+        video.onloadeddata = function() { URL.revokeObjectURL(url); };
+        container.appendChild(video);
     });
 });

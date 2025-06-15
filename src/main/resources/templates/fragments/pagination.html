@@ -1,19 +1,19 @@
-<!-- Paginación principal -->
+<!-- Paginación -->
 <nav th:fragment="pagination" aria-label="Pagination" th:if="${listings.totalPages > 0}">
     <ul class="pagination justify-content-center mt-3">
         <!-- Primera página -->
         <li class="page-item" th:classappend="${listings.first} ? 'disabled'">
-            <a th:href="@{/community(page=1,size=${listings.size},sort=${param.sort},order=${param.order},minRating=${param.minRating},maxRating=${param.maxRating},dateFrom=${param.dateFrom},dateTo=${param.dateTo})}"
+            <a th:href="@{/community(page=1,size=${listings.size},sort=${param.sort != null ? param.sort : 'updatedAt'},order=${param.order != null ? param.order : 'desc'},minRating=${param.minRating},maxRating=${param.maxRating},dateFrom=${param.dateFrom},dateTo=${param.dateTo})}"
                class="page-link page-arrow" th:classappend="${listings.first} ? 'disabled' : ''" aria-label="First">&laquo;</a>
         </li>
 
-        <!-- Anterior -->
+        <!-- Página anterior -->
         <li class="page-item" th:classappend="${listings.first} ? 'disabled'">
-            <a th:href="@{/community(page=${listings.number},size=${listings.size},sort=${param.sort},order=${param.order},minRating=${param.minRating},maxRating=${param.maxRating},dateFrom=${param.dateFrom},dateTo=${param.dateTo})}"
+            <a th:href="@{/community(page=${listings.number},size=${listings.size},sort=${param.sort != null ? param.sort : 'updatedAt'},order=${param.order != null ? param.order : 'desc'},minRating=${param.minRating},maxRating=${param.maxRating},dateFrom=${param.dateFrom},dateTo=${param.dateTo})}"
                class="page-link page-arrow" aria-label="Previous">Prev</a>
         </li>
 
-        <!-- Ir a página -->
+        <!-- Ir a página... -->
         <li class="page-item" th:if="${listings.number - 2 > 0}">
             <button class="page-link" data-bs-toggle="modal" data-bs-target="#pageNumber">...</button>
         </li>
@@ -22,24 +22,24 @@
         <li class="page-item"
             th:each="i : ${#numbers.sequence(1, listings.totalPages)}"
             th:classappend="${i == listings.number + 1} ? 'active' : ''">
-            <a th:href="@{/community(page=${i},size=${listings.size},sort=${param.sort},order=${param.order},minRating=${param.minRating},maxRating=${param.maxRating},dateFrom=${param.dateFrom},dateTo=${param.dateTo})}"
+            <a th:href="@{/community(page=${i},size=${listings.size},sort=${param.sort != null ? param.sort : 'updatedAt'},order=${param.order != null ? param.order : 'desc'},minRating=${param.minRating},maxRating=${param.maxRating},dateFrom=${param.dateFrom},dateTo=${param.dateTo})}"
                class="page-link" th:text="${i}"></a>
         </li>
 
-        <!-- Ir a página -->
+        <!-- Ir a página... -->
         <li class="page-item" th:if="${listings.number + 2 < listings.totalPages - 1}">
             <button class="page-link" data-bs-toggle="modal" data-bs-target="#pageNumber">...</button>
         </li>
 
-        <!-- Siguiente -->
+        <!-- Página siguiente -->
         <li class="page-item" th:classappend="${listings.last} ? 'disabled'">
-            <a th:href="@{/community(page=${listings.number + 2},size=${listings.size},sort=${param.sort},order=${param.order},minRating=${param.minRating},maxRating=${param.maxRating},dateFrom=${param.dateFrom},dateTo=${param.dateTo})}"
+            <a th:href="@{/community(page=${listings.number + 2},size=${listings.size},sort=${param.sort != null ? param.sort : 'updatedAt'},order=${param.order != null ? param.order : 'desc'},minRating=${param.minRating},maxRating=${param.maxRating},dateFrom=${param.dateFrom},dateTo=${param.dateTo})}"
                class="page-link page-arrow" aria-label="Next">Next</a>
         </li>
         
         <!-- Última página -->
         <li class="page-item" th:classappend="${listings.last} ? 'disabled'">
-            <a th:href="@{/community(page=${listings.totalPages},size=${listings.size},sort=${param.sort},order=${param.order},minRating=${param.minRating},maxRating=${param.maxRating},dateFrom=${param.dateFrom},dateTo=${param.dateTo})}"
+            <a th:href="@{/community(page=${listings.totalPages},size=${listings.size},sort=${param.sort != null ? param.sort : 'updatedAt'},order=${param.order != null ? param.order : 'desc'},minRating=${param.minRating},maxRating=${param.maxRating},dateFrom=${param.dateFrom},dateTo=${param.dateTo})}"
                class="page-link page-arrow" aria-label="Last">&raquo;</a>
         </li>
     </ul>

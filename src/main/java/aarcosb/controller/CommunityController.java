@@ -1,28 +1,24 @@
 package aarcosb.controller;
 
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.validation.BindingResult;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.Authentication;
-import java.util.Date;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import aarcosb.model.entity.*;
 import aarcosb.model.dto.*;
+import aarcosb.model.entity.*;
 import aarcosb.model.repository.*;
 import aarcosb.service.*;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/community")
 public class CommunityController {
 
-    // Servicios necesarios para la gestión de listings y funcionalidades asociadas
+    // Autowired pone aquí automáticamente los objetos que necesita la clase
     @Autowired private ListingService listingService;
     @Autowired private UserDetailsServiceImpl userDetailsService;
     @Autowired private CloudinaryService cloudinaryService;
@@ -30,59 +26,52 @@ public class CommunityController {
     @Autowired private RatingService ratingService;
     @Autowired private UserRepository userRepository;
 
-    // Método auxiliar para obtener el usuario actual a partir de la autenticación
-    private User getCurrentUser(Authentication authentication) 
+    // Añade el usuario actual al modelo y lo retorna
+    private User addCurrentUserToModel(Model model, Authentication authentication) 
     {
-        return userRepository.findByEmail(authentication.getName());
+        User currentUser = userRepository.findByEmail(authentication.getName());
+        model.addAttribute("currentUser", currentUser);
+        return currentUser;
     }
 
-    // Página principal de la comunidad con paginación de listings
-    // Muestra los listings más recientes primero, 12 por página por defecto
+    // Página principal de la comunidad con filtros y paginación de listings
     @GetMapping("")
-    public String index(@RequestParam(defaultValue = "1") Integer page,
-                        @RequestParam(defaultValue = "9") Integer size,
-                        @RequestParam(defaultValue = "updatedAt") String sort,
-                        @RequestParam(defaultValue = "desc") String order,
-                        @RequestParam(defaultValue = "") String query,
-                        @RequestParam(required = false) Double minRating,
-                        @RequestParam(required = false) Double maxRating,
-                        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateFrom,
-                        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateTo,
-                        Model model, Authentication authentication) 
+    public String index(@ModelAttribute("filter") ListingFilterDTO filter, Model model, Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("currentUser", userRepository.findByEmail(authentication.getName()));
 
-        Sort sortBy = order.equals("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
-        Pageable pageable = PageRequest.of(page - 1, size, sortBy);
+        // Ordena los listings por el campo y la dirección especificados en el filtro
+        Sort sortBy = filter.getOrder().equals("desc") ? Sort.by(filter.getSort()).descending() : Sort.by(filter.getSort()).ascending();
+        Pageable pageable = PageRequest.of(filter.getPage() - 1, filter.getSize(), sortBy);
 
-        model.addAttribute("listings", listingService.searchAndFilter(query, minRating, maxRating, dateFrom, dateTo, pageable));
+        // Añade los listings ya filtrados al modelo
+        model.addAttribute("listings", listingService.searchAndFilter(filter.getQuery(), filter.getMinRating(), filter.getMaxRating(), filter.getDateFrom(), filter.getDateTo(), pageable));
         return "community/main";
     }
 
-    // Muestra un listing específico con todos sus detalles
-    // Incluye comentarios, valoraciones, y estado de favorito para el usuario actual
+    // Muestra los detalles de un listing, comentarios y favoritos
     @GetMapping("/listing/{listingId}")
     public String viewListing(@PathVariable Long listingId, Model model, Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
-        
+        User currentUser = addCurrentUserToModel(model, authentication);
         Listing listing = listingService.getListingById(listingId);
+
+        // Si el listing no existe, lanza una excepción
         if (listing == null) {
-            return "redirect:/community";
+            throw new IllegalArgumentException("Listing not found");
         }
         model.addAttribute("listing", listing);
 
+        // Se envían datos varios necesarios para la vista
         User listingUser = userRepository.findById(listing.getUserId()).orElse(null);
         model.addAttribute("listingUserProfilePic", listingUser.getProfilePic());
         model.addAttribute("userRating", ratingService.getUserRating(listingId, currentUser.getId()));
         model.addAttribute("isFavorite", currentUser.getFavListings().contains(listingId));
         model.addAttribute("totalFavorites", listingService.countTotalFavorites(listingId));
         model.addAttribute("totalListings", userDetailsService.countTotalListings(listing.getUserId()));
-
         model.addAttribute("comments", commentService.getListingComments(listingId));
 
+        // Si no existe el formulario de comentario, lo añade al modelo
         if (!model.containsAttribute("commentForm")) {
             model.addAttribute("commentForm", new CommentForm());
         }
@@ -90,46 +79,44 @@ public class CommunityController {
         return "community/show";
     }
 
-    // Formulario de creación de nuevo listing
-    // Inicializa un formulario vacío y lo añade al modelo
+    // Formulario para crear un nuevo listing
     @GetMapping("/listing/create")
     public String createListing(Model model, Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
+        User currentUser = addCurrentUserToModel(model, authentication);
 
+        // Si el usuario es admin, lanza una excepción
         if (currentUser.getRole() == Role.ADMIN) {
-            return "redirect:/community";
+            throw new IllegalArgumentException("Admins cannot create listings");
         }
 
+        // Añade el formulario de creación de listing al modelo
         model.addAttribute("listingForm", new ListingForm());
         return "community/create";
     }
 
-    // Procesa la creación de un nuevo listing
-    // Maneja la subida de imágenes (3-10) y video (opcional)
+    // Procesa la creación de un nuevo listing con imágenes y video
     @PostMapping("/listing/create")
     public String createListing(@Valid @ModelAttribute("listingForm") ListingForm form,
-                          BindingResult result,
-                          Model model, 
-                          Authentication authentication) 
+                                BindingResult result,
+                                Model model, 
+                                Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
+        User currentUser = addCurrentUserToModel(model, authentication);
 
+        // Si el usuario es admin, lanza una excepción
         if (currentUser.getRole() == Role.ADMIN) {
-            return "redirect:/community";
+            throw new IllegalArgumentException("Admins cannot create listings");
         }
 
-        // Validación del formulario mediante anotaciones en ListingForm
+        // Si hay errores, añade el formulario de creación de listing al modelo
         if (result.hasErrors()) {
             model.addAttribute("listingForm", form);
             return "community/create";
         }
 
+        // Crea el listing y lo guarda en la base de datos
         try {
-            // Creación del listing con datos básicos
-            // El ID se genera automáticamente al guardar
             Listing listing = new Listing();
             listing.setTitle(form.getTitle());
             listing.setDescription(form.getDescription());
@@ -137,42 +124,36 @@ public class CommunityController {
             listing.setTags(listingService.convertTags(form.getTags()));
             listing.setUserId(currentUser.getId());
             listing.setUserName(currentUser.getUserName());
-            
-            // Guardamos primero para obtener el ID
-            // Necesario para asociar imágenes y video
             listing = listingService.updateListing(listing);
 
-            // Subida de archivos multimedia
-            // Las validaciones de formato y cantidad se realizan en CloudinaryService
+            // Sube las imágenes al servicio de Cloudinary
             cloudinaryService.uploadImages(listing.getId(), form.getImages());
             if (form.getVideo() != null && !form.getVideo().isEmpty()) {
                 cloudinaryService.uploadVideo(listing.getId(), form.getVideo());
             }
 
             return "redirect:/community/listing/" + listing.getId();
-
         } catch (Exception e) {
-            result.reject("global", "Error creating listing: " + e.getMessage());
+            // Si hay errores, añade el formulario de creación de listing al modelo
+            result.reject("error", "Error creating listing: " + e.getMessage());
             model.addAttribute("listingForm", form);
             return "community/create";
         }
     }
 
-    // Formulario de edición de listing existente
-    // Carga los datos actuales del listing en el formulario
+    // Formulario para editar un listing existente
     @GetMapping("/listing/{listingId}/edit")
     public String editListing(@PathVariable Long listingId, Model model, Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
-
+        User currentUser = addCurrentUserToModel(model, authentication);
         Listing listing = listingService.getListingById(listingId);
+
+        // Si el listing no existe, lanza una excepción
         if (listing == null || currentUser.getRole() == Role.ADMIN || !currentUser.getId().equals(listing.getUserId())) {
-            return "redirect:/community/listing/" + listingId;
+            throw new IllegalArgumentException("User not authorized");
         }
 
-        // Poblar el formulario con los datos actuales
-        // Las imágenes y video actuales se muestran en la vista
+        // Añade el formulario de edición de listing al modelo
         ListingForm form = new ListingForm();
         form.setTitle(listing.getTitle());
         form.setDescription(listing.getDescription());
@@ -185,7 +166,6 @@ public class CommunityController {
     }
 
     // Procesa la actualización de un listing existente
-    // Permite actualizar datos básicos y opcionalmente multimedia
     @PostMapping("/listing/{listingId}/update")
     public String updateListing(@PathVariable Long listingId,
                                 @Valid @ModelAttribute("listingForm") ListingForm form,
@@ -193,49 +173,49 @@ public class CommunityController {
                                 Model model,
                                 Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
-
-        // Obtener listing existente o redirigir si no existe
+        User currentUser = addCurrentUserToModel(model, authentication);
         Listing listing = listingService.getListingById(listingId);
+
+        // Si el listing no existe, lanza una excepción
         if (listing == null) {
-            return "redirect:/community";
+            throw new IllegalArgumentException("Listing not found");
         }
 
-        // Check if user is authorized (must be owner)
+        // Si el usuario no es admin y no es el propietario del listing, lanza una excepción
         if (currentUser.getRole() != Role.ADMIN && !currentUser.getId().equals(listing.getUserId())) {
-            return "redirect:/community/listing/" + listingId;
+            throw new IllegalArgumentException("User not authorized");
         }
 
         model.addAttribute("listing", listing);
 
-        // Validación del formulario mediante anotaciones en ListingForm
+        // Si hay errores, añade el formulario de edición de listing al modelo
         if (result.hasErrors()) {
             model.addAttribute("listingForm", form);
             return "community/edit";
         }
 
+        // Actualiza el listing y lo guarda en la base de datos
         try {
-            // Actualizar datos básicos del listing
             listing.setTitle(form.getTitle());
             listing.setDescription(form.getDescription());
             listing.setOfficialUrl(form.getOfficialUrl());
             listing.setTags(listingService.convertTags(form.getTags()));
 
-            // Actualizar multimedia solo si se proporcionan nuevos archivos
-            // Las validaciones de formato y cantidad se realizan en CloudinaryService
+            // Sube las imágenes al servicio de Cloudinary
             if (!form.getImages().isEmpty() && !form.getImages().get(0).isEmpty()) {
                 cloudinaryService.uploadImages(listingId, form.getImages());
             }
+
+            // Sube el video, si existe, al servicio de Cloudinary
             if (form.getVideo() != null && !form.getVideo().isEmpty()) {
                 cloudinaryService.uploadVideo(listingId, form.getVideo());
             }
 
             listingService.updateListing(listing);
             return "redirect:/community/listing/" + listingId;
-
         } catch (Exception e) {
-            result.reject("global", "Error updating listing: " + e.getMessage());
+            // Si hay errores, añade el formulario de edición de listing al modelo
+            result.reject("error", "Error updating listing: " + e.getMessage());
             model.addAttribute("listingForm", form);
             model.addAttribute("listing", listing);
             return "community/edit";
@@ -243,20 +223,20 @@ public class CommunityController {
     }
 
     // Elimina un listing y todos sus datos asociados
-    // Incluye imágenes, video, comentarios y valoraciones
     @PostMapping("/listing/{listingId}/delete")
     public String deleteListing(@PathVariable Long listingId, Model model, Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
-
+        User currentUser = addCurrentUserToModel(model, authentication);
         Listing listing = listingService.getListingById(listingId);
+
+        // Si el listing no existe, lanza una excepción
         if (listing == null) {
-            return "redirect:/community";
+            throw new IllegalArgumentException("Listing not found");
         }
 
+        // Si el usuario no es admin y no es el propietario del listing, lanza una excepción
         if (currentUser.getRole() != Role.ADMIN && !currentUser.getId().equals(listing.getUserId())) {
-            return "redirect:/community/listing/" + listingId;
+            throw new IllegalArgumentException("User not authorized");
         }
 
         listingService.deleteListing(listingId);
@@ -264,7 +244,6 @@ public class CommunityController {
     }
 
     // Añade un nuevo comentario a un listing
-    // Requiere título y texto, asocia automáticamente el usuario actual
     @PostMapping("/listing/{listingId}/comment/post")
     public String addComment(@PathVariable Long listingId, 
                              @Valid @ModelAttribute("commentForm") CommentForm form,
@@ -273,13 +252,14 @@ public class CommunityController {
                              Authentication authentication,
                              Model model) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
+        User currentUser = addCurrentUserToModel(model, authentication);
 
+        // Si el usuario es admin, lanza una excepción
         if (currentUser.getRole() == Role.ADMIN) {
-            return "redirect:/community/listing/" + listingId;
+            throw new IllegalArgumentException("User not authorized");
         }
 
+        // Si hay errores, añade el formulario de creación de comentario al modelo
         if (result.hasErrors()) {
             redirect.addFlashAttribute("org.springframework.validation.BindingResult.commentForm", result);
             redirect.addFlashAttribute("commentForm", form);
@@ -297,19 +277,19 @@ public class CommunityController {
         return "redirect:/community/listing/" + listingId;
     }
 
-    // Elimina un comentario específico de un listing
-    // Solo el propietario del comentario puede eliminarlo
+    // Elimina un comentario de un listing (solo el propietario puede)
     @PostMapping("/listing/{listingId}/comment/{commentId}/delete")
-    public String deleteComment(@PathVariable Long listingId, @PathVariable Long commentId, Model model, Authentication authentication) 
+    public String deleteComment(@PathVariable Long listingId, 
+                                @PathVariable Long commentId, 
+                                Model model, 
+                                Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
-
+        User currentUser = addCurrentUserToModel(model, authentication);
         Comment comment = commentService.getCommentById(commentId);
 
-
+        // Si el usuario no es admin y no es el propietario del comentario, lanza una excepción
         if (currentUser.getRole() != Role.ADMIN && !currentUser.getId().equals(comment.getUserId()) || comment == null) {
-            return "redirect:/community/listing/" + listingId;
+            throw new IllegalArgumentException("User not authorized");
         }
 
         commentService.deleteComment(commentId);
@@ -317,16 +297,18 @@ public class CommunityController {
     }
 
     // Añade o actualiza la valoración de un usuario para un listing
-    // La valoración debe estar entre 1 y 5 estrellas
     @PostMapping("/listing/{listingId}/rate")
-    public String rateListing(@PathVariable Long listingId, @RequestParam Double rating, Model model, Authentication authentication) 
+    public String rateListing(@PathVariable Long listingId, 
+                              @RequestParam Double rating, 
+                              Model model, 
+                              Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
-
+        User currentUser = addCurrentUserToModel(model, authentication);
         Listing listing = listingService.getListingById(listingId);
+
+        // Si el listing no existe, lanza una excepción
         if (listing == null || currentUser.getRole() == Role.ADMIN || currentUser.getId().equals(listing.getUserId())) {
-            return "redirect:/community/listing/" + listingId;
+            throw new IllegalArgumentException("User not authorized");
         }
 
         ratingService.rateListing(listingId, currentUser.getId(), rating);
@@ -334,18 +316,18 @@ public class CommunityController {
     }
 
     // Alterna el estado de favorito de un listing para el usuario actual
-    // Si ya es favorito lo quita, si no lo es lo añade
     @PostMapping("/listing/{listingId}/favorite")
     public String addToFavorites(@PathVariable Long listingId, Model model, Authentication authentication) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
-
+        User currentUser = addCurrentUserToModel(model, authentication);
         Listing listing = listingService.getListingById(listingId);
+
+        // Si el listing no existe, lanza una excepción
         if (listing == null) {
-            return "redirect:/community/listing/" + listingId;
+            throw new IllegalArgumentException("Listing not found");
         }
 
+        // Si el listing no está en la lista de favoritos, lo añade, si está, lo elimina
         if (!currentUser.getFavListings().contains(listingId)) {
             currentUser.getFavListings().add(listingId);
         } else {

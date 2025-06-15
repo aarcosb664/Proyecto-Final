@@ -17,15 +17,19 @@
         <div class="banner header-neon-white mb-5"><h1>Create Listing</h1></div>
 
         <div class="row justify-content-center">
-            <!-- Formulario -->
+            <!-- Formulario para crear un listing -->
             <form class="col-lg-9 needs-validation form-neon" novalidate
                   th:action="@{/community/listing/create}" 
                   th:object="${listingForm}"
                   enctype="multipart/form-data"
                   method="post">
-            
+
+                <!-- Mensaje de error -->
+                <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+
+                <!-- Campos del formulario -->
                 <div class="row g-3 mb-3">
-                    <!-- Title -->
+                    <!-- Título -->
                     <div class="col-md-6">
                         <label class="form-label label-required text-neon-white" for="title">Title</label>
                         <input th:field="*{title}" maxlength="100" required
@@ -94,12 +98,14 @@
                             Save
                         </button>
                     </div>
+
                     <div class="form-group col-md-4">
                         <button type="reset" class="btn-neon-red w-100 mb-4 mb-md-0">
                             <i class="bi bi-eraser me-1"></i> 
                             Reset
                         </button>
                     </div>
+
                     <div class="form-group col-md-4">
                         <a th:href="@{/community}" class="btn-neon-gray w-100 d-block text-center">
                             <i class="bi bi-x me-1"></i> 
@@ -109,7 +115,7 @@
                 </div>
             </form>
 
-            <!-- Previews -->
+            <!-- Previsualizaciones de los archivos subidos -->
             <div class="col-lg-3 mt-4 mt-lg-0">
                 <div id="previewCarousel">
                     <div id="videoPreviewContainer"></div>

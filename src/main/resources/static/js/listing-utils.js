@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Swiper
+    // Swiper (librería JS para carruseles)
     const thumbSwiper = new Swiper(".thumbSwiper", {
         spaceBetween: 10,
         slidesPerView: 'auto',
@@ -21,10 +21,9 @@ document.addEventListener('DOMContentLoaded', function() {
         },
     });
 
-    // Rating functionality
+    // Función de rating
     const input = document.getElementById('ratingInput');
     const form = document.getElementById('ratingForm');
-    const submit = document.getElementById('ratingSubmit');
     let rating = parseFloat(input.value) || 0;
     
     function paint(val) {
@@ -49,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let position = getPosition(lab, e);
             rating = position;
             paint(rating);
-            submit.click();
+            form.submit();
         };
     });
     
@@ -58,10 +57,9 @@ document.addEventListener('DOMContentLoaded', function() {
         let v = parseFloat(lab.dataset.value) - (x < w/2 ? 0.5 : 0);
         return v;
     }
-
 });
 
-// Handle share button
+// Función para el botón de compartir
 document.getElementById('copyUrl').addEventListener('click', function() {
     const url = window.location.href;
     navigator.clipboard.writeText(url);

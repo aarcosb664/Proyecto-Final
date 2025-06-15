@@ -18,7 +18,7 @@
         <!-- Título -->
         <div class="banner header-neon-white mb-5"><h1>Edit Listing</h1></div>
 
-        <!-- Formulario principal -->
+        <!-- Formulario para editar un listing -->
         <form th:action="@{/community/listing/{id}/update(id=${listing.id})}"
               method="post"
               th:object="${listingForm}"
@@ -26,13 +26,13 @@
               class="needs-validation" novalidate>
             
             <div class="row mb-5 g-5">
-                <!-- Galería (Carrusel + Thumbnails) -->
+                <!-- Galería (Carrusel + Miniaturas) -->
                 <div class="col-lg-8">
                     <div class="row">
-                        <!-- Carrusel principal -->
+                        <!-- Carrusel principal de la galería -->
                         <div class="col-12">
                             <div class="carousel-wrapper border-neon-pink">
-                                <!-- Swiper principal -->
+                                <!-- Swiper principal de la galería -->
                                 <div class="swiper mainSwiper">
                                     <div class="swiper-wrapper">
                                         <!-- Vídeo -->
@@ -41,6 +41,7 @@
                                                 <video th:src="${listing.video}" controls class="carousel-video" muted></video>
                                             </div>
                                         </div>
+
                                         <!-- Imágenes -->
                                         <div th:each="img,iterStat : ${listing.images}" class="swiper-slide">
                                             <div class="ratio ratio-16x9">
@@ -48,6 +49,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <!-- Flechas de navegación -->
                                     <div class="swiper-button-next"></div>
                                     <div class="swiper-button-prev"></div>
@@ -55,18 +57,19 @@
                             </div>
                         </div>
 
-                        <!-- Fila de miniaturas -->
+                        <!-- Fila de miniaturas de la galería -->
                         <div class="col-12">
                             <div class="thumbnails-wrapper p-0 pt-3">
                                 <!-- Thumbnail Swiper -->
                                 <div class="swiper thumbSwiper">
                                     <div class="swiper-wrapper">
                                         <!-- Video Thumbnail -->
-                                        <div th:if="${!#strings.isEmpty(listing.video)}" class="ratio ratio-16x9 swiper-slide">
+                                        <div th:if="${!#strings.isEmpty(listing.video)}" class="ratio ratio-16x9 swiper-slide me-3">
                                             <video th:src="${listing.video}" class="img-fluid preview-thumb" muted></video>
                                         </div>
+                                        
                                         <!-- Image Thumbnails -->
-                                        <div th:each="img, iStat : ${listing.images}" class="ratio ratio-16x9 swiper-slide">
+                                        <div th:each="img, iStat : ${listing.images}" class="ratio ratio-16x9 swiper-slide me-3">
                                             <img th:src="${img}" class="img-fluid preview-thumb" alt="Image thumbnail">
                                         </div>
                                     </div>
@@ -76,7 +79,7 @@
                     </div>
                 </div>
 
-                <!-- Card con inputs -->
+                <!-- Card con los campos del formulario -->
                 <div class="col-lg-4">
                     <div class="card border-neon-cyan p-4 py-5 h-100">
                         <!-- Título -->
@@ -109,7 +112,7 @@
             <!-- Sección inferior -->
             <div class="row g-5">
                 <div class="col-lg-8">
-                    <!-- Imágenes y video -->
+                    <!-- Campos para subir imágenes y video -->
                     <div class="row g-3 mb-4">
                         <div class="col-md-6">
                             <label class="form-label label-required text-neon-white" for="images">Images (3-10)</label>
@@ -157,12 +160,14 @@
                                 Save
                             </button>
                         </div>
+
                         <div class="form-group col-md-4">
                             <button type="reset" class="btn-neon-red w-100 mb-4 mb-md-0">
                                 <i class="bi bi-eraser me-1"></i> 
                                 Reset
                             </button>
                         </div>
+                        
                         <div class="form-group col-md-4">
                             <a th:href="@{/community/listing/{id}(id=${listing.id})}" class="btn-neon-gray w-100 d-block text-center">
                                 <i class="bi bi-x me-1"></i> 
@@ -172,7 +177,7 @@
                     </div>
                 </div>
 
-                <!-- Preview -->
+                <!-- Previsualizaciones de los archivos subidos -->
                 <div class="col-lg-4">
                     <div id="previewCarousel">
                         <div id="videoPreviewContainer"></div>
