@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>aarcosb</groupId>
 	<artifactId>final</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>final</name>
 	<description>Proyecto final</description>
 	<url/>
