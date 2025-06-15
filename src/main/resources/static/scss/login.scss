@@ -5,8 +5,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    overflow: hidden;
+	min-height: 100vh;
+	overflow: hidden;
+
+	@media (max-width: 768px) {
+		padding-bottom: 5rem;
+	}
 }
 
 .video-background {
@@ -19,9 +23,12 @@ body {
 	z-index: -1;
 }
 
-.login-container {
-	width: 100%;
+.container {
 	max-width: 800px;
+
+	@media (max-width: 768px) {
+		max-width: 90%;
+	}
 }
 
 .card {

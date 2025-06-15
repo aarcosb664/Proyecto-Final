@@ -56,24 +56,24 @@
             </div>
 
             <!-- Separador (desktop) -->
-            <div class="col-md-1 d-flex justify-content-center">
+            <div class="col-md-1 d-flex justify-content-center mb-4">
                 <div class="vertical-divider"></div>
             </div>
 
             <!-- Contenido -->
             <div class="col-12 col-md-10 z-1">
-                <div id="settings" class="border-bottom pb-5 mb-3">
-                    <h1 class="header-neon-white pt-2">
+                <div id="settings" class="border-bottom pb-5 mb-4">
+                    <h1 class="header-neon-white pt-2 pb-3">
                         <i class="bi bi-gear-fill me-2"></i>
                         Settings
                     </h1>
                     
                     <!-- Foto de perfil -->
-                    <div class="row ms-5 mt-4">
+                    <div class="row ms-5">
                         <div class="col-3">
                             <div class="d-flex flex-column align-items-center">
                                 <div class="profile-pic-container mb-3">
-                                    <img th:src="@{${user.profilePic}}" width="150" height="150" alt="Pfp" class="rounded-circle border border-2">
+                                    <img th:src="@{${user.profilePic}}" alt="Pfp" class="profile-pic rounded-circle border border-2">
                                 </div>
 
                                 <!-- Formulario para cambiar la foto de perfil -->
@@ -139,8 +139,8 @@
                 </div>
 
                 <!-- Mis listings -->
-                <div id="myListings" class="border-bottom pb-3 mb-3" th:if="${currentUser.id != id or currentUser.role.name() != 'ADMIN'}">
-                    <h1 class="header-neon-white pt-2">
+                <div id="myListings" class="border-bottom pb-3 mb-4" th:if="${currentUser.id != id or currentUser.role.name() != 'ADMIN'}">
+                    <h1 class="header-neon-white pt-2 pb-3">
                         <i class="bi bi-list-check me-2"></i>
                         My Listings
                         <span th:text="'(' + ${totalListings} + ' total)'"></span>
@@ -154,8 +154,8 @@
                 </div>
 
                 <!-- Favoritos -->
-                <div id="myFavorites" class="border-bottom pb-3 mb-3">
-                    <h1 class="header-neon-white pt-2">
+                <div id="myFavorites" class="border-bottom pb-3 mb-4">
+                    <h1 class="header-neon-white pt-2 pb-3">
                         <i class="bi bi-heart-fill me-2"></i>
                         Favorites
                         <span th:text="'(' + ${totalFavorites} + ' total)'"></span>
@@ -169,8 +169,8 @@
                 </div>
 
                 <!-- Historial -->
-                <div id="history" class="border-bottom pb-3 mb-3">
-                    <h1 class="header-neon-white pt-2">
+                <div id="history" class="border-bottom pb-3 mb-4">
+                    <h1 class="header-neon-white pt-2 pb-3">
                         <i class="bi bi-clock-history me-2"></i>
                         History
                     </h1>
