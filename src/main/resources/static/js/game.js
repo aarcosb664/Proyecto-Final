@@ -403,6 +403,11 @@ function handleBallWallCollision() {
     }
 
     // Si la pelota colisiona con la pared izquierda, se invierte la velocidad en X
+    if (ballX + ballVelocityX < ballRadius) {
+        ballVelocityX = -ballVelocityX;
+    }
+    
+    // Si la pelota colisiona con el techo, se invierte la velocidad en Y
     if (ballY + ballVelocityY < ballRadius) {
         ballVelocityY = -ballVelocityY;
     }

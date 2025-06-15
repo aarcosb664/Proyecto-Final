@@ -11,6 +11,10 @@
 		height: 2px;
 		opacity: 0.5;
 		margin-bottom: 0.5rem;
+
+		@media (max-width: 768px) {
+			margin: 0 auto;
+		}
 	}
 
 	h6 {

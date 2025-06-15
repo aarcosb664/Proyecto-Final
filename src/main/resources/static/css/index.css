@@ -662,7 +662,7 @@
 .text-neon-red {
   color: #ff1744 !important;
   text-shadow: 0 0 3px rgba(255, 23, 68, 0.4), 0 0 6px rgba(255, 23, 68, 0.2);
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   font-weight: 500;
   line-height: 1.5;
 }
@@ -670,7 +670,7 @@
 .text-neon-blue {
   color: #00bfff !important;
   text-shadow: 0 0 3px rgba(0, 191, 255, 0.4), 0 0 6px rgba(0, 191, 255, 0.2);
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   font-weight: 500;
   line-height: 1.5;
 }
@@ -678,7 +678,7 @@
 .text-neon-green {
   color: #00ff90 !important;
   text-shadow: 0 0 3px rgba(0, 255, 144, 0.4), 0 0 6px rgba(0, 255, 144, 0.2);
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   font-weight: 500;
   line-height: 1.5;
 }
@@ -686,7 +686,7 @@
 .text-neon-yellow {
   color: #ffe600 !important;
   text-shadow: 0 0 3px rgba(255, 230, 0, 0.4), 0 0 6px rgba(255, 230, 0, 0.2);
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   font-weight: 500;
   line-height: 1.5;
 }
@@ -694,7 +694,7 @@
 .text-neon-purple {
   color: #a259ff !important;
   text-shadow: 0 0 3px rgba(162, 89, 255, 0.4), 0 0 6px rgba(162, 89, 255, 0.2);
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   font-weight: 500;
   line-height: 1.5;
 }
@@ -702,7 +702,7 @@
 .text-neon-orange {
   color: #ff9100 !important;
   text-shadow: 0 0 3px rgba(255, 145, 0, 0.4), 0 0 6px rgba(255, 145, 0, 0.2);
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   font-weight: 500;
   line-height: 1.5;
 }
@@ -710,7 +710,7 @@
 .text-neon-cyan {
   color: #00fff7 !important;
   text-shadow: 0 0 3px rgba(0, 255, 247, 0.4), 0 0 6px rgba(0, 255, 247, 0.2);
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   font-weight: 500;
   line-height: 1.5;
 }
@@ -718,7 +718,7 @@
 .text-neon-pink {
   color: #ff4fd8 !important;
   text-shadow: 0 0 3px rgba(255, 79, 216, 0.4), 0 0 6px rgba(255, 79, 216, 0.2);
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   font-weight: 500;
   line-height: 1.5;
 }
@@ -726,7 +726,7 @@
 .text-neon-white {
   color: #ffffff !important;
   text-shadow: 0 0 3px rgba(255, 255, 255, 0.4), 0 0 6px rgba(255, 255, 255, 0.2);
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   font-weight: 500;
   line-height: 1.5;
 }
@@ -734,7 +734,7 @@
 .text-neon-black {
   color: #000000 !important;
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.4), 0 0 6px rgba(0, 0, 0, 0.2);
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   font-weight: 500;
   line-height: 1.5;
 }
@@ -742,7 +742,7 @@
 .text-neon-gray {
   color: #888888 !important;
   text-shadow: 0 0 3px rgba(136, 136, 136, 0.4), 0 0 6px rgba(136, 136, 136, 0.2);
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   font-weight: 500;
   line-height: 1.5;
 }
@@ -750,7 +750,7 @@
 .text-neon-red-sm {
   color: #ff1744 !important;
   text-shadow: 0 0 2px rgba(255, 23, 68, 0.4), 0 0 4px rgba(255, 23, 68, 0.2);
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   font-weight: 400;
   line-height: 1.4;
 }
@@ -758,7 +758,7 @@
 .text-neon-blue-sm {
   color: #00bfff !important;
   text-shadow: 0 0 2px rgba(0, 191, 255, 0.4), 0 0 4px rgba(0, 191, 255, 0.2);
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   font-weight: 400;
   line-height: 1.4;
 }
@@ -766,7 +766,7 @@
 .text-neon-green-sm {
   color: #00ff90 !important;
   text-shadow: 0 0 2px rgba(0, 255, 144, 0.4), 0 0 4px rgba(0, 255, 144, 0.2);
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   font-weight: 400;
   line-height: 1.4;
 }
@@ -774,7 +774,7 @@
 .text-neon-yellow-sm {
   color: #ffe600 !important;
   text-shadow: 0 0 2px rgba(255, 230, 0, 0.4), 0 0 4px rgba(255, 230, 0, 0.2);
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   font-weight: 400;
   line-height: 1.4;
 }
@@ -782,7 +782,7 @@
 .text-neon-purple-sm {
   color: #a259ff !important;
   text-shadow: 0 0 2px rgba(162, 89, 255, 0.4), 0 0 4px rgba(162, 89, 255, 0.2);
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   font-weight: 400;
   line-height: 1.4;
 }
@@ -790,7 +790,7 @@
 .text-neon-orange-sm {
   color: #ff9100 !important;
   text-shadow: 0 0 2px rgba(255, 145, 0, 0.4), 0 0 4px rgba(255, 145, 0, 0.2);
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   font-weight: 400;
   line-height: 1.4;
 }
@@ -798,7 +798,7 @@
 .text-neon-cyan-sm {
   color: #00fff7 !important;
   text-shadow: 0 0 2px rgba(0, 255, 247, 0.4), 0 0 4px rgba(0, 255, 247, 0.2);
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   font-weight: 400;
   line-height: 1.4;
 }
@@ -806,7 +806,7 @@
 .text-neon-pink-sm {
   color: #ff4fd8 !important;
   text-shadow: 0 0 2px rgba(255, 79, 216, 0.4), 0 0 4px rgba(255, 79, 216, 0.2);
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   font-weight: 400;
   line-height: 1.4;
 }
@@ -814,7 +814,7 @@
 .text-neon-white-sm {
   color: #ffffff !important;
   text-shadow: 0 0 2px rgba(255, 255, 255, 0.4), 0 0 4px rgba(255, 255, 255, 0.2);
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   font-weight: 400;
   line-height: 1.4;
 }
@@ -822,7 +822,7 @@
 .text-neon-black-sm {
   color: #000000 !important;
   text-shadow: 0 0 2px rgba(0, 0, 0, 0.4), 0 0 4px rgba(0, 0, 0, 0.2);
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   font-weight: 400;
   line-height: 1.4;
 }
@@ -830,7 +830,7 @@
 .text-neon-gray-sm {
   color: #888888 !important;
   text-shadow: 0 0 2px rgba(136, 136, 136, 0.4), 0 0 4px rgba(136, 136, 136, 0.2);
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   font-weight: 400;
   line-height: 1.4;
 }
@@ -838,7 +838,7 @@
 .header-neon-red {
   color: #ff1744 !important;
   text-shadow: 0 0 6px rgba(255, 23, 68, 0.5), 0 0 12px rgba(255, 23, 68, 0.25);
-  font-size: 2.6rem;
+  font-size: clamp(1.4rem, 4vw, 2.6rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.5px;
@@ -847,7 +847,7 @@
 .header-neon-blue {
   color: #00bfff !important;
   text-shadow: 0 0 6px rgba(0, 191, 255, 0.5), 0 0 12px rgba(0, 191, 255, 0.25);
-  font-size: 2.6rem;
+  font-size: clamp(1.4rem, 4vw, 2.6rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.5px;
@@ -856,7 +856,7 @@
 .header-neon-green {
   color: #00ff90 !important;
   text-shadow: 0 0 6px rgba(0, 255, 144, 0.5), 0 0 12px rgba(0, 255, 144, 0.25);
-  font-size: 2.6rem;
+  font-size: clamp(1.4rem, 4vw, 2.6rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.5px;
@@ -865,7 +865,7 @@
 .header-neon-yellow {
   color: #ffe600 !important;
   text-shadow: 0 0 6px rgba(255, 230, 0, 0.5), 0 0 12px rgba(255, 230, 0, 0.25);
-  font-size: 2.6rem;
+  font-size: clamp(1.4rem, 4vw, 2.6rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.5px;
@@ -874,7 +874,7 @@
 .header-neon-purple {
   color: #a259ff !important;
   text-shadow: 0 0 6px rgba(162, 89, 255, 0.5), 0 0 12px rgba(162, 89, 255, 0.25);
-  font-size: 2.6rem;
+  font-size: clamp(1.4rem, 4vw, 2.6rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.5px;
@@ -883,7 +883,7 @@
 .header-neon-orange {
   color: #ff9100 !important;
   text-shadow: 0 0 6px rgba(255, 145, 0, 0.5), 0 0 12px rgba(255, 145, 0, 0.25);
-  font-size: 2.6rem;
+  font-size: clamp(1.4rem, 4vw, 2.6rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.5px;
@@ -892,7 +892,7 @@
 .header-neon-cyan {
   color: #00fff7 !important;
   text-shadow: 0 0 6px rgba(0, 255, 247, 0.5), 0 0 12px rgba(0, 255, 247, 0.25);
-  font-size: 2.6rem;
+  font-size: clamp(1.4rem, 4vw, 2.6rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.5px;
@@ -901,7 +901,7 @@
 .header-neon-pink {
   color: #ff4fd8 !important;
   text-shadow: 0 0 6px rgba(255, 79, 216, 0.5), 0 0 12px rgba(255, 79, 216, 0.25);
-  font-size: 2.6rem;
+  font-size: clamp(1.4rem, 4vw, 2.6rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.5px;
@@ -910,7 +910,7 @@
 .header-neon-white {
   color: #ffffff !important;
   text-shadow: 0 0 6px rgba(255, 255, 255, 0.5), 0 0 12px rgba(255, 255, 255, 0.25);
-  font-size: 2.6rem;
+  font-size: clamp(1.4rem, 4vw, 2.6rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.5px;
@@ -919,7 +919,7 @@
 .header-neon-black {
   color: #000000 !important;
   text-shadow: 0 0 6px rgba(0, 0, 0, 0.5), 0 0 12px rgba(0, 0, 0, 0.25);
-  font-size: 2.6rem;
+  font-size: clamp(1.4rem, 4vw, 2.6rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.5px;
@@ -928,7 +928,7 @@
 .header-neon-gray {
   color: #888888 !important;
   text-shadow: 0 0 6px rgba(136, 136, 136, 0.5), 0 0 12px rgba(136, 136, 136, 0.25);
-  font-size: 2.6rem;
+  font-size: clamp(1.4rem, 4vw, 2.6rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.5px;
@@ -937,7 +937,7 @@
 .header-neon-red-sm {
   color: #ff1744 !important;
   text-shadow: 0 0 4px rgba(255, 23, 68, 0.4), 0 0 8px rgba(255, 23, 68, 0.2);
-  font-size: 2rem;
+  font-size: clamp(1.1rem, 3vw, 2rem);
   font-weight: 600;
   line-height: 1.3;
 }
@@ -945,7 +945,7 @@
 .header-neon-blue-sm {
   color: #00bfff !important;
   text-shadow: 0 0 4px rgba(0, 191, 255, 0.4), 0 0 8px rgba(0, 191, 255, 0.2);
-  font-size: 2rem;
+  font-size: clamp(1.1rem, 3vw, 2rem);
   font-weight: 600;
   line-height: 1.3;
 }
@@ -953,7 +953,7 @@
 .header-neon-green-sm {
   color: #00ff90 !important;
   text-shadow: 0 0 4px rgba(0, 255, 144, 0.4), 0 0 8px rgba(0, 255, 144, 0.2);
-  font-size: 2rem;
+  font-size: clamp(1.1rem, 3vw, 2rem);
   font-weight: 600;
   line-height: 1.3;
 }
@@ -961,7 +961,7 @@
 .header-neon-yellow-sm {
   color: #ffe600 !important;
   text-shadow: 0 0 4px rgba(255, 230, 0, 0.4), 0 0 8px rgba(255, 230, 0, 0.2);
-  font-size: 2rem;
+  font-size: clamp(1.1rem, 3vw, 2rem);
   font-weight: 600;
   line-height: 1.3;
 }
@@ -969,7 +969,7 @@
 .header-neon-purple-sm {
   color: #a259ff !important;
   text-shadow: 0 0 4px rgba(162, 89, 255, 0.4), 0 0 8px rgba(162, 89, 255, 0.2);
-  font-size: 2rem;
+  font-size: clamp(1.1rem, 3vw, 2rem);
   font-weight: 600;
   line-height: 1.3;
 }
@@ -977,7 +977,7 @@
 .header-neon-orange-sm {
   color: #ff9100 !important;
   text-shadow: 0 0 4px rgba(255, 145, 0, 0.4), 0 0 8px rgba(255, 145, 0, 0.2);
-  font-size: 2rem;
+  font-size: clamp(1.1rem, 3vw, 2rem);
   font-weight: 600;
   line-height: 1.3;
 }
@@ -985,7 +985,7 @@
 .header-neon-cyan-sm {
   color: #00fff7 !important;
   text-shadow: 0 0 4px rgba(0, 255, 247, 0.4), 0 0 8px rgba(0, 255, 247, 0.2);
-  font-size: 2rem;
+  font-size: clamp(1.1rem, 3vw, 2rem);
   font-weight: 600;
   line-height: 1.3;
 }
@@ -993,7 +993,7 @@
 .header-neon-pink-sm {
   color: #ff4fd8 !important;
   text-shadow: 0 0 4px rgba(255, 79, 216, 0.4), 0 0 8px rgba(255, 79, 216, 0.2);
-  font-size: 2rem;
+  font-size: clamp(1.1rem, 3vw, 2rem);
   font-weight: 600;
   line-height: 1.3;
 }
@@ -1001,7 +1001,7 @@
 .header-neon-white-sm {
   color: #ffffff !important;
   text-shadow: 0 0 4px rgba(255, 255, 255, 0.4), 0 0 8px rgba(255, 255, 255, 0.2);
-  font-size: 2rem;
+  font-size: clamp(1.1rem, 3vw, 2rem);
   font-weight: 600;
   line-height: 1.3;
 }
@@ -1009,7 +1009,7 @@
 .header-neon-black-sm {
   color: #000000 !important;
   text-shadow: 0 0 4px rgba(0, 0, 0, 0.4), 0 0 8px rgba(0, 0, 0, 0.2);
-  font-size: 2rem;
+  font-size: clamp(1.1rem, 3vw, 2rem);
   font-weight: 600;
   line-height: 1.3;
 }
@@ -1017,7 +1017,7 @@
 .header-neon-gray-sm {
   color: #888888 !important;
   text-shadow: 0 0 4px rgba(136, 136, 136, 0.4), 0 0 8px rgba(136, 136, 136, 0.2);
-  font-size: 2rem;
+  font-size: clamp(1.1rem, 3vw, 2rem);
   font-weight: 600;
   line-height: 1.3;
 }
@@ -1259,6 +1259,11 @@
   height: 2px;
   opacity: 0.5;
   margin-bottom: 0.5rem;
+}
+@media (max-width: 768px) {
+  .footer-links .footer-hr {
+    margin: 0 auto;
+  }
 }
 .footer-links h6 {
   letter-spacing: 1px;
@@ -1730,7 +1735,7 @@ body {
 input, select, textarea {
   color: #ffffff !important;
   text-shadow: 0 0 3px rgba(255, 255, 255, 0.4), 0 0 6px rgba(255, 255, 255, 0.2);
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   font-weight: 500;
   line-height: 1.5;
   border: 1.5px solid #ffffff;
@@ -1745,7 +1750,7 @@ input, select, textarea {
 input::placeholder, select::placeholder, textarea::placeholder {
   color: #888888 !important;
   text-shadow: 0 0 2px rgba(136, 136, 136, 0.4), 0 0 4px rgba(136, 136, 136, 0.2);
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   font-weight: 400;
   line-height: 1.4;
 }
@@ -1782,7 +1787,7 @@ input[type=password]::-ms-reveal, input[type=password]::-ms-clear, input[type=pa
 label {
   color: #888888 !important;
   text-shadow: 0 0 2px rgba(136, 136, 136, 0.4), 0 0 4px rgba(136, 136, 136, 0.2);
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
   font-weight: 400;
   line-height: 1.4;
   font-weight: 500;
