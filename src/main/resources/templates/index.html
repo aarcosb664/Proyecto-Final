@@ -70,11 +70,15 @@
                             </thead>
 
                             <tbody>
-                                <tr th:each="i : ${#numbers.sequence(0,4)}">
-                                    <td th:text="${players[i].userName ?: '-'}">-</td>
-                                    <td th:text="${players[i].score ?: '-'}">-</td>
-                                    <td th:text="${players[i].destroyedBlocks ?: '-'}">-</td>
-                                    <td th:text="${players[i].dateGame ?: '-'}">-</td>
+                                <tr th:each="player : ${players}">
+                                    <td th:text="${player.userName} ?: '-'">-</td>
+                                    <td th:text="${player.score} ?: '-'">-</td>
+                                    <td th:text="${player.destroyedBlocks} ?: '-'">-</td>
+                                    <td th:text="${player.dateGame} ?: '-'">-</td>
+                                </tr>
+                                
+                                <tr th:if="${players.empty}">
+                                    <td colspan="4">No scores yet</td>
                                 </tr>
                             </tbody>
                         </table>

@@ -6,7 +6,8 @@ import aarcosb.model.repository.UserRepository;
 import aarcosb.service.CloudinaryService;
 import aarcosb.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,27 +23,24 @@ public class IndexController {
     @Autowired private UserDetailsServiceImpl userDetailsService;
 
     // Obtiene el usuario autenticado actual usando el email
-    private User getCurrentUser(Authentication authentication) 
-    {
-        return userRepository.findByEmail(authentication.getName());
+    private User getCurrentUser(UserDetails userDetails) {
+        return (userDetails != null) ? userRepository.findByEmail(userDetails.getUsername()) : null;
     }
 
     // Muestra la página de inicio con el usuario actual y los 5 mejores jugadores
     @GetMapping("/")
-    public String index(Model model, Authentication authentication) 
+    public String index(Model model, @AuthenticationPrincipal UserDetails userDetails) 
     {
-        User currentUser = getCurrentUser(authentication);
-        model.addAttribute("currentUser", currentUser);
-        
+        model.addAttribute("currentUser", getCurrentUser(userDetails));
         model.addAttribute("players", playerRepository.findTop5ByOrderByScoreDesc());
         return "index";
     }
 
     // Muestra el perfil de un usuario con el usuario actual
     @GetMapping("/profile/{id}")
-    public String profile(@PathVariable Long id, Model model, Authentication authentication) 
+    public String profile(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails) 
     {
-        User currentUser = getCurrentUser(authentication);
+        User currentUser = getCurrentUser(userDetails);
         model.addAttribute("currentUser", currentUser);
         
         // Si el usuario no existe, lanza una excepción
@@ -65,10 +63,10 @@ public class IndexController {
     @PostMapping("/profile/updateProfilePic")
     public String updateProfilePic(@RequestParam("id") Long id,
                                    @RequestParam("profilePic") MultipartFile file,
-                                   Authentication authentication,
+                                   @AuthenticationPrincipal UserDetails userDetails,
                                    Model model) 
     {
-        User currentUser = getCurrentUser(authentication);
+        User currentUser = getCurrentUser(userDetails);
         model.addAttribute("currentUser", currentUser);
         
         // Si el usuario no es admin y no es el propietario del perfil, lanza una excepción
