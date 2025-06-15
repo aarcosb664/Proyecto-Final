@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" th:href="@{img/logo.png}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{css/game.css}" rel="stylesheet">
+    <title>Breakout!</title>
+</head>
+
+<body class="p-0">
+    <div class="container-fluid p-0">
+        <div class="row vh-100 m-0 g-0">
+            <!-- Contenedor del juego (desktop) -->
+            <div class="col-12 col-lg-9 mb-5 mb-lg-0 game-container">
+                <!-- Canvas que dibuja el juego (desktop) -->
+                <canvas id="miCanvas" class="bg-white"></canvas>
+
+                <!-- Tutorial (popup) (desktop) --> 
+                <div id="tutorial" class="tutorial border-neon-white-sm">
+                    <span class="d-none d-lg-block">
+                        <h1 class="border-bottom pb-2 text-center fw-bold">How to play</h1>
+                        <h5 class="mb-3"><i class="me-2">➤</i> Press <kbd>Enter</kbd> to start the game and pause/resume the game</h5>
+                        <h5 class="mb-3"><i class="me-2">➤</i> Press the arrows <kbd>←</kbd> <kbd>→</kbd> to move the paddle</h5>
+                        <h5 class="mb-3"><i class="me-2">➤</i> Press <kbd>R</kbd> to see the ranking</h5>
+                        <h5 class="mb-3"><i class="me-2">➤</i> Press <kbd>Space</kbd> to use the power</h5>
+                    </span>
+
+                    <span class="d-block d-lg-none">
+                        <h1 class="border-bottom pb-2 text-center fw-bold">How to play</h1>
+                        <h5 class="mb-3"><i class="me-2">➤</i> Press below the arrows to start/pause the game</h5>
+                        <h5 class="mb-3"><i class="me-2">➤</i> Press the arrows <kbd>←</kbd> <kbd>→</kbd> to move the paddle</h5>
+                        <h5 class="mb-3"><i class="me-2">➤</i> Press the power icon to use the power</h5>
+                    </span>
+                </div>
+
+                <!-- Popup para guardar la información del jugador (desktop) -->
+                <form id="rankingForm" class="ranking-form border-neon-white-sm d-none" method="post" th:action="@{/saveGame}" sec:authorize="isAuthenticated()">
+                    <input type="hidden" name="score" id="inputFinalScore" />
+                    <input type="hidden" name="destroyedBlocks" id="inputFinalDestroyedBlocks" />
+                    <input type="hidden" name="dateGame" id="inputFinalDate" />
+
+                    <h2 class="border-bottom pb-2 text-center fw-bold mb-3">Game Over!</h2>
+                    <h5 class="header-neon-white-sm mb-2 text-center">Your final score:</h5>
+
+                    <div class="text-start w-50 mx-auto mb-2">
+                        <p class="text-neon-white">
+                            <i class="bi bi-star-fill pe-1"></i> 
+                            <span class="d-none d-md-inline me-3">Score:</span> 
+                            <span class="text-neon-white-sm" id="finalScore">0</span>
+                        </p>
+                        <p class="text-neon-white">
+                            <i class="bi bi-bricks pe-1"></i> 
+                            <span class="d-none d-md-inline me-3">Blocks destroyed:</span> 
+                            <span class="text-neon-white-sm" id="finalDestroyedBlocks">0</span>
+                        </p>
+                        <p class="text-neon-white">
+                            <i class="bi bi-calendar4-event pe-1"></i> 
+                            <span class="d-none d-md-inline me-3">Date:</span> 
+                            <span class="text-neon-white-sm" id="finalDate">1970-01-01 - 00:00</span>
+                        </p>
+                    </div>
+
+                    <div class="mb-3 text-center">
+                        <input type="text" name="userName" id="playerName" placeholder="Your username" required class="form-control w-50 mx-auto text-center" />
+                    </div>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button type="submit" class="btn-neon-green w-100">Save</button>
+                        <button type="reset" onclick="window.location.reload()" class="btn-neon-red w-100">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Información del juego (desktop) -->
+            <div class="col-lg-3 d-none d-lg-flex flex-column justify-content-between pe-5">
+                <!-- Información (desktop) -->
+                <fieldset class="d-flex flex-column justify-content-center align-items-center gap-3">
+                    <legend>Info</legend>
+
+                    <div class="d-flex align-items-center fs-4">
+                        <i class="bi bi-heart-fill pe-3"></i>
+                        <h2 id="lives" class="m-0">Lives</h2>
+                    </div>
+
+                    <div class="d-flex align-items-center fs-4">
+                        <i class="bi bi-star-fill pe-3"></i> 
+                        <h2 id="score" class="m-0">Score</h2>
+                    </div>
+
+                    <div class="d-flex align-items-center fs-4">
+                        <i class="bi bi-bricks pe-3"></i>
+                        <h2 id="destroyedBlocks" class="m-0">Destroyed</h2>
+                    </div>
+
+                    <div class="d-flex align-items-center fs-4">
+                        <i class="bi bi-arrows-expand pe-3"></i>
+                        <h2 id="rows" class="m-0">Rows</h2>
+                    </div>
+
+                    <div class="d-flex align-items-center fs-4">
+                        <i class="bi bi-arrows-expand-vertical pe-3"></i>
+                        <h2 id="columns" class="m-0">Columns</h2>
+                    </div>
+                </fieldset>
+
+                <!-- Power (desktop) -->
+                <fieldset class="text-center">
+                    <legend>Power</legend>
+                    <h1 id="powerTxt">None</h1>
+                </fieldset>
+
+                <!-- Opciones (desktop) -->
+                <fieldset>
+                    <legend>Options</legend>
+
+                    <div class="d-flex justify-content-around">
+                        <button id="resume" onclick="resume()" class="bg-transparent border-0">
+                            <i class="bi bi-play-fill text-white fs-1"></i>
+                        </button>
+
+                        <button id="pause" onclick="pause()" class="bg-transparent border-0">
+                            <i class="bi bi-pause-fill text-white fs-1"></i>
+                        </button>
+
+                        <button id="rankingBtn" class="bg-transparent border-0">
+                            <a th:href="@{/ranking}" id="rankingLink">
+                                <i class="bi bi-trophy-fill text-white fs-3"></i>
+                            </a>
+                        </button>
+                    </div>
+                </fieldset>
+
+                <!-- Botón de volver (desktop) -->
+                <a href="javascript:history.back()" id="exit" class="btn btn-outline-neon-purple btn-exit fs-4 mt-4 w-100">Exit</a>
+            </div>
+
+            <!-- Información del juego (mobile) -->
+            <div id="mobileContainer" class="col-12 d-block d-lg-none">
+                <div class="d-flex justify-content-center align-items-center gap-3 p-0 m-0">
+                    <div class="d-flex align-items-center fs-6">
+                        <i class="bi bi-heart-fill pe-1"></i>
+                        <h2 id="livesMobile" class="m-0"></h2>
+                    </div>
+
+                    <div class="d-flex align-items-center fs-6">
+                        <i class="bi bi-star-fill pe-1"></i> 
+                        <h2 id="scoreMobile" class="m-0"></h2>
+                    </div>
+
+                    <div class="d-flex align-items-center fs-6">
+                        <i class="bi bi-bricks pe-1"></i>
+                        <h2 id="destroyedBlocksMobile" class="m-0"></h2>
+                    </div>
+
+                    <div class="d-flex align-items-center fs-6">
+                        <i class="bi bi-arrows-expand pe-1"></i>
+                        <h2 id="rowsMobile" class="m-0"></h2>
+                    </div>
+
+                    <div class="d-flex align-items-center fs-6">
+                        <i class="bi bi-arrows-expand-vertical pe-1"></i>
+                        <h2 id="columnsMobile" class="m-0"></h2>
+                    </div>
+                </div>
+
+                <!-- Controles (mobile) -->
+                <div class="controls-container d-flex justify-content-center">
+                    <i id="mobileLeft" class="bi bi-caret-left text-white"></i>
+
+                    <p class="fs-1 align-self-center px-5 pt-3">
+                        <span id="powerTxt">None</span>
+                    </p>
+                    
+                    <i id="mobileRight" class="bi bi-caret-right text-white"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enlace al ranking (desktop) -->
+        <a th:href="@{/ranking}" id="rankingLink" class="d-none">Ranking</a>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script th:src="@{/js/game.js}"></script>
+    </div>
+</body>
+</html>

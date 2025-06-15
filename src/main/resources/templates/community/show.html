@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" th:href="@{/img/logo.png}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link th:href="@{/css/community/show.css}" rel="stylesheet">
+    <title th:text="${listing.title}">Listing</title>
+</head>
+
+<body>
+    <header th:replace="~{fragments/header :: header}"></header>
+
+    <div class="container py-4 mt-5">
+        <!-- Botones de navegación -->
+        <div class="d-flex justify-content-between w-100 mb-4">
+            <!-- Botón para volver a la página anterior -->
+            <a href="javascript:history.back()" class="btn btn-outline-neon-blue">
+                <i class="bi bi-arrow-left-short"></i> 
+                Back
+            </a>
+
+            <!-- Botones para compartir y añadir a favoritos -->
+            <div class="d-flex gap-4">
+                <!-- Botón para copiar la URL del listing -->
+                <button class="btn-outline-neon-orange" id="copyUrl">
+                    <i class="bi bi-share me-2"></i>
+                    Share
+                </button>
+
+                <!-- Botón para añadir a favoritos -->
+                <form th:action="@{/community/listing/{id}/favorite(id=${listing.id})}" 
+                      th:if="${currentUser.id != listing.userId}"
+                      method="POST">
+
+                    <button class="btn-outline-neon-pink">
+                        <i class="bi bi-star me-2" th:unless="${isFavorite}"></i>
+                        <i class="bi bi-star-fill me-2" th:if="${isFavorite}"></i>
+                        Fav
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="row mb-5 g-5">
+            <!-- Sección de la galería -->
+            <div class="col-lg-8">
+                <div class="row">
+                    <!-- Carrusel principal de la galería -->
+                    <div class="col-12">
+                        <div class="carousel-wrapper border-neon-pink">
+                            <!-- Swiper principal de la galería -->
+                            <div class="swiper mainSwiper">
+                                <div class="swiper-wrapper">
+                                    <!-- Video -->
+                                    <div th:if="${!#strings.isEmpty(listing.video)}" class="swiper-slide">
+                                        <div class="ratio ratio-16x9">
+                                            <video th:src="${listing.video}" controls class="carousel-video" muted></video>
+                                        </div>
+                                    </div>
+
+                                    <!-- Imágenes de la galería -->
+                                    <div th:each="img : ${listing.images}" class="swiper-slide">
+                                        <div class="ratio ratio-16x9">
+                                            <img th:src="${img}" alt="Listing image">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Flechas de navegación -->
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fila de miniaturas de la galería -->
+                    <div class="col-12">
+                        <div class="thumbnails-wrapper p-0 pt-3">
+                            <!-- Swiper de las miniaturas -->
+                            <div class="swiper thumbSwiper">
+                                <div class="swiper-wrapper">
+                                    <!-- Miniatura del video -->
+                                    <div th:if="${!#strings.isEmpty(listing.video)}" class="ratio ratio-16x9 swiper-slide me-3">
+                                        <video th:src="${listing.video}" class="img-fluid preview-thumb" muted></video>
+                                    </div>
+
+                                    <!-- Miniaturas de las imágenes -->
+                                    <div th:each="img : ${listing.images}" class="ratio ratio-16x9 swiper-slide me-3">
+                                        <img th:src="${img}" class="img-fluid preview-thumb" alt="Image thumbnail">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta del usuario -->
+            <div class="col-lg-4 d-flex flex-column justify-content-between border-neon-cyan text-center p-4">
+                <!-- Información del usuario -->
+                <div class="d-flex align-items-center justify-content-center mx-auto gap-3 mb-4">
+                    <!-- Imagen de perfil del usuario -->
+                    <div class="flex-shrink-0">
+                        <img th:src="@{${listingUserProfilePic}}" 
+                             width="100" height="100" 
+                             class="rounded-circle border-neon-blue p-1" 
+                             alt="Profile picture"
+                             th:title="${listing.userName}">
+                    </div>
+                    
+                    <!-- Detalles del usuario (nombre, verificado, fecha de actualización) -->
+                    <div>
+                        <!-- Nombre del usuario -->
+                        <h5 class="header-neon-blue-sm text-start m-0" th:text="${listing.userName}">user_name</h5>
+
+                        <!-- Verificado -->
+                        <div class="text-start text-neon-green-sm mb-2"
+                             data-bs-toggle="tooltip" 
+                             data-bs-placement="top" 
+                             title="This user is verified by the admins of this site">
+                            <i class="bi bi-patch-check-fill me-1"></i>
+                            <small>Verified user</small>
+                        </div>
+                        
+                        <!-- Fecha de actualización -->
+                        <div class="text-start text-neon-orange-sm">
+                            <i class="bi bi-clock me-1"></i>
+                            <small th:text="${@prettyTime.format(listing.updatedAt)}">updated_at</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Estadísticas del usuario (listings, favoritos, rating) -->
+                <div class="d-flex justify-content-around mb-4">
+                    <!-- Listings -->
+                    <div class="text-center">
+                        <div class="text-neon-blue fs-4" th:text="${totalListings}">0</div>
+                        <small class="text-neon-gray">Listings</small>
+                    </div>
+
+                    <!-- Favorites -->
+                    <div class="text-center">
+                        <div class="text-neon-green fs-4" th:text="${totalFavorites}">0</div>
+                        <small class="text-neon-gray">Favs</small>
+                    </div>
+
+                    <!-- Rating -->
+                    <div class="text-center">
+                        <div class="text-neon-orange fs-4" th:text="${#numbers.formatDecimal(listing.rating, 1, 1)}">0.0</div>
+                        <small class="text-neon-gray">Rating</small>
+                    </div>
+                </div>
+
+                <!-- Insignias del usuario (newbie - experienced, enthusiast - collector, beginner - expert) -->
+                <div class="d-flex justify-content-center gap-2 mb-4">
+                    <span class="badge badge-blue">
+                        <span th:if="${totalListings < 5}">
+                            <i class="bi bi-lightning-charge-fill me-1"></i>
+                            Newbie
+                        </span>
+
+                        <span th:if="${totalListings >= 5}">
+                            <i class="bi bi-lightning-charge-fill me-1"></i>
+                            Experienced
+                        </span>
+                    </span>
+
+                    <span class="badge badge-green">
+                        <span th:if="${totalFavorites < 10}">
+                            <i class="bi bi-trophy-fill me-1"></i>
+                            Enthusiast
+                        </span>
+
+                        <span th:if="${totalFavorites >= 10}">
+                            <i class="bi bi-trophy-fill me-1"></i>
+                            Collector
+                        </span>
+                    </span>
+
+                    <span class="badge badge-orange">
+                        <span th:if="${listing.rating < 3.5}">
+                            <i class="bi bi-star-fill me-1"></i>
+                            Beginner
+                        </span>
+
+                        <span th:if="${listing.rating >= 3.5}">
+                            <i class="bi bi-star-fill me-1"></i>
+                            Expert
+                        </span>
+                    </span>
+                </div>
+                
+                <!-- Botones de acción -->
+                <div class="d-flex flex-column justify-content-end align-items-end mt-5 gap-3">
+                    <!-- Enlace al sitio web del usuario -->
+                    <a th:if="${listing.officialUrl}" 
+                        th:href="${listing.officialUrl}" 
+                        class="btn-neon-purple w-100"
+                        method="GET">
+                        <i class="bi bi-box-arrow-up-right me-2"></i>
+                        <span>Visit Website</span>
+                    </a>
+
+                    <!-- Enlace al perfil del usuario (para otros) -->
+                    <a th:unless="${currentUser.id == listing.userId}"
+                        th:href="@{/profile/{userId}(userId=${listing.userId})}" 
+                        class="btn-outline-neon-green w-100"
+                        method="GET">
+                        <i class="bi bi-person me-2"></i>
+                        View Profile
+                    </a>
+
+                    <!-- Enlace para editar el listing (para el propietario) -->
+                    <a th:if="${currentUser.id == listing.userId}"
+                       th:href="@{/community/listing/{id}/edit(id=${listing.id})}" 
+                       class="btn-neon-yellow w-100"
+                       method="GET">
+                        <i class="bi bi-pencil-square me-2"></i>
+                        Edit Listing
+                    </a>
+
+                    <!-- Botón para eliminar el listing (para el propietario y admins) -->
+                    <button class="btn-neon-red w-100" 
+                            th:if="${currentUser.id == listing.userId or currentUser.role.name() == 'ADMIN'}"
+                            data-bs-toggle="modal" 
+                            data-bs-target="#deleteListing">
+                        <i class="bi bi-trash me-2"></i>
+                        Delete Listing
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Título y descripción del listing -->
+        <div class="d-flex justify-content-between mb-3 align-items-end">
+            <h3 th:text="${listing.title}" class="header-neon-red mb-0"></h3>
+
+            <!-- Formulario para calificar el listing -->
+            <form id="ratingForm" 
+                  th:action="@{/community/listing/{id}/rate(id=${listing.id})}"
+                  th:if="${listing.userId != currentUser.id and currentUser.role.name() != 'ADMIN'}"
+                  method="POST">
+
+                <!-- Estrellas para calificar el listing -->
+                <div id="customRating" class="rating ms-3 me-2">
+                    <input type="hidden" id="ratingInput" name="rating" th:value="${userRating}" />
+                    <label th:attr="data-value=5" for="star-5"><i class="bi bi-star"></i></label>
+                    <label th:attr="data-value=4" for="star-4"><i class="bi bi-star"></i></label>
+                    <label th:attr="data-value=3" for="star-3"><i class="bi bi-star"></i></label>
+                    <label th:attr="data-value=2" for="star-2"><i class="bi bi-star"></i></label>
+                    <label th:attr="data-value=1" for="star-1"><i class="bi bi-star"></i></label>
+                </div>
+
+                <!-- Botón para enviar la calificación -->
+                <button type="submit" id="ratingSubmit" class="d-none"></button>
+            </form>
+        </div>
+
+        <!-- Descripción del listing -->
+        <div class="border-neon-white rounded-3 mb-3 p-4">
+            <div class="text-neon-white">
+                <p th:text="${listing.description}"></p>
+            </div>
+
+            <!-- Etiquetas y fecha de creación -->
+            <div class="d-flex justify-content-between mt-5">
+                <div>
+                    <span th:each="tag : ${listing.tags}" class="badge badge-tag me-3" th:text="${tag}"></span>
+                </div>
+
+                <span class="text-neon-white-sm">
+                    <i class="bi bi-calendar4-event me-1"></i>
+                    <small th:text="${#dates.format(listing.createdAt, 'dd/MM/yyyy - HH:mm')}">created_at</small>
+                </span>
+            </div>
+        </div>
+
+        <!-- Sección de comentarios del listing -->
+        <div class="row mt-5">
+            <div class="banner mt-5">
+                <h3 class="header-neon-white">Comments</h3>
+            </div>
+
+            <div class="col-12">
+                <!-- Formulario para añadir un comentario -->
+                <form th:action="@{/community/listing/{id}/comment/post(id=${listing.id})}" 
+                      method="POST" 
+                      th:object="${commentForm}"
+                      th:if="${currentUser.role.name() != 'ADMIN'}"
+                      class="needs-validation border-neon-white-sm rounded-4 p-3 mb-5"
+                      novalidate>
+
+                    <!-- Título del comentario -->
+                    <div class="mb-4">
+                        <label class="form-label text-neon-white">Title</label>
+                        <input type="text" class="form-control form-custom text-neon-white-sm" 
+                            placeholder="Title" 
+                            th:field="*{title}" 
+                            th:errorclass="is-invalid"
+                            required>
+                        <div class="invalid-feedback" th:errors="*{title}"></div>
+                    </div>
+
+                    <!-- Texto del comentario -->
+                    <div class="mb-4">
+                        <label class="form-label text-neon-white">Comment</label>
+                        <textarea class="form-control form-custom text-neon-white-sm" 
+                                  rows="3" 
+                                  placeholder="Write a comment..." 
+                                  th:field="*{text}" 
+                                  th:errorclass="is-invalid"
+                                  required>
+                        </textarea>
+                        <div class="invalid-feedback" th:errors="*{text}"></div>
+                    </div>
+
+                    <!-- Botón para enviar el comentario -->
+                    <button type="submit" class="btn btn-outline-neon-white">Post Comment</button>
+                </form>
+
+                <!-- Lista de comentarios del listing -->
+                <div th:each="comment : ${comments}" th:if="${!comments.empty}" class="border-neon-blue-sm rounded-4 p-3 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="text-neon-white mb-2" th:text="${comment.title}"></div>
+
+                        <!-- Formulario para eliminar un comentario -->
+                        <form th:action="@{/community/listing/{listingId}/comment/{commentId}/delete(listingId=${listing.id}, commentId=${comment.id})}"
+                                th:if="${currentUser.id == comment.userId or currentUser.role.name() == 'ADMIN'}"
+                                method="POST">
+
+                            <!-- Campo oculto para el ID del comentario -->
+                            <input type="hidden" name="commentId" th:value="${comment.id}">
+
+                            <!-- Botón para eliminar el comentario -->
+                            <button class="btn-neon-red" type="submit">
+                                <i class="bi bi-trash"></i>
+                            </button> 
+                        </form>
+                    </div>
+
+                    <!-- Texto del comentario -->
+                    <div class="text-neon-white-sm mb-4" th:text="${comment.text}"></div>
+                    
+                    <!-- Nombre del usuario y fecha de creación -->
+                    <div class="d-flex justify-content-between align-items-center small">
+                        <span class="text-neon-cyan-sm" th:text="${comment.userName}"></span>
+                        <span class="text-neon-gray-sm" th:text="${@prettyTime.format(comment.createdAt)}"></span>
+                    </div>
+                </div>
+
+                <!-- Mensaje si no hay comentarios -->
+                <div th:if="${comments.empty}">
+                    <h3 class="text-center header-neon-white ">
+                        <i class="bi bi-chat-dots me-2"></i>
+                        No comments yet...
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para eliminar el listing -->
+    <div class="modal fade" id="deleteListing" tabindex="-1" aria-labelledby="deleteListing" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 bg-black border-neon-white text-neon-white">
+                <!-- Cabecera del modal -->
+                <div class="modal-header">
+                    <h5 class="modal-title header-neon-red-sm" id="deleteListing">Delete Listing</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <!-- Cuerpo del modal -->
+                <div class="modal-body text-center">
+                    <p class="text-neon-white-sm">Are you sure you want to delete this listing?</p>
+                    <p class="text-neon-white fw-bold">This action cannot be undone.</p>
+
+                    <!-- Formulario para eliminar el listing -->
+                    <form th:action="@{/community/listing/{id}/delete(id=${listing.id})}"
+                          method="POST">
+                        <button type="submit" class="btn-neon-red w-100 my-3">
+                            <i class="bi bi-trash me-2"></i>
+                            Delete
+                        </button>
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script th:src="@{/js/listing-utils.js}"></script>
+</body>
+</html>

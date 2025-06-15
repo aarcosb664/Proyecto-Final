@@ -1,0 +1,138 @@
+@use 'sass:color';
+@use '../base' as *;
+
+.navbar {
+	background-color: $black;
+
+	.navbar-toggler {
+		border-color: $blue;
+	}
+
+	.navbar-collapse {
+		transition: all 0.3s;
+		
+		@media (max-width: 991px) {
+			border: 1px solid $blue;
+			border-radius: 8px;
+			margin-top: 0.5rem !important;
+		}
+    }
+
+	.nav-link {
+        color: rgba($white, 0.8);
+        transition: all 0.3s;
+        font-weight: 500;
+
+        &:hover, 
+        &:focus {
+            color: $white !important;
+            transform: scale(1.1) !important;
+
+            @media (min-width: 991px) {
+                color: $white !important;
+                transform: translateY(-2px) !important;
+            }
+        }
+	}
+
+	.dropdown {
+        * { transition: all 0.3s ease-in-out; }
+
+		.dropdown-toggle {
+            &.isUser  { 
+                color: $blue;
+                .rounded-circle { border: 2px solid $blue; }
+
+                &:hover {
+                    color: $pink;
+                    .rounded-circle { 
+                        border: 2px solid $pink; 
+                        transform: scale(1.05);
+                    }
+                }
+            }
+
+            &.isAdmin { 
+                color: $pink;
+                .rounded-circle { border: 2px solid $pink; }
+
+                &:hover {
+                    color: $blue;
+                    .rounded-circle { 
+                        border: 2px solid $blue; 
+                        transform: scale(1.05);
+                    }
+                }
+            }
+
+			&::after {
+                content: '';
+				margin-top: 5px;
+				margin-left: 10px;
+				font-size: 1.5rem;
+			}
+		}
+        
+        .dropdown-menu {
+            position: absolute;
+            background-color: $black;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            margin-top: 10px;
+            animation: fadeIn 0.3s ease-out;
+
+            &.isUser  { 
+                border: 2px solid $blue; 
+                .dropdown-divider { border: 1px solid $blue; }
+            }
+
+            &.isAdmin { 
+                border: 2px solid $pink; 
+                .dropdown-divider { border: 1px solid $pink; }
+            }
+
+            @media (max-width: 991px) {
+                left: auto;
+                right: 0;
+                margin-top: 0.5rem;
+            }
+            
+            .dropdown-item {
+                color: $white;
+                
+                &:hover, &:focus {
+                    background-color: rgba($blue, 0.2);
+                }
+            }
+            
+            .btn-link {
+                color: $red;
+                
+                &:hover {
+                    color: rgba($red, 0.8);
+                }
+            }
+        }
+    }
+  
+    @media (max-width: 991px) {
+        .navbar-nav .nav-item {
+            margin: 8px 0;
+            text-align: center;
+                
+            &:hover {
+                background-color: rgba($blue, 0.1);
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.navbar.fixed-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+}

@@ -1,0 +1,141 @@
+<nav th:fragment="header" class="navbar navbar-expand-lg border-bottom-custom fixed-top py-2"
+     th:classappend="${currentUser.role.name() == 'USER' ? 'isUser' : 'isAdmin'}">
+
+    <div class="container d-flex align-items-center justify-content-between">
+        <!-- Perfil (móvil: último; desktop: último) -->
+        <div class="order-3 order-lg-3 d-flex align-items-center">
+            <div class="dropdown me-2" sec:authorize="isAuthenticated()">
+                <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" 
+                   id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+                   th:classappend="${currentUser.role.name() == 'USER' ? 'isUser' : 'isAdmin'}">
+                    <img th:src="@{${currentUser.profilePic}}" alt="User" width="50" height="50" class="rounded-circle me-2">
+                    <span class="d-none d-xl-block" th:text="${currentUser.userName}">Username</span>
+                </a>
+
+                <!-- Menú desplegable del perfil -->
+                <ul class="dropdown-menu dropdown-menu-end" 
+                    aria-labelledby="userDropdown"
+                    th:classappend="${currentUser.role.name() == 'USER' ? 'isUser' : 'isAdmin'}">
+
+                    <li><a class="dropdown-item" th:href="@{'/profile/' + ${currentUser.id}}">Profile</a></li>
+                    <li><a class="dropdown-item" th:href="@{'/profile/' + ${currentUser.id} + '#settings'}">Settings</a></li>
+                    <li><a class="dropdown-item" th:if="${currentUser.role.name() == 'USER'}" th:href="@{'/profile/' + ${currentUser.id} + '#myListings'}">My Listings</a></li>
+                    <li><a class="dropdown-item" th:href="@{'/profile/' + ${currentUser.id} + '#myFavorites'}">Favorites</a></li>
+                    <li><a class="dropdown-item" th:if="${currentUser.role.name() == 'USER'}" th:href="@{'/profile/' + ${currentUser.id} + '#stats'}">My Stats</a></li>
+                    <li><a class="dropdown-item" th:href="@{'/profile/' + ${currentUser.id} + '#history'}">History</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item btn-link" th:if="${currentUser.role.name() == 'ADMIN'}" th:href="@{/admin/panel}">Control Panel</a></li>
+                    <li><a class="dropdown-item btn-link" href="#" data-bs-toggle="modal" data-bs-target="#quickHelp">Quick Help</a></li>
+                    <li>
+                        <form th:action="@{/logout}" method="post" class="dropdown-item btn-link p-0">
+                            <button type="submit" class="btn btn-link text-decoration-none w-100 text-start px-3 py-1">Sign out</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Botón para iniciar sesión -->
+            <a th:href="@{/login}" sec:authorize="!isAuthenticated()">
+                <div class="box">
+                    <span class="d-block text-white px-4 py-2">
+                        Sign in
+                    </span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Logo (móvil: segundo; desktop: primero) -->
+        <a class="navbar-brand order-2 order-lg-1 d-flex align-items-center mx-auto" th:href="@{/}">
+            <img th:src="@{/img/logo.png}" alt="Logo" width="50" height="50" class="me-0 me-sm-2">
+            <span class="fw-bold text-white fs-4">Breakout</span>
+        </a>
+        
+        <!-- Botón para mostrar el menú (móvil: primero; desktop: oculto) -->
+        <button class="navbar-toggler order-1 order-lg-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" 
+                aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list text-white fs-1"></i>
+        </button>
+        
+        <!-- Enlaces (desktop: centrados; móvil: en collapse, apilados) -->
+        <div class="collapse navbar-collapse justify-content-center order-4 order-lg-2 my-2 my-lg-0" id="navbarMain">
+            <ul class="navbar-nav text-center flex-lg-row align-items-lg-center justify-content-lg-center gap-lg-5 mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/community}">Community</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="btn glow-on-hover hover-scale px-4 py-2" th:href="@{/game}">PLAY</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/about}">About</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/ranking}">Ranking</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Modal para mostrar el menú rápido -->
+<div th:fragment="quickHelp" class="modal fade" id="quickHelp" tabindex="-1" aria-labelledby="quickHelp" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content rounded-4 bg-black border-neon-white text-neon-white">
+            <!-- Cabecera del modal -->
+            <div class="modal-header">
+                <h5 class="modal-title text-center header-neon-blue-sm" id="quickHelp">
+                    <i class="bi bi-question-circle me-2"></i> Quick Help
+                </h5>
+
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Cuerpo del modal -->
+            <div class="modal-body">
+                <!-- Ayuda rápida -->
+                <ul class="list-unstyled fs-5 mb-0">
+                    <li class="mb-3">
+                        <i class="bi bi-person-plus text-neon-green me-2"></i>
+                        <b>Register:</b> Create an account from the registration tab.
+                    </li>
+
+                    <li class="mb-3">
+                        <i class="bi bi-box-arrow-in-right text-neon-yellow me-2"></i>
+                        <b>Login:</b> Access with your email and password.
+                    </li>
+
+                    <li class="mb-3">
+                        <i class="bi bi-search text-neon-cyan me-2"></i>
+                        <b>Search:</b> Use the search bar or filters to find content.
+                    </li>
+
+                    <li class="mb-3">
+                        <i class="bi bi-plus-circle text-neon-pink me-2"></i>
+                        <b>Create listing:</b> Publish a new game or resource from the Community section.
+                    </li>
+
+                    <li class="mb-3">
+                        <i class="bi bi-star text-neon-yellow me-2"></i>
+                        <b>Favorites:</b> Mark your favorite listings to access them quickly.
+                    </li>
+
+                    <li class="mb-3">
+                        <i class="bi bi-chat-left-text text-neon-blue me-2"></i>
+                        <b>Comment:</b> Leave your opinion or question in the listings.
+                    </li>
+                    
+                    <li class="mb-3">
+                        <i class="bi bi-person-circle text-neon-green me-2"></i>
+                        <b>Profile:</b> Consult and edit your data and your publications.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

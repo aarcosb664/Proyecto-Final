@@ -1,0 +1,15 @@
+@use 'vars' as *;
+@use 'mixins' as *;
+
+// Colores de los badges
+.badge-red    { @include badge($red);    }
+.badge-blue   { @include badge($blue);   }
+.badge-green  { @include badge($green);  }
+.badge-yellow { @include badge($yellow); }
+.badge-purple { @include badge($purple); }
+.badge-cyan   { @include badge($cyan);   }
+.badge-pink   { @include badge($pink);   }
+.badge-orange { @include badge($orange); }
+.badge-white  { @include badge($white);  }
+.badge-black  { @include badge($black);  }
+.badge-gray   { @include badge($gray);   }

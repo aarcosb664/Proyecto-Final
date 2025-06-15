@@ -1,0 +1,20 @@
+$red:      #ff1744;
+$blue:     #00bfff;
+$green:    #00ff90;
+$yellow:   #ffe600;
+$purple:   #a259ff;
+$cyan:     #00fff7;
+$pink:     #ff4fd8;
+$orange:   #ff9100;
+$black:    #000000;
+$white:    #ffffff;
+$gray:     #888888;
+
+// Animación para el hover de los elementos
+.hover-scale {
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}

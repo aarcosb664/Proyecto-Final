@@ -1,97 +1,171 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Breakout!</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/style.css}">    
+    <link rel="icon" type="image/png" th:href="@{img/logo.png}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link th:href="@{css/index.css}" rel="stylesheet">
+    <title>Inicio</title>
 </head>
-<body>
-    <div class="contenedor">      
-        <!-- Tutorial -->
-        <div id="tutorial">
-            <h1>---------- Cómo jugar ----------</h1>
-            <h2>> Pulsa Enter para iniciar el juego y pausar/reanudar el juego</h2>
-            <h2>> Pulsa las flechas derecha o izquierda para mover la paleta</h2>
-            <h2>> Pulsa r para ver la clasificación</h2>
-            <h2>> Pulsa espacio para usar el poder</h2>
-        </div>
-        <!-- Canvas que dibuja el juego -->
-        <canvas id="miCanvas" width="1000" height="750"></canvas>
-        <!-- Informacion, poder y opciones -->
-        <div class="misc">
-            <!-- Información -->
-            <fieldset class="informacion">
-                <legend>Información</legend>
-                <!-- Vidas -->
-                <div class="info">
-                    <img th:src="@{/img/vida.svg}" alt="Vida"/>
-                    <h1 id="vidas"></h1>
-                </div>
-                <!-- Puntos -->
-                <div class="info">
-                    <img th:src="@{/img/puntuacion.svg}" alt="Puntuacion"/>
-                    <h1 id="puntos"></h1>
-                </div>
-                <!-- Bloques destruidos -->
-                <div class="info">
-                    <img th:src="@{/img/bloque.svg}" alt="BloquesDestruidos"/>
-                    <h1 id="bloquesDestruidos"></h1>
-                </div>              
-                <!-- Filas -->
-                <div class="info">
-                    <img th:src="@{/img/fila.svg}" alt="Fila"/>
-                    <h1 id="filas"></h1>
-                </div>
-                <!-- Columnas -->
-                <div class="info">
-                    <img th:src="@{/img/columna.svg}" alt="Columna"/>
-                    <h1 id="columnas"></h1>
-                </div>
-            </fieldset>
-            <!-- Poder -->
-            <fieldset class="poder">
-                <legend>Poder</legend>
-                <h1 id="poderTxt">Nada</h1>
-            </fieldset>
-            <!-- Opciones -->
-            <fieldset class="opciones">
-                <legend>Opciones</legend>
-                <button id="reanudar" onclick="reanudar()"></button>
-                <button id="pausar" onclick="pausar()"></button>
-                <button id="clasificacion" onclick="verRanking()"></button>
-            </fieldset>
-        </div>
-        <a th:href="@{/ranking}" type="hidden" id="rankingLink"></a>
-    </div>
-    <!-- Ventana emergente para guardar la información del jugador -->
-    <form id="ranking" method="post" th:action="@{/ranking}">
-        <h1>¡Vaya, has perdido!</h1>
-        <h2>----- Tu puntuación final -----</h2>
-        <h3 id="puntuacionFinal">Puntos finales: </h3>
-        <input type="hidden" name="puntuacionFinal" id="inputPuntuacionFinal" />
-        <h3 id="bloquesDestruidosFinal">Bloques destruidos totales: </h3>
-        <input type="hidden" name="bloquesDestruidosFinal" id="inputBloquesDestruidosFinal" />
-        <h3 id="fecha">Fecha: </h3>
-        <input type="hidden" name="fechaFinal" id="inputFechaFinal" />
-        <h1>Ingresa tu nombre:</h1>
-        <input type="text" name="nombreJugador" id="nombreJugador" placeholder="Nombre" required />
-        <button type="submit" onclick="guardarRanking()">Guardar</button>
-        <button type="reset" onclick="recargar()">Cancelar</button>
-    </form>
-    <script th:inline="javascript">
-        /*<![CDATA[*/
-        let bX = 500;
-        let bY = 450;
-        let radio = 7;
-        let vX = 0;
-        let vY = 3;
 
-        let pX = 450;
-        let pY = 20;
-        let pW = 100;
-        let pH = 10;
-        /*]]>*/
-    </script>
-    <script th:src="@{/script.js}"></script>
+<body>
+    <header th:replace="~{fragments/header :: header}"></header>
+
+    <!-- Diseño de romboides a pantalla completa -->
+    <div class="rhombus-container mt-5">
+        <!-- Wrapper para el rombo rojo -->
+        <div class="rhombus-wrapper rhombus-red-wrapper">
+            <div class="rhombus rhombus-red">
+                <div class="rhombus-content ms-lg-5 ms-0">
+                    <h1 class="header-neon-white mb-3">Breakout!</h1>
+
+                    <div>
+                        <p class="text-neon-white mb-3">Play the breakout game (without registering!) or discover other games created by the community!</p>
+                        
+                        <div class="hero-stats">
+                            <div class="stat-item" style="--stat-color1:#00f;--stat-color2:#0ff;">
+                                <div class="stat-number">50+</div>
+                                <div class="stat-label">Levels</div>
+                            </div>
+
+                            <div class="stat-item" style="--stat-color1:#f00;--stat-color2:#ff0;">
+                                <div class="stat-number">20+</div>
+                                <div class="stat-label">Power-ups</div>
+                            </div>
+                            
+                            <div class="stat-item" style="--stat-color1:#0f0;--stat-color2:#0ff;">
+                                <div class="stat-number">10K+</div>
+                                <div class="stat-label">Players</div>
+                            </div>
+                        </div>
+                        
+                        <p class="text-neon-white mb-3">Break blocks, collect power-ups, and compete for the highest score in this classic arcade game!</p>
+                    </div>
+
+                    <div class="d-grid gap-0 column-gap-4 align-items-center" style="grid-template-columns: 1fr 1fr;">
+                        <a th:href="@{/game}" class="btn-neon-red">LET'S PLAY</a>
+                        <a th:href="@{/community}" class="btn-neon-blue">COMMUNITY</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Wrapper para el rombo azul -->
+        <div class="rhombus-wrapper rhombus-blue-wrapper">
+            <div class="rhombus rhombus-blue">
+                <div class="rhombus-content me-lg-5 me-0">
+                    <h1 class="header-neon-white mb-3">Top 5 players</h1>
+
+                    <div class="rhombus-table-wrapper">
+                        <table class="table table-dark table-striped table-hover table-bordered border-neon-purple table-sm align-middle text-center py-3">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Player</th>
+                                    <th>Score</th>
+                                    <th>Blocks</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr th:each="i : ${#numbers.sequence(0,4)}">
+                                    <td th:text="${players[i].userName ?: '-'}">-</td>
+                                    <td th:text="${players[i].score ?: '-'}">-</td>
+                                    <td th:text="${players[i].destroyedBlocks ?: '-'}">-</td>
+                                    <td th:text="${players[i].dateGame ?: '-'}">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <a th:href="@{/ranking}" class="btn-neon-white">View Full Ranking</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-4">
+        <!-- Características -->
+        <h2 class="text-center banner header-neon-white mb-5">Features</h2>
+
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <a th:href="@{/game}" class="text-decoration-none">
+                    <div class="card border-neon-red h-100 p-4 text-center hover-scale">
+                        <i class="bi bi-lightning-charge-fill fs-1 mb-3 text-neon-red"></i>
+                        <h3 class="header-neon-red mb-3">Power-ups</h3>
+                        <p class="text-neon-red">Unlock special powers to improve your ball and break blocks faster.</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4">
+                <a th:href="@{/ranking}" class="text-decoration-none">
+                    <div class="card border-neon-green h-100 p-4 text-center hover-scale">
+                        <i class="bi bi-trophy-fill fs-1 mb-3 text-neon-green"></i>
+                        <h3 class="header-neon-green mb-3">Ranking</h3>
+                        <p class="text-neon-green">Compete against others and reach the top of our global ranking.</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4">
+                <a th:href="@{/community}" class="text-decoration-none">
+                    <div class="card border-neon-blue h-100 p-4 text-center hover-scale">
+                        <i class="bi bi-people-fill fs-1 mb-3 text-neon-blue"></i>
+                        <h3 class="header-neon-blue mb-3">Community</h3>
+                        <p class="text-neon-blue">Discover and play other games created by the community.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="row text-center mt-5 g-4">
+            <div class="col-md-3 col-6">
+                <div class="speckyboy-shimmer speckyboy-shimmer--red">
+                    <span class="shimmer"></span>
+                    <div class="card-body">
+                        <h3 class="header-neon-red mb-3">10K+</h3>
+                        <p class="text-neon-red">Players</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-6">
+                <div class="speckyboy-shimmer speckyboy-shimmer--blue">
+                    <span class="shimmer"></span>
+                    <div class="card-body">
+                        <h3 class="header-neon-blue mb-3">50+</h3>
+                        <p class="text-neon-blue">Levels</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-6">
+                <div class="speckyboy-shimmer speckyboy-shimmer--green">
+                    <span class="shimmer"></span>
+                    <div class="card-body">
+                        <h3 class="header-neon-green mb-3">5M+</h3>
+                        <p class="text-neon-green">Games</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-6">
+                <div class="speckyboy-shimmer speckyboy-shimmer--yellow">
+                    <span class="shimmer"></span>
+                    <div class="card-body">
+                        <h3 class="header-neon-yellow mb-3">20+</h3>
+                        <p class="text-neon-yellow">Power-ups</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
-</html> 
+</html>

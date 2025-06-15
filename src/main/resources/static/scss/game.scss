@@ -1,0 +1,64 @@
+@use 'globals';
+@use 'base' as *;
+
+#miCanvas {
+    display: block;
+    margin: 0 auto;
+}
+
+.game-container {
+    position: relative
+}
+
+.tutorial,
+.ranking-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $black;
+    color: $white;
+    padding: 1rem;
+    border-radius: 1rem;
+    z-index: 1;
+
+    @media (max-width: 992px) {
+        width: 90%;
+        transform: translate(-50%, 50%);
+    }
+}
+
+.ranking-form {
+    width: 60%;
+}
+
+// Reset de los campos definidos por Bootstrap
+fieldset, legend {
+    all: revert;
+}
+
+fieldset,
+.btn-exit {
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    animation: borderNeonPulseGame 5s ease-in-out infinite;
+    --pulse-color-1: #{$red};
+    --pulse-color-2: #{$blue};
+}
+
+legend {
+    @include header-neon($white);
+    text-align: center;
+}
+
+@keyframes borderNeonPulseGame {
+    0%, 100% { box-shadow: 0 0 1.5rem 2px var(--pulse-color-1); }
+         25% { box-shadow: 0 0 1rem 1px var(--pulse-color-1);   }
+         50% { box-shadow: 0 0 1.5rem 2px var(--pulse-color-2); }
+         75% { box-shadow: 0 0 1rem 1px var(--pulse-color-2);   }
+}
+
+.controls-container {
+    i { font-size: 100px; }
+}

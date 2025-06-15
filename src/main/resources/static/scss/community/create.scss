@@ -1,0 +1,14 @@
+@use '../globals';
+@use '../base' as *;
+
+.label-required {
+    &::before {
+		content: "* ";
+		color: $red;
+    }
+}
+
+#previewCarousel {
+	max-height: 550px;
+	overflow-y: auto;
+}
