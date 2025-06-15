@@ -1,15 +1,13 @@
-# Dockerfile
-FROM openjdk:17-jdk AS build
+# Stage 1: build
+FROM maven:3.8-openjdk-17 AS build
 WORKDIR /app
-COPY pom.xml mvnw ./
-COPY .mvn .mvn
-COPY src src
-RUN chmod +x mvnw && ./mvnw clean package -DskipTests
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
 
+# Stage 2: runtime
 FROM openjdk:17-jdk
 WORKDIR /
-COPY --from=build /app/target/*.jar app.jar
-# Opcional: expone para depuración local
-EXPOSE 8080
-
-ENTRYPOINT ["sh","-c","java -jar /app.jar --server.port=$PORT"]
+# Copiamos el WAR repackaged y lo renombramos a app.jar para mantener java -jar /app.jar
+COPY --from=build /app/target/*.war app.war
+ENTRYPOINT ["java", "-jar", "/app.war"]
