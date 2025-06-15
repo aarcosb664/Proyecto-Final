@@ -1,15 +1,15 @@
 package aarcosb.model.dto;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class CloudinaryResponse {
+    // ID público del archivo
     private String publicId;
+
+    // URL del archivo
     private String url;
 }

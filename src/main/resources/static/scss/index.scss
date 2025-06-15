@@ -2,130 +2,130 @@
 @use 'base' as *;
 
 .rhombus-container {
-  overflow: hidden;
-  position: relative;
-  height: 85vh;
-  
-  @media (max-width: 992px) { 
-    height: auto; 
-  }
+	overflow: hidden;
+	position: relative;
+	height: 85vh;
+	
+	@media (max-width: 992px) { 
+		height: auto; 
+	}
 }
 
 .rhombus-wrapper {
-  position: absolute;
-  top: 5%;
-  height: 90%;
-  width: 60%;
-  border: 3px solid transparent;
-  border-radius: 1rem;
-  transform: skew(-15deg, 0);
-  
-  @media (max-width: 992px) {
-    position: relative;
-    width: 90%;
-    margin: 1rem auto;
-    transform: none;
-    top: 0;
-    left: 0 !important;
-  }
+	position: absolute;
+	top: 5%;
+	height: 90%;
+	width: 60%;
+	border: 3px solid transparent;
+	border-radius: 1rem;
+	transform: skew(-15deg, 0);
+	
+	@media (max-width: 992px) {
+		position: relative;
+		width: 90%;
+		margin: 1rem auto;
+		transform: none;
+		top: 0;
+		left: 0 !important;
+	}
 }
 
 .rhombus-red-wrapper {
-  @include border-neon($red);
-  left: -10%;
+	@include border-neon($red);
+	left: -10%;
 }
 
 .rhombus-blue-wrapper {
-  @include border-neon($blue);
-  right: -10%;
+	@include border-neon($blue);
+	right: -10%;
 }
 
 .rhombus {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: skew(15deg, 0);
-  
-  @media (max-width: 992px) { 
-    transform: none; 
-  }
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transform: skew(15deg, 0);
+	
+	@media (max-width: 992px) { 
+		transform: none; 
+	}
 }
 
 .rhombus-content {
-  display: grid;
-  grid-template-rows: 1fr 4fr 1fr;
-  gap: 0.3rem;
-  width: 95%;
-  max-width: 550px;
-  padding: clamp(1.6rem, 5vw, 3rem);
-  text-align: center;
-  font-size: 1.1rem;
-  line-height: 1.5;
+	display: grid;
+	grid-template-rows: 1fr 4fr 1fr;
+	gap: 0.3rem;
+	width: 95%;
+	max-width: 550px;
+	padding: clamp(1.6rem, 5vw, 3rem);
+	text-align: center;
+	font-size: 1.1rem;
+	line-height: 1.5;
 
-  h1, h2, h3, h4, h5, h6 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-  }
+	h1, h2, h3, h4, h5, h6 {
+		font-size: 2.5rem;
+		margin-bottom: 1.5rem;
+	}
 
-  p, .hero-stats, .btn, a {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-  }
+	p, .hero-stats, .btn, a {
+		font-size: 1.2rem;
+		margin-bottom: 1rem;
+	}
 
-  .btn, a.btn {
-    padding: 1rem 1.8rem;
-    font-size: 1.2rem;
-  }
+	.btn, a.btn {
+		padding: 1rem 1.8rem;
+		font-size: 1.2rem;
+	}
 
-  @media (max-width: 992px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.1rem;
-  }
+	@media (max-width: 992px) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		font-size: 1.1rem;
+	}
 }
 
 .table {
-  height: 85%;
+	height: 85%;
 
-  @media (max-width: 992px) { 
-    margin: 10px 0 20px 0; 
-  }
+	@media (max-width: 992px) { 
+		margin: 10px 0 20px 0; 
+	}
 }
 
 .hero-stats {
-  display: flex;
-  justify-content: center;
-  margin: 1.5rem 0;
-  
-  .stat-item {
-    text-align: center;
-    padding: 0 1.5rem;
-    border-right: 1px solid rgba($gray, 0.4);
-    
-    &:last-child {
-      border-right: none;
-    }
-    
-    .stat-number {
-      display: inline-block;
-      background: linear-gradient(120deg, var(--stat-color1), var(--stat-color2));
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      font-weight: bold;
-      font-size: clamp(1.1em, 2rem, 2.5rem);
-    }
-    
-    .stat-label {
-      font-size: clamp(0.8rem, 0.9rem, 1rem);
-      opacity: 0.8;
-    }
-    
-    @media (max-width: 992px) { 
-      justify-content: space-evenly; 
-    }
-  }
+	display: flex;
+	justify-content: center;
+	margin: 1.5rem 0;
+	
+	.stat-item {
+		text-align: center;
+		padding: 0 1.5rem;
+		border-right: 1px solid rgba($gray, 0.4);
+		
+		&:last-child {
+			border-right: none;
+		}
+		
+		.stat-number {
+			display: inline-block;
+			background: linear-gradient(120deg, var(--stat-color1), var(--stat-color2));
+			background-clip: text;
+			-webkit-background-clip: text;
+			color: transparent;
+			font-weight: bold;
+			font-size: clamp(1.1em, 2rem, 2.5rem);
+		}
+		
+		.stat-label {
+			font-size: clamp(0.8rem, 0.9rem, 1rem);
+			opacity: 0.8;
+		}
+		
+		@media (max-width: 992px) { 
+			justify-content: space-evenly; 
+		}
+	}
 }

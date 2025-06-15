@@ -13,13 +13,18 @@
 <body>
     <header th:replace="~{fragments/header :: header}"></header>
 
+    <!-- Contenedor de ranking -->
     <div class="container mt-5">
+        <!-- Título -->
         <h1 class="banner header-neon-white">Ranking</h1>
-        
+
+        <!-- Tabla de ranking -->
         <div class="table-container">
             <table class="table table-dark table-striped table-bordered table-hover border-neon-blue">
+                <!-- Cabecera de la tabla -->
                 <thead>
                     <tr>
+                        <!-- Posición -->
                         <th scope="col">
                             Position
                             <span class="arrow">
@@ -28,6 +33,7 @@
                             </span>
                         </th>
 
+                        <!-- Jugador -->
                         <th scope="col">
                             Player
                             <span class="arrow">
@@ -36,6 +42,7 @@
                             </span>
                         </th>
 
+                        <!-- Puntuación -->
                         <th scope="col">
                             Score
                             <span class="arrow">
@@ -44,6 +51,7 @@
                             </span>
                         </th>
 
+                        <!-- Bloques -->
                         <th scope="col">
                             Blocks
                             <span class="arrow">
@@ -52,6 +60,7 @@
                             </span>
                         </th>
 
+                        <!-- Fecha -->
                         <th scope="col">
                             Date&nbsp;
                             <span class="arrow">
@@ -62,6 +71,7 @@
                     </tr>
                 </thead>
 
+                <!-- Cuerpo de la tabla -->
                 <tbody>
                     <tr th:each="player : ${players}" th:if="${!players.empty}" th:classappend="${player.userId == currentUser.id ? 'text-neon-white' : ''}">
                         <td th:text="${player.position}"></td>
@@ -70,18 +80,20 @@
                         </td>
                         <td th:text="${player.score}"></td>
                         <td th:text="${player.destroyedBlocks}"></td>
-                        <td th:text="${#temporals.format(player.dateGame, 'MM/dd/yyyy - HH:mm')}"></td>
+                        <td th:text="${#dates.format(player.dateGame, 'MM/dd/yyyy - HH:mm')}"></td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
+        <!-- Mensaje si no hay datos -->
         <div class="header-neon-white text-center mt-4" th:if="${players.empty}">
             <h2>No ranking data available</h2>
         </div>
 
+        <!-- Botón para volver -->
         <div class="mt-4">
-            <a href="javascript:history.back()" class="btn btn-neon-red w-100 mt-4">Go back</a>
+            <a th:href="@{/game}" class="btn btn-outline-neon-pink w-100 mt-4">Go to game</a>
         </div>
     </div>
 

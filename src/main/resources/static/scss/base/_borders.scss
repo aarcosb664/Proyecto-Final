@@ -1,7 +1,7 @@
 @use 'vars' as *;
 @use 'mixins' as *;
 
-// Bordes neon
+// Colores de los bordes neon
 .border-neon-red      { @include border-neon($red);      }
 .border-neon-blue     { @include border-neon($blue);     }
 .border-neon-green    { @include border-neon($green);    }
@@ -14,7 +14,7 @@
 .border-neon-black    { @include border-neon($black);    }
 .border-neon-gray     { @include border-neon($gray);     }
 
-// Bordes neon más pequeños
+// Colores de los bordes neon más pequeños
 .border-neon-red-sm      { @include border-neon-sm($red);      }
 .border-neon-blue-sm     { @include border-neon-sm($blue);     }
 .border-neon-green-sm    { @include border-neon-sm($green);    }

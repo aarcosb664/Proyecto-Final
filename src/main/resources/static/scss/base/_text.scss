@@ -1,7 +1,7 @@
 @use 'vars' as *;
 @use 'mixins' as *;
 
-// Neon text utilities
+// Colores de los textos neon
 .text-neon-red      { @include text-neon($red);      }
 .text-neon-blue     { @include text-neon($blue);     }
 .text-neon-green    { @include text-neon($green);    }
@@ -14,7 +14,7 @@
 .text-neon-black    { @include text-neon($black);    }
 .text-neon-gray     { @include text-neon($gray);     }
 
-// Neon text small utilities
+// Colores de los textos neon más pequeños
 .text-neon-red-sm      { @include text-neon-sm($red);      }
 .text-neon-blue-sm     { @include text-neon-sm($blue);     }
 .text-neon-green-sm    { @include text-neon-sm($green);    }
@@ -27,7 +27,7 @@
 .text-neon-black-sm    { @include text-neon-sm($black);    }
 .text-neon-gray-sm     { @include text-neon-sm($gray);     }
 
-// Neon header utilities
+// Colores de los encabezados neon
 .header-neon-red      { @include header-neon($red);      }
 .header-neon-blue     { @include header-neon($blue);     }
 .header-neon-green    { @include header-neon($green);    }
@@ -40,7 +40,7 @@
 .header-neon-black    { @include header-neon($black);    }
 .header-neon-gray     { @include header-neon($gray);     }
 
-// Neon header small utilities
+// Colores de los encabezados neon más pequeños
 .header-neon-red-sm      { @include header-neon-sm($red);      }
 .header-neon-blue-sm     { @include header-neon-sm($blue);     }
 .header-neon-green-sm    { @include header-neon-sm($green);    }

@@ -36,7 +36,7 @@ public class ListingServiceTest {
     @Test
     void getListingById_callsRepository() {
         listingService.getListingById(1L);
-        verify(listingRepository).findByIdWithImages(1L);
+        verify(listingRepository).findById(1L);
     }
 
     @Test

@@ -1,22 +1,9 @@
 package aarcosb.model.entity;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import java.time.LocalDate;
-import java.util.List;
-import jakarta.persistence.PrePersist;
-import java.util.ArrayList;
+import lombok.*;
+import java.util.*;
 
 @Entity
 @Data
@@ -24,37 +11,47 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @Table(name = "users")
 public class User {
+    // ID del usuario
     @Id
+    // Genera el ID del usuario de forma automática
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Nombre de usuario
     @Column(name = "user_name", unique = true, nullable = false)
     private String userName;
 
+    // Email del usuario
     @Column(name = "email", unique = true)
     @Email
     private String email;
 
+    // Contraseña del usuario
     @Column(name = "password")
     private String password;
 
+    // Imagen de perfil del usuario
     @Column(name = "profile_pic")
     private String profilePic;
 
-    @ElementCollection
+    // Listado de listings favoritos del usuario
+    @ElementCollection 
     @Column(name = "fav_listings")
     private List<Long> favListings;
 
+    // Rol del usuario
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
     
+    // Fecha de creación del usuario
     @Column(name = "created_at")
-    private LocalDate createdAt;
+    private Date createdAt;
 
+    // Método que se ejecuta antes de que se persista el usuario
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDate.now();
+        createdAt = new Date();
         profilePic = "/img/default.png";
         favListings = new ArrayList<>();
         role = Role.USER;

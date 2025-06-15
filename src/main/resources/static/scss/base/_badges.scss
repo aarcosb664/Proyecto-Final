@@ -1,7 +1,7 @@
 @use 'vars' as *;
 @use 'mixins' as *;
 
-// Badges utilities
+// Colores de los badges
 .badge-red    { @include badge($red);    }
 .badge-blue   { @include badge($blue);   }
 .badge-green  { @include badge($green);  }

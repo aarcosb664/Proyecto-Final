@@ -36,7 +36,7 @@
 		transition: all 0.2s ease-in-out;
 
 		&:hover {
-		color: rgba($gray, 0.5);
+			color: rgba($gray, 0.5);
 		}
 	}
 }
@@ -73,7 +73,9 @@
 .badge-tag {
 	$colors: ($red, $green, $blue, $cyan, $yellow, $purple, $orange, $pink, $gray);
 
+	// Bucle para seleccionar el color de cada badge
 	@for $i from 1 through 9 {
+		// Selecciona el color de cada badge en función del índice
 		&:nth-child(#{$i}) {
 			@include badge(list.nth($colors, $i));
 		}

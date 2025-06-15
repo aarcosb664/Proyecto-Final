@@ -1,7 +1,7 @@
 @use 'vars' as *;
 @use 'mixins' as *;
 
-// Botones neon
+// Colores de los botones neon
 .btn-neon-red      { @include btn-neon($red, $white);    }
 .btn-neon-blue     { @include btn-neon($blue, $white);   }
 .btn-neon-green    { @include btn-neon($green, $black);  }
@@ -14,7 +14,7 @@
 .btn-neon-black    { @include btn-neon($black, $white);  }
 .btn-neon-gray     { @include btn-neon($gray, $white);   }
 
-// Botones neon outline
+// Colores de los bolores de los botones neon outline
 .btn-outline-neon-red      { @include btn-outline-neon($red, $red);         }
 .btn-outline-neon-blue     { @include btn-outline-neon($blue, $blue);       }
 .btn-outline-neon-green    { @include btn-outline-neon($green, $green);     }

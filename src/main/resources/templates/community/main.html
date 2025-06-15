@@ -16,12 +16,12 @@
     <div class="container">
         <div class="row">
             <div class="col mt-3">
-                <!-- Title -->
+                <!-- Título -->
                 <div class="banner header-neon-white">
                     <h1>Community</h1>
                 </div>
                 
-                <!-- Search, filters and sort menu -->
+                <!-- Botón para mostrar el menú y los filtros -->
                 <button class="btn-outline-neon-white dropdown-toggle w-100 mt-3" type="button"
                         data-bs-toggle="collapse" data-bs-target="#search-menu" 
                         aria-expanded="false" aria-controls="search-menu">
@@ -29,30 +29,40 @@
                     Menu and utils
                 </button>
 
-                <!-- Search, filters and sort menu -->
+                <!-- Menú y filtros -->
                 <div class="collapse" id="search-menu">
-                    <!-- Search, filters and sort form -->
+                    <!-- Formulario para buscar, filtrar y ordenar -->
                     <div class="container my-4">
                         <form th:action="@{/community}" method="get" class="row gy-4">
-                            <!-- Search and filters -->
+                            <!-- Buscador y filtros -->
                             <div class="col-12 col-lg-5">
+                                <!-- Buscador -->
                                 <label class="form-label w-100">Search</label>
-                                <input name="query" class="form-control mb-3" placeholder="Title, description, user, tags…" th:value="${param.query}">
+                                <input name="query" 
+                                       class="form-control mb-3" 
+                                       placeholder="Title, description, user, tags…" 
+                                       th:value="${param.query}">
+                                
+                                <!-- Filtros de rating -->
                                 <div class="row g-2 mb-3">
                                     <div class="col-6">
                                         <label class="form-label w-100">Min rating</label>
                                         <input name="minRating" type="number" step="0.1" min="0" max="5" placeholder="0" class="form-control" th:value="${param.minRating}">
                                     </div>
+
                                     <div class="col-6">
                                         <label class="form-label w-100">Max rating</label>
                                         <input name="maxRating" type="number" step="0.1" min="0" max="5" placeholder="5" class="form-control" th:value="${param.maxRating}">
                                     </div>
                                 </div>
+
+                                <!-- Filtros de fechas -->
                                 <div class="row g-2">
                                     <div class="col-6">
                                         <label class="form-label w-100">From</label>
                                         <input name="dateFrom" type="date" class="form-control" th:value="${param.dateFrom}">
                                     </div>
+
                                     <div class="col-6">
                                         <label class="form-label w-100">To</label>
                                         <input name="dateTo" type="date" class="form-control" th:value="${param.dateTo}">
@@ -62,10 +72,11 @@
                             
                             <div class="col-0 d-none d-lg-block col-lg-1"></div>
                             
-                            <!-- Sort -->
+                            <!-- Ordenación -->
                             <div class="col-12 col-lg-3">
                                 <div class="row g-3">
                                     <div class="col-12">
+                                        <!-- Ordenar por -->
                                         <label class="form-label w-100">Sort by</label>
                                         <select name="sort" class="form-select">
                                             <option th:selected="${param.sort == 'updatedAt'}" value="updatedAt">Updated</option>
@@ -74,14 +85,18 @@
                                             <option th:selected="${param.sort == 'title'}" value="title">Title</option>
                                         </select>
                                     </div>
+
                                     <div class="col-12">
+                                        <!-- Orden -->
                                         <label class="form-label w-100">Order</label>
                                         <select name="order" class="form-select">
                                             <option th:selected="${param.order == 'desc'}" value="desc">Descending</option>
                                             <option th:selected="${param.order == 'asc'}" value="asc">Ascending</option>
                                         </select>
                                     </div>
+
                                     <div class="col-12">
+                                        <!-- Tamaño de la página -->
                                         <label class="form-label w-100">Page size</label>
                                         <input name="size" type="number" class="form-control" th:value="${param.size != null ? param.size : 9}">
                                     </div>
@@ -90,9 +105,10 @@
                             
                             <div class="col-0 d-none d-lg-block col-lg-1"></div>
                             
-                            <!-- Search, reset and create listing -->
+                            <!-- Botones para buscar, resetear y crear un listing -->
                             <div class="col-12 col-lg-2">
                                 <div class="row g-2 g-lg-3">
+                                    <!-- Botón para buscar -->
                                     <div class="col mt-lg-2">
                                         <label class="form-label mb-1 pt-lg-2">&nbsp;</label>
                                         <button type="submit" class="btn-neon-blue w-100 d-flex align-items-center justify-content-center">
@@ -100,17 +116,22 @@
                                             Search
                                         </button>
                                     </div>
+
+                                    <!-- Botón para resetear -->
                                     <div class="col">
                                         <label class="form-label mb-1">&nbsp;</label>
-                                        <a th:href="@{/community?sort=updatedAt&order=desc&size=9}" class="btn-neon-red w-100 d-flex align-items-center justify-content-center">
+                                        <a th:href="@{/community?sort=updatedAt&order=desc&size=9}" 
+                                           class="btn-neon-red w-100 d-flex align-items-center justify-content-center">
                                             <i class="bi bi-eraser me-2"></i>
                                             Reset
                                         </a>
                                     </div>
+
+                                    <!-- Botón para crear un listing -->
                                     <div class="col">
                                         <label class="form-label mb-1">&nbsp;</label>
-                                        <a th:href="@{/community/listing/create}" class="btn-neon-green w-100 d-flex align-items-center justify-content-center"
-                                           th:disabled="${currentUser.role.name() == 'ADMIN'}">
+                                        <a th:href="@{/community/listing/create}" 
+                                           class="btn-neon-green w-100 d-flex align-items-center justify-content-center">
                                             <i class="bi bi-plus me-1"></i>
                                             Create
                                         </a>
@@ -121,22 +142,20 @@
                     </div>
                 </div>
 
-                <!-- Separador -->
+                <!-- Separador entre el menú y los listings -->
                 <div class="border-bottom border-secondary mt-5"></div>
 
-                <!-- Cards de listings -->
+                <!-- Listings -->
                 <div class="row mt-5" th:if="${!listings.empty}">
                     <div class="col-xl-4 col-lg-6 col-md-6 mb-4" th:each="listing : ${listings}">
+                        <!-- Card del listing -->
                         <a th:replace="~{fragments/listing_card :: listing_card(listing=${listing})}"></a>
                     </div>
                 </div>
 
                 <!-- Mensaje si no hay listings -->
                 <div th:if="${listings.empty}">
-                    <h3 class="text-center header-neon-white">
-                        <i class="bi bi-search me-2"></i>
-                        No listings found :/
-                    </h3>
+                    <h3 class="text-center header-neon-white mt-5">No listings found :/</h3>
                 </div>
                 
                 <nav th:replace="~{fragments/pagination :: pagination}"></nav>
