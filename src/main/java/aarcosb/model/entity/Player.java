@@ -26,7 +26,7 @@ public class Player {
 
     // Posición del jugador
     @Column(name = "position")
-    private int position;
+    private Integer position;
     
     // Puntuación del jugador
     @Column(name = "score")
