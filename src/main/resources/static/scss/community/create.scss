@@ -3,12 +3,12 @@
 
 .label-required {
     &::before {
-      content: "* ";
-      color: $red;
+		content: "* ";
+		color: $red;
     }
 }
 
 #previewCarousel {
-  max-height: 550px;
-  overflow-y: auto;
+	max-height: 550px;
+	overflow-y: auto;
 }

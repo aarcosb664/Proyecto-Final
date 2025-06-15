@@ -4,8 +4,7 @@ import lombok.experimental.UtilityClass;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import org.springframework.web.multipart.MultipartFile;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @UtilityClass
 public class FileUploadUtil {
@@ -50,8 +49,7 @@ public class FileUploadUtil {
     }
 
     public static String getFileName(final String name) {
-        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
-        final String date = LocalDateTime.now().format(dateTimeFormatter);
+        final String date = new Date().toString();
         return String.format(IMAGE_FILE_NAME_FORMAT, name, date);
     }
 }

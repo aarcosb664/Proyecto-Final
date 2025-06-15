@@ -1,25 +1,19 @@
-// Paleta mínima de colores retro/neón para efectos visuales únicos
-$red:      #ff1744; // Vibrant neon red
-$blue:     #00bfff; // Electric blue
-$green:    #00ff90; // Arcade green
-$yellow:   #ffe600; // Highlighter yellow
-$purple:   #a259ff; // Retro purple
-$cyan:     #00fff7; // Neon cyan
-$pink:     #ff4fd8; // Neon pink
-$orange:   #ff9100; // Vibrant orange
-$black:    #000000; // Black
-$white:    #ffffff; // White
-$gray:     #888888; // Gray
+$red:      #ff1744;
+$blue:     #00bfff;
+$green:    #00ff90;
+$yellow:   #ffe600;
+$purple:   #a259ff;
+$cyan:     #00fff7;
+$pink:     #ff4fd8;
+$orange:   #ff9100;
+$black:    #000000;
+$white:    #ffffff;
+$gray:     #888888;
 
-.header-retro {
-    font-family: 'Press Start 2P', monospace;
-    color: #0ff;
-    text-shadow: 0 0 8px #0ff, 0 0 20px #00f;
-    animation: pulse-glow 2s infinite;
-}
-
+// Animación para el hover de los elementos
 .hover-scale {
     transition: transform 0.3s ease;
+
     &:hover {
         transform: scale(1.05);
     }

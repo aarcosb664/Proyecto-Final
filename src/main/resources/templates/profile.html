@@ -14,10 +14,15 @@
 <body>
     <header th:replace="~{fragments/header :: header}"></header>
 
+    <!-- Contenedor de perfil -->
     <div class="profile-container mt-5">
         <div class="row">
+            <!-- Separador (desktop) -->
             <div class="col-12 col-md-1 pt-3 z-n1"></div>
+
+            <!-- Barra lateral -->
             <div class="sidebar pt-3 z-0">
+                <!-- Configuración -->
                 <h5>
                     <a href="#settings" class="nav-link">
                         <i class="bi bi-gear-fill me-2"></i> 
@@ -25,6 +30,7 @@
                     </a>
                 </h5>
 
+                <!-- Mis listings -->
                 <h5 th:if="${currentUser.id != id or currentUser.role.name() != 'ADMIN'}">
                     <a href="#myListings" class="nav-link mt-3">
                         <i class="bi bi-list-check me-2"></i> 
@@ -32,6 +38,7 @@
                     </a>
                 </h5>
 
+                <!-- Favoritos -->
                 <h5>
                     <a href="#myFavorites" class="nav-link mt-3">
                         <i class="bi bi-heart-fill me-2"></i> 
@@ -39,6 +46,7 @@
                     </a>
                 </h5>
 
+                <!-- Historial -->
                 <h5>
                     <a href="#history" class="nav-link mt-3">
                         <i class="bi bi-clock-history me-2"></i>
@@ -47,10 +55,12 @@
                 </h5>
             </div>
 
+            <!-- Separador (desktop) -->
             <div class="col-md-1 d-flex justify-content-center">
                 <div class="vertical-divider"></div>
             </div>
 
+            <!-- Contenido -->
             <div class="col-12 col-md-10 z-1">
                 <div id="settings" class="border-bottom pb-5 mb-3">
                     <h1 class="header-neon-white pt-2">
@@ -58,6 +68,7 @@
                         Settings
                     </h1>
                     
+                    <!-- Foto de perfil -->
                     <div class="row ms-5 mt-4">
                         <div class="col-3">
                             <div class="d-flex flex-column align-items-center">
@@ -65,33 +76,43 @@
                                     <img th:src="@{${user.profilePic}}" width="150" height="150" alt="Pfp" class="rounded-circle border border-2">
                                 </div>
 
+                                <!-- Formulario para cambiar la foto de perfil -->
                                 <form th:action="@{/profile/updateProfilePic}" 
                                       th:if="${currentUser.id == id or currentUser.role.name() == 'ADMIN'}"
                                       method="post" 
                                       id="profilePicForm" 
                                       enctype="multipart/form-data">
 
+                                    <!-- Campo para cambiar la foto de perfil -->
                                     <label for="profilePic" class="form-label">Change Profile Picture</label>
                                     <input type="hidden" name="id" th:value="${user.id}">
                                     <input type="file" class="form-control" id="profilePicInput" name="profilePic" accept=".png, .jpg, .jpeg">
                                     <div class="invalid-feedback" th:if="${hasError}" th:text="${error}"></div>
 
+                                    <!-- Botón para guardar la foto de perfil -->
                                     <button type="submit" class="d-none">Save</button>
                                 </form>
                             </div>
                         </div>
 
+                        <!-- Separador (desktop) -->
                         <div class="col-1"></div>
 
+                        <!-- Información de perfil -->
                         <div class="col-8 text-neon-white">
+                            <!-- Nombre de usuario -->
                             <div class="mb-3">
                                 <label for="userName" class="form-label mb-0">Username:</label>
                                 <div class="text-neon-white-sm d-inline" id="userName" th:text="${user.userName}"></div>
                             </div>
+
+                            <!-- Email -->
                             <div class="mb-3">
                                 <label for="email" class="form-label mb-0">Email:</label>
                                 <div class="text-neon-white-sm d-inline" id="email" th:text="${user.email}"></div>
                             </div>
+
+                            <!-- Contraseña (solo visible para el usuario o administrador) -->
                             <div class="mb-3" th:if="${currentUser.id == id or currentUser.role.name() == 'ADMIN'}">
                                 <label for="passwordView" class="form-label mb-0">Password:</label>
                                 <div class="password-container">
@@ -101,18 +122,23 @@
                                     </span>
                                 </div>
                             </div>
+
+                            <!-- Rol -->
                             <div class="mb-3">
                                 <label for="role" class="form-label mb-0">Role:</label>
                                 <div class="text-neon-white-sm d-inline" id="role" th:text="${user.role}"></div>
                             </div>
+                            
+                            <!-- Fecha de creación -->
                             <div class="mb-3">
                                 <label for="createdAt" class="form-label mb-0">Created At:</label>
-                                <div class="text-neon-white-sm d-inline" id="createdAt" th:text="${#temporals.format(user.createdAt, 'dd/MM/yyyy - HH:mm')}"></div>
+                                <div class="text-neon-white-sm d-inline" id="createdAt" th:text="${#dates.format(user.createdAt, 'dd/MM/yyyy - HH:mm')}"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Mis listings -->
                 <div id="myListings" class="border-bottom pb-3 mb-3" th:if="${currentUser.id != id or currentUser.role.name() != 'ADMIN'}">
                     <h1 class="header-neon-white pt-2">
                         <i class="bi bi-list-check me-2"></i>
@@ -120,13 +146,14 @@
                         <span th:text="'(' + ${totalListings} + ' total)'"></span>
                     </h1>
                     
-                    <div class="row mt-5" th:if="${!myListings.empty}">
+                    <div class="row ms-5 mt-4" th:if="${!myListings.empty}">
                         <div class="col-xl-4 col-lg-6 col-md-6 mb-4" th:each="listing : ${myListings}">
                             <div th:replace="~{fragments/listing_card :: listing_card(listing=${listing})}"></div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Favoritos -->
                 <div id="myFavorites" class="border-bottom pb-3 mb-3">
                     <h1 class="header-neon-white pt-2">
                         <i class="bi bi-heart-fill me-2"></i>
@@ -134,20 +161,21 @@
                         <span th:text="'(' + ${totalFavorites} + ' total)'"></span>
                     </h1>
 
-                    <div class="row mt-5" th:if="${!myFavorites.empty}">
+                    <div class="row ms-5 mt-4" th:if="${!myFavorites.empty}">
                         <div class="col-xl-4 col-lg-6 col-md-6 mb-4" th:each="listing : ${myFavorites}">
                             <div th:replace="~{fragments/listing_card :: listing_card(listing=${listing})}"></div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Historial -->
                 <div id="history" class="border-bottom pb-3 mb-3">
                     <h1 class="header-neon-white pt-2">
                         <i class="bi bi-clock-history me-2"></i>
                         History
                     </h1>
 
-                    <div class="table-container border-neon-blue mt-5" th:if="${!allGames.empty}">
+                    <div class="table-container border-neon-blue ms-5 mt-4" th:if="${!allGames.empty}">
                         <table class="table table-dark table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -163,7 +191,7 @@
                                     <td th:text="${player.userName}"></td>
                                     <td th:text="${player.score}"></td>
                                     <td th:text="${player.destroyedBlocks}"></td>
-                                    <td th:text="${#temporals.format(player.dateGame, 'MM/dd/yyyy - HH:mm')}"></td>
+                                    <td th:text="${#dates.format(player.dateGame, 'MM/dd/yyyy - HH:mm')}"></td>
                                 </tr>
                             </tbody>
                         </table>

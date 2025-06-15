@@ -13,7 +13,10 @@
     <header th:replace="~{fragments/header :: header}"></header>
 
     <div class="container mt-5 mb-5">
+        <!-- Título -->
         <h1 class="header-neon-white text-center mb-4"><i class="bi bi-info-circle me-2"></i>About this Project</h1>
+
+        <!-- Información del proyecto -->
         <div class="row d-flex justify-content-center mb-5">
             <div class="col-lg-8">
                 <div class="card border-neon-blue p-4 bg-black text-neon-white">
@@ -33,6 +36,7 @@
             </div>
         </div>
 
+        <!-- Tecnologías utilizadas -->
         <div class="row justify-content-center mb-5">
             <div class="col-lg-8">
                 <div class="card border-neon-green p-4 bg-black text-neon-white">
@@ -56,6 +60,7 @@
             </div>
         </div>
 
+        <!-- Ayuda externa -->
         <div class="row justify-content-center mb-5">
             <div class="col-lg-8">
                 <div class="card border-neon-red p-4 bg-black text-neon-white">
@@ -71,36 +76,42 @@
                             </a>
                             <p>For general questions, troubleshooting, etc.</p>
                         </span>
+
                         <span class="fs-4">
                             <a href="https://freefrontend.com/" class="text-neon-white-sm text-decoration-none">
                                 <i class="bi bi-palette-fill text-neon-pink me-2"></i> Freefrontend
                             </a>
                             <p>For web page design inspiration, UI ideas, etc.</p>
                         </span>
+
                         <span class="fs-4">
                             <a href="https://www.w3schools.com/" class="text-neon-white-sm text-decoration-none">
                                 <i class="bi bi-journal-code text-neon-green me-2"></i> W3Schools
                             </a>
                             <p>For learning HTML, CSS, JavaScript, etc.</p>
                         </span>
+
                         <span class="fs-4">
                             <a href="https://www.youtube.com/" class="text-neon-white-sm text-decoration-none">
                                 <i class="bi bi-youtube text-neon-red me-2"></i> YouTube
                             </a>
                             <p>For tutorials, videos, and more.</p>
                         </span>
+
                         <span class="fs-4">
                             <a href="https://www.chatgpt.com/" class="text-neon-white-sm text-decoration-none">
                                 <i class="bi bi-robot text-neon-blue me-2"></i> ChatGPT
                             </a>
                             <p>For explanations, questions, suggestions, time management, etc.</p>
                         </span>
+
                         <span class="fs-4">
                             <a href="https://coderabbit.com/" class="text-neon-white-sm text-decoration-none">
                                 <i class="bi bi-terminal text-neon-green me-2"></i> Coderabbit
                             </a>
                             <p>For code analysis, suggestions, etc.</p>
                         </span>
+                        
                         <span class="fs-4">
                             <a href="https://www.codacy.com/" class="text-neon-white-sm text-decoration-none">
                                 <i class="bi bi-shield-check text-neon-green me-2"></i> Codacy
@@ -112,23 +123,27 @@
             </div>
         </div>
 
+        <!-- Formulario de feedback -->
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card border-neon-purple p-4 bg-black text-neon-white">
                     <h3 class="header-neon-white mb-3"><i class="bi bi-chat-dots me-2"></i>Feedback & Opinions</h3>
                     <form method="post" th:action="@{/send-email}" class="needs-validation" novalidate>
+                        <!-- Campo para el asunto -->
                         <div class="mb-3">
                             <label for="subject" class="form-label">Subject</label>
                             <input type="text" class="form-control" id="subject" name="subject" required>
                             <div class="invalid-feedback">Please enter the subject.</div>
                         </div>
 
+                        <!-- Campo para el cuerpo -->
                         <div class="mb-3">
                             <label for="body" class="form-label">Body</label>
                             <textarea class="form-control" id="body" name="body" rows="4" required></textarea>
                             <div class="invalid-feedback">Please enter your message.</div>
                         </div>
 
+                        <!-- Botón para enviar el feedback -->
                         <button type="submit" class="btn-neon-blue w-100 mt-3">Send Feedback</button>
                     </form>
                 </div>

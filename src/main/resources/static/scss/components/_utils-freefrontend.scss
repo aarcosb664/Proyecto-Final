@@ -286,30 +286,33 @@
 		&::after  { z-index: 1; }
 	}
 
-  &:hover .shimmer {
-    	animation: spin 1.3s linear infinite both -0.1s;
-  }
+	&:hover .shimmer {
+			animation: spin 1.3s linear infinite both -0.1s;
+	}
 
-  &--red .shimmer {
-	background: #ff3b3b;
-	&::before { box-shadow: 0 0 12px 4px #ff3b3b; }
-	&::after  { box-shadow: inset 0 0 0 2px #ff3b3b, inset 0 0 8px 2px #ff3b3b; }
-  }
-  &--blue .shimmer {
-    background: #3b6cff;
-    &::before { box-shadow: 0 0 12px 4px #3b6cff; }
-    &::after  { box-shadow: inset 0 0 0 2px #3b6cff, inset 0 0 8px 2px #3b6cff; }
-  }
-  &--green .shimmer {
-    background: #3bff6c;
-    &::before { box-shadow: 0 0 12px 4px #3bff6c; }
-    &::after  { box-shadow: inset 0 0 0 2px #3bff6c, inset 0 0 8px 2px #3bff6c; }
-  }
-  &--yellow .shimmer {
-    background: #ffe347;
-    &::before { box-shadow: 0 0 12px 4px #ffe347; }
-    &::after  { box-shadow: inset 0 0 0 2px #ffe347, inset 0 0 8px 2px #ffe347; }
-  }
+	&--red .shimmer {
+		background: #ff3b3b;
+		&::before { box-shadow: 0 0 12px 4px #ff3b3b; }
+		&::after  { box-shadow: inset 0 0 0 2px #ff3b3b, inset 0 0 8px 2px #ff3b3b; }
+	}
+
+	&--blue .shimmer {
+		background: #3b6cff;
+		&::before { box-shadow: 0 0 12px 4px #3b6cff; }
+		&::after  { box-shadow: inset 0 0 0 2px #3b6cff, inset 0 0 8px 2px #3b6cff; }
+	}
+
+	&--green .shimmer {
+		background: #3bff6c;
+		&::before { box-shadow: 0 0 12px 4px #3bff6c; }
+		&::after  { box-shadow: inset 0 0 0 2px #3bff6c, inset 0 0 8px 2px #3bff6c; }
+	}
+	
+	&--yellow .shimmer {
+		background: #ffe347;
+		&::before { box-shadow: 0 0 12px 4px #ffe347; }
+		&::after  { box-shadow: inset 0 0 0 2px #ffe347, inset 0 0 8px 2px #ffe347; }
+	}
 }
 
 @keyframes spin {

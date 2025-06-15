@@ -1,11 +1,13 @@
 <a th:fragment="listing_card" th:href="@{/community/listing/{id}(id=${listing.id})}" class="hover-scale text-decoration-none">
     <div class="card rounded-4 bg-black border-neon-white m-2">
+        <!-- Imágenes del listing -->
         <div class="d-flex flex-column-reverse card-img-top-container border-bottom">
             <img th:src="${listing.images[0]}" class="card-img-top" th:alt="${listing.title}">
             <img th:src="${listing.images[1]}" class="card-img-top" th:alt="${listing.title}">
             <img th:src="${listing.images[2]}" class="card-img-top" th:alt="${listing.title}">
         </div>
 
+        <!-- Etiquetas del listing -->
         <div class="card-body">
             <div class="grid-tags mt-2 mb-4">
                 <small class="tag text-neon-white-sm border p-2 mx-1 rounded-4" 
@@ -16,19 +18,23 @@
                 </small>
             </div>
 
+            <!-- Título y descripción del listing -->
             <h5 class="crop text-center header-neon-white-sm mb-3" th:text="${listing.title}">title</h5>
             <p class="crop-extended text-neon-white-sm" th:text="${listing.description}">description</p>
         </div>
 
+        <!-- Autor, fecha de actualización y calificación del listing -->
         <div class="card-footer row text-center px-3">
             <small class="col-4 text-neon-cyan-sm">
                 <i class="bi bi-person-circle"></i>
                 <span th:text="${#strings.abbreviate(listing.userName, 10)}">Author</span>
             </small>
+
             <small class="col-3 text-neon-yellow-sm">
                 <i class="bi bi-star-fill"></i>
                 <span th:text="${#numbers.formatDecimal(listing.rating,1,1)}">0.0</span>
             </small>
+            
             <small class="col-5 text-neon-blue-sm">
                 <i class="bi bi-clock"></i>
                 <span th:text="${#strings.abbreviate(@prettyTime.format(listing.updatedAt), 10)}">00:00</span>

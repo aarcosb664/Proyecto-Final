@@ -1,31 +1,31 @@
 package aarcosb.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.security.core.Authentication;
 import aarcosb.model.entity.Player;
-import aarcosb.model.repository.UserRepository;
 import aarcosb.model.entity.User;
+import aarcosb.model.repository.UserRepository;
 import aarcosb.service.GameService;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class GameController {
 
+    // Autowired pone aquí automáticamente los objetos que necesita la clase
     @Autowired private GameService gameService;
     @Autowired private UserRepository userRepository;
 
-    // Método auxiliar para obtener el usuario actual a partir de la autenticación
+    // Obtiene el usuario autenticado actual usando el email
     private User getCurrentUser(Authentication authentication) 
     {
         return userRepository.findByEmail(authentication.getName());
     }
 
+    // Muestra la vista principal del juego con el usuario actual
     @GetMapping("/game")
     public String game(Authentication authentication, Model model) 
     {
@@ -35,6 +35,7 @@ public class GameController {
         return "game";
     }
     
+    // Muestra el ranking de jugadores ordenado por el campo y dirección especificados
     @GetMapping("/ranking")
     public String ranking(@RequestParam(defaultValue = "score") String sort,
                           @RequestParam(defaultValue = "desc") String order,
@@ -42,8 +43,11 @@ public class GameController {
     {
         User currentUser = getCurrentUser(authentication);
         model.addAttribute("currentUser", currentUser);
-        gameService.setAllPlayersPosition();
 
+        // Establece la posición de todos los jugadores
+        gameService.setAllPlayersPosition();
+        
+        // Ordena los jugadores según los parámetros recibidos
         Sort sortBy = order.equals("desc") ? Sort.by(sort).descending() : Sort.by(sort).ascending();
         List<Player> players = gameService.findAll(sortBy);
 
@@ -53,6 +57,7 @@ public class GameController {
         return "ranking";
     }
     
+    // Guarda la puntuación de un jugador después de una partida
     @PostMapping("/saveGame")
     public String saveRanking(@RequestParam("userName") String userName,
                               @RequestParam("score") int score,
@@ -62,15 +67,15 @@ public class GameController {
     {
         User currentUser = getCurrentUser(authentication);
         model.addAttribute("currentUser", currentUser);
-
-        // Crear y guardar jugador
+        
+        // Crea y guarda el jugador con los datos de la partida
         Player player = new Player();
         player.setUserName(userName);
         player.setUserId(currentUser.getId());
         player.setScore(score);
         player.setDestroyedBlocks(destroyedBlocks);
         gameService.saveGame(player);
-        
+
         return "game";
     }
 } 

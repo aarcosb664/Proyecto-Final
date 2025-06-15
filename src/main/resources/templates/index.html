@@ -24,24 +24,24 @@
                     <div>
                         <p class="text-neon-white mb-3">Play the breakout game (without registering!) or discover other games created by the community!</p>
                         
-                        <!-- Estadísticas del juego -->
                         <div class="hero-stats">
                             <div class="stat-item" style="--stat-color1:#00f;--stat-color2:#0ff;">
                                 <div class="stat-number">50+</div>
                                 <div class="stat-label">Levels</div>
                             </div>
+
                             <div class="stat-item" style="--stat-color1:#f00;--stat-color2:#ff0;">
                                 <div class="stat-number">20+</div>
                                 <div class="stat-label">Power-ups</div>
                             </div>
+                            
                             <div class="stat-item" style="--stat-color1:#0f0;--stat-color2:#0ff;">
                                 <div class="stat-number">10K+</div>
                                 <div class="stat-label">Players</div>
                             </div>
                         </div>
                         
-                        <!-- Texto adicional -->
-                        <p class="text-neon-white mb-3">Break bricks, collect power-ups, and compete for the highest score in this classic arcade game!</p>
+                        <p class="text-neon-white mb-3">Break blocks, collect power-ups, and compete for the highest score in this classic arcade game!</p>
                     </div>
 
                     <div class="d-grid gap-0 column-gap-4 align-items-center" style="grid-template-columns: 1fr 1fr;">
@@ -57,29 +57,24 @@
             <div class="rhombus rhombus-blue">
                 <div class="rhombus-content me-lg-5 me-0">
                     <h1 class="header-neon-white mb-3">Top 5 players</h1>
+
                     <div class="rhombus-table-wrapper">
                         <table class="table table-dark table-striped table-hover table-bordered border-neon-purple table-sm align-middle text-center py-3">
                             <thead class="thead-light">
                                 <tr>
                                     <th>Player</th>
                                     <th>Score</th>
-                                    <th>Bricks</th>
+                                    <th>Blocks</th>
                                     <th>Date</th>
                                 </tr>
                             </thead>
+
                             <tbody>
-                                <tr th:each="player : ${players}">
-                                    <td th:text="${player.userName != null ? player.userName : '-'}">name_placeholder</td>
-                                    <td th:text="${player.score != null ? player.score : '-'}">0</td>
-                                    <td th:text="${player.destroyedBlocks != null ? player.destroyedBlocks : '-'}">0</td>
-                                    <td th:text="${player.dateGame != null ? #temporals.format(player.dateGame, 'MM/dd/yyyy - HH:mm') : '-'}">01/01/2023</td>
-                                </tr>
-                                <!-- Añadir filas vacías si no hay suficientes jugadores -->
-                                <tr th:if="${#lists.size(players) < 5}" th:each="i : ${#numbers.sequence(1, 5 - #lists.size(players))}">
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
+                                <tr th:each="i : ${#numbers.sequence(0,4)}">
+                                    <td th:text="${players[i].userName ?: '-'}">-</td>
+                                    <td th:text="${players[i].score ?: '-'}">-</td>
+                                    <td th:text="${players[i].destroyedBlocks ?: '-'}">-</td>
+                                    <td th:text="${players[i].dateGame ?: '-'}">-</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -92,7 +87,9 @@
     </div>
 
     <div class="container py-4">
+        <!-- Características -->
         <h2 class="text-center banner header-neon-white mb-5">Features</h2>
+
         <div class="row g-4">
             <div class="col-lg-4">
                 <a th:href="@{/game}" class="text-decoration-none">
@@ -103,6 +100,7 @@
                     </div>
                 </a>
             </div>
+
             <div class="col-lg-4">
                 <a th:href="@{/ranking}" class="text-decoration-none">
                     <div class="card border-neon-green h-100 p-4 text-center hover-scale">
@@ -112,6 +110,7 @@
                     </div>
                 </a>
             </div>
+
             <div class="col-lg-4">
                 <a th:href="@{/community}" class="text-decoration-none">
                     <div class="card border-neon-blue h-100 p-4 text-center hover-scale">
@@ -122,11 +121,9 @@
                 </a>
             </div>
         </div>
-    </div>
-    
-    <!-- Sección de contador de estadísticas -->
-    <div class="container py-5 text-center">
-        <div class="row g-4">
+
+        <!-- Estadísticas -->
+        <div class="row text-center mt-5 g-4">
             <div class="col-md-3 col-6">
                 <div class="speckyboy-shimmer speckyboy-shimmer--red">
                     <span class="shimmer"></span>
@@ -136,6 +133,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-3 col-6">
                 <div class="speckyboy-shimmer speckyboy-shimmer--blue">
                     <span class="shimmer"></span>
@@ -145,6 +143,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-3 col-6">
                 <div class="speckyboy-shimmer speckyboy-shimmer--green">
                     <span class="shimmer"></span>
@@ -154,6 +153,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-3 col-6">
                 <div class="speckyboy-shimmer speckyboy-shimmer--yellow">
                     <span class="shimmer"></span>
