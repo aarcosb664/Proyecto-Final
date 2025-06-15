@@ -175,13 +175,5 @@
 				</filters>
 			</build>
 		</profile>
-		<profile>
-			<id>prod</id>
-			<build>
-				<filters>
-					<filter>src/main/resources/prod.properties</filter>
-				</filters>
-			</build>
-		</profile>
 	</profiles>
 </project>
