@@ -1,17 +1,15 @@
-# Fase 1: Construcción de la app
+# Dockerfile
 FROM openjdk:17-jdk AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src src
-COPY mvnw .
+COPY pom.xml mvnw ./
 COPY .mvn .mvn
+COPY src src
+RUN chmod +x mvnw && ./mvnw clean package -DskipTests
 
-RUN chmod +x ./mvnw
-RUN ./mvnw clean package -DskipTests
-
-# Fase 2: Imagen final
 FROM openjdk:17-jdk
-VOLUME /tmp
-COPY --from=build /app/target/final-*.jar app.jar
+WORKDIR /
+COPY --from=build /app/target/*.jar app.jar
+# Opcional: expone para depuración local
 EXPOSE 8080
+
 ENTRYPOINT ["sh","-c","java -jar /app.jar --server.port=$PORT"]

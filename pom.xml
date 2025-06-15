@@ -158,7 +158,7 @@
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
+				<filtering>false</filtering>
 			</resource>
 		</resources>
 	</build>
@@ -166,14 +166,25 @@
 	<profiles>
 		<profile>
 			<id>dev</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 			<build>
 				<filters>
 					<filter>src/main/resources/dev.properties</filter>
 				</filters>
 			</build>
+			<properties>
+				<activeProfile>dev</activeProfile>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<build>
+				<filters>
+					<filter>src/main/resources/prod.properties</filter>
+				</filters>
+			</build>
+			<properties>
+				<activeProfile>prod</activeProfile>
+			</properties>
 		</profile>
 	</profiles>
 </project>
